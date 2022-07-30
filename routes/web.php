@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\MomoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,14 @@ Route::get('/', function () {
 
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index']);
+
+    //payment momo
+    Route::prefix('momo')->group(function () {
+        Route::get('atm', function () {
+           return view('atm.atm_momo');
+        });
+        Route::post('atm', [MomoController::class, 'atm'])->name('momo.atm');
+        Route::post('ipn_momo', [MomoController::class, 'ipn_momo']);
+    });
 });
+
