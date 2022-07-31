@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('view-table', function () {
+    return view('app');
+});
+Route::get('table', [StoreController::class, 'table'])->name('table');
+
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index']);
 
