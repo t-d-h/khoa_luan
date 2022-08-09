@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductModel extends Model
 {
     use HasFactory;
+
+    protected $table = 'products';
+
+    public $timestamps = false;
+
+    protected $fillable = [
+        'tensp',
+        'loai',
+        'dongia'
+    ];
 }
