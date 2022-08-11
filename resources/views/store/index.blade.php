@@ -11,6 +11,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css.css') }}">
     <link href='https://css.gg/shopping-cart.css' rel='stylesheet'>
     <link href='https://css.gg/arrow-up-r.css' rel='stylesheet'>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
 <body>
 <!-- Navbar -->
@@ -218,6 +222,8 @@
 
 <hr>
 
+<div id="summernote">Hello Summernote</div>
+
 <!-- Sản phẩm mới -->
 <div class="new-product mt-5">
     <img src="images/dfa4c658f5dc35afb30e1166a9ba4574.jpg" class="img-fluid">
@@ -333,6 +339,21 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#summernote').summernote({
+            placeholder: 'Hello stand alone ui',
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
         $(window).scroll(function(event) {
             var pos = $('html, body').scrollTop();
             if(pos >= 500){

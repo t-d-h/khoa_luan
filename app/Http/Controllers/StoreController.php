@@ -18,7 +18,7 @@ class StoreController extends Controller
 
     public function index()
     {
-        dd($this->productService->insert(1));
+//        dd($this->productService->insert(1));
         return view('store.index');
     }
 

@@ -9,13 +9,14 @@ class ProductModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
-
-    public $timestamps = false;
+    protected $table = 'product_models';
 
     protected $fillable = [
-        'tensp',
-        'loai',
-        'dongia'
+        'name',
+        'type',
+        'amount',
+        'price',
+        'color',
+        'description',
     ];
 }
