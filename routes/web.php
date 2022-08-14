@@ -27,6 +27,10 @@ Route::get('table', [StoreController::class, 'table'])->name('table');
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index']);
 
+    //cart shop
+    Route::get('cart-session', [StoreController::class, 'getCartSession']);
+    Route::get('add-cart', [StoreController::class, 'addCart'])->name('add.cart');
+
     //payment momo
     Route::prefix('momo')->group(function () {
         Route::get('atm', function () {
