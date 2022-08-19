@@ -49,7 +49,7 @@
     <script>
     $(document).ready(function() {
         $('#summernote').summernote({
-            placeholder: 'Hello stand alone ui',
+            placeholder: 'Nhập thông tin mô tả sản phẩm',
             height: 120,
             toolbar: [
                 ['style', ['style']],
@@ -59,7 +59,6 @@
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
             ]
         });
     });

@@ -6,7 +6,21 @@
                     <h5 class="card-title mb-0">Tên sản phẩm</h5>
                 </div>
                 <div class="card-body">
-                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" name="name">
+                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" name="name" required/>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Loại sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <select class="form-select mb-3" name="type">
+                        <option selected>Chọn loại sản phẩm</option>
+                        <option>One</option>
+                        <option>Two</option>
+                        <option>Three</option>
+                    </select>
                 </div>
             </div>
 
@@ -15,58 +29,21 @@
                     <h5 class="card-title mb-0">Mô tả sản phẩm</h5>
                 </div>
                 <div class="card-body">
-                    <textarea class="form-control" rows="2" placeholder="Thông tin mô tả" id="summernote"></textarea>
+                    <textarea class="form-control" id="summernote" name="description"></textarea>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Checkboxes</h5>
+                    <h5 class="card-title mb-0">Hiển thị sản phẩm</h5>
                 </div>
                 <div class="card-body">
-                    <div>
-                        <label class="form-check">
-                            <input class="form-check-input" type="checkbox" value="">
-                            <span class="form-check-label">
-										Option one is this and that&mdash;be sure to include why it's great
-										</span>
-                        </label>
-                        <label class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" disabled>
-                            <span class="form-check-label">
-										Option two is disabled
-										</span>
+                    <div class="mb-3">
+                        <label class="switch form-label">
+                            <input class="form-control" type="checkbox" name="status" checked>
+                            <span class="slider round"></span>
                         </label>
                     </div>
-                    <div>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="option1">
-                            <span class="form-check-label">
-										1
-										</span>
-                        </label>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="option2">
-                            <span class="form-check-label">
-										2
-										</span>
-                        </label>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="option3" disabled>
-                            <span class="form-check-label">
-										3
-										</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Read only</h5>
-                </div>
-                <div class="card-body">
-                    <input class="form-control" type="text" placeholder="Readonly input" readonly>
                 </div>
             </div>
         </div>
@@ -74,116 +51,65 @@
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Radios</h5>
+                    <h5 class="card-title mb-0">Màu sắc sản phẩm</h5>
                 </div>
                 <div class="card-body">
-                    <div>
-                        <label class="form-check">
-                            <input class="form-check-input" type="radio" value="option1" name="radios-example"
-                                   checked>
-                            <span class="form-check-label">
-                                  Option one is this and that&mdash;be sure to include why it's great
-                                </span>
-                        </label>
-                        <label class="form-check">
-                            <input class="form-check-input" type="radio" value="option2" name="radios-example">
-                            <span class="form-check-label">
-                                  Option two can be something else and selecting it will deselect option one
-                                </span>
-                        </label>
-                        <label class="form-check">
-                            <input class="form-check-input" type="radio" value="option3" name="radios-example"
-                                   disabled>
-                            <span class="form-check-label">
-                                  Option three is disabled
-                                </span>
-                        </label>
-                    </div>
-                    <div>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inline-radios-example"
-                                   value="option1">
-                            <span class="form-check-label">
-                              1
-                            </span>
-                        </label>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inline-radios-example"
-                                   value="option2">
-                            <span class="form-check-label">
-                              2
-                            </span>
-                        </label>
-                        <label class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inline-radios-example"
-                                   value="option3" disabled>
-                            <span class="form-check-label">
-                              3
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Selects</h5>
-                </div>
-                <div class="card-body">
-                    <select class="form-select mb-3">
-                        <option selected>Open this select menu</option>
-                        <option>One</option>
-                        <option>Two</option>
-                        <option>Three</option>
-                    </select>
-
-                    <select multiple class="form-control">
-                        <option>One</option>
-                        <option>Two</option>
-                        <option>Three</option>
-                        <option>Four</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Disabled</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Disabled input</label>
-                        <input type="text" class="form-control" placeholder="Disabled input" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Disabled select menu</label>
-                        <select class="form-control" disabled>
-                            <option>Disabled select</option>
+                    <div style="display: flex">
+                        <select class="form-select" name="type" style="width: 120px">
+                            <option selected>Chọn màu</option>
+                            <option>One</option>
+                            <option>Two</option>
+                            <option>Three</option>
                         </select>
                     </div>
-                    <label class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" disabled>
-                        <span class="form-check-label">
-                                Can't check this
-                              </span>
-                    </label>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Turn on/off</h5>
+                    <h5 class="card-title mb-0">Sản phẩm đặc biệt</h5>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <label class="switch form-label">
-                            <input class="form-control" type="checkbox" name="turn">
-                            <span class="slider round"></span>
-                        </label>
+                    <div style="display: flex">
+                        <div class="mr-2 special-product">Sản phẩm nổi bật</div>
+                        <div>
+                            <label class="switch form-label">
+                                <input class="form-control" type="checkbox" name="option">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="display: flex">
+                        <div class="mr-2 special-product">Sản phẩm bán chạy</div>
+                        <div>
+                            <label class="switch form-label">
+                                <input class="form-control" type="checkbox" name="option">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Số lượng sản phẩm</h5>
+                </div>
+                <div class="card-body">
+                    <input type="number" class="form-control" placeholder="Nhập số lượng sản phẩm" name="amount" required min="1" />
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Đơn giá</h5>
+                </div>
+                <div class="card-body">
+                    <input type="number" class="form-control" placeholder="Nhập đơn giá sản phẩm" name="price" required min="1" />
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
-
