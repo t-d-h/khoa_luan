@@ -220,6 +220,7 @@
 <hr>
 
 <div id="summernote">Hello Summernote</div>
+{{--<textarea id="summernote"></textarea>--}}
 
 <!-- Sản phẩm mới -->
 <div class="new-product mt-5">
