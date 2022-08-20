@@ -24,6 +24,7 @@ Route::get('view-table', function () {
 });
 Route::get('table', [StoreController::class, 'table'])->name('table');
 
+//Store
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index']);
 
@@ -41,3 +42,13 @@ Route::prefix('store')->group(function () {
     });
 });
 
+//Admin Management
+Route::prefix('admin')->group(function() {
+    Route::get('', function () {
+       return view('admin.product.edit');
+    });
+
+    Route::get('summernote', function () {
+       return view('store.index');
+    });
+});
