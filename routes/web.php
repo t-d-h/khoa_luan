@@ -60,6 +60,8 @@ Route::prefix('store')->group(function () {
         Route::post('atm', [VNPAYController::class, 'createPayment'])->name(CREATE_PAYMENT_VNPAY);
         Route::get('result', [VNPayController::class, 'result']);
     });
+
+    Route::get('send', [StoreController::class, 'sendMail']);
 });
 
 //Admin Management

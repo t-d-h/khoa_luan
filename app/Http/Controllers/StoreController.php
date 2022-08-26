@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyEmail;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 use App\Services\ProductService;
@@ -70,5 +72,15 @@ class StoreController extends Controller
         });
 
         return view('store.detail');
+    }
+
+    public function sendMail()
+    {
+        try {
+            Mail::to('hung.vu2@ntq-solution.com.vn')->send(new VerifyEmail('test email'));
+            return 'send oke';
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }
