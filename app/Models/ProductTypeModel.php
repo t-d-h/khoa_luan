@@ -12,4 +12,9 @@ class ProductTypeModel extends Model
     protected $table = 'product_type_models';
 
     public $fillable = ['name'];
+
+    public function product()
+    {
+        return $this->belongsTo(ProductModel::class, 'type', 'id');
+    }
 }

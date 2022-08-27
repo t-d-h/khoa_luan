@@ -19,4 +19,14 @@ class ProductModel extends Model
         'color',
         'description',
     ];
+
+    public function type()
+    {
+        return $this->hasOne(ProductTypeModel::class, 'id', 'type');
+    }
+
+    public function component()
+    {
+        return $this->hasMany(ProductComponentModel::class, 'product_id', 'id');
+    }
 }
