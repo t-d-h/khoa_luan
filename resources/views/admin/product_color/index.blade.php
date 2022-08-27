@@ -3,9 +3,9 @@
     <div class="row mb-3">
         <div class="col-lg-6">
             <div>
-                <h1 class="h3 d-inline align-middle">Loại sản phẩm</h1>
+                <h1 class="h3 d-inline align-middle">Màu sản phẩm</h1>
                 <a class="badge bg-dark text-white ms-2">
-                    Danh sách loại sản phẩm
+                    Danh sách màu sắc sản phẩm
                 </a>
             </div>
         </div>
@@ -22,14 +22,14 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Loại sản phẩm</th>
+                        <th>Màu sản phẩm</th>
                         <th>Trạng thái</th>
                     </tr>
                     </thead>
                 </table>
             </div>
             <div class="col-6">
-                @include('admin.product_type.form')
+                @include('admin.product_color.form')
             </div>
         </div>
     </div>

@@ -2,10 +2,10 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title mb-0">Loại sản phẩm</h5>
+                <h5 class="card-title mb-0">Màu sản phẩm</h5>
             </div>
             <div class="card-body">
-                <input type="text" class="form-control" placeholder="Nhập tên loại sản phẩm" name="name" required/>
+                <input type="color" class="form-control" placeholder="Chọn màu sản phẩm" name="color" style="width: 200px" required/>
             </div>
         </div>
     </div>

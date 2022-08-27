@@ -1,6 +1,6 @@
 import da from "../../public/statics/moment/src/locale/da";
 
-$(document).ready(function() {
+$(document).ready(function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -12,7 +12,7 @@ $(document).ready(function() {
         let sort = [];
 
         $.each(data, function (index, value) {
-           sort.push(value);
+            sort.push(value);
         });
 
         sort.sort((a, b) => {
@@ -20,25 +20,25 @@ $(document).ready(function() {
         });
 
         $.each(sort, function (index, val) {
-            row += '<div class="row">'+
-                '<input type="hidden" name="product_id" value="'+val.id+'">'+
-                '<div class="col-md-5">'+
-                '<img src="'+val.img+'">'+
-                '</div>'+
-                '<div class="col-md-7">'+
-                '<strong>'+val.name+'</strong>'+
-                '<div class="product-giohang">'+
-                '<div>'+
-                '<p>Giá: </p>'+
-                '<p>'+val.price+'</p>'+
-                '</div>'+
-                '<div>'+
-                '<p>Số lượng: </p>'+
-                '<p>'+val.amount+'</p>'+
-                '</div>'+
-                '</div>'+
-                '</div>'+
-                '<hr>'+
+            row += '<div class="row">' +
+                '<input type="hidden" name="product_id" value="' + val.id + '">' +
+                '<div class="col-md-5">' +
+                '<img src="' + val.img + '">' +
+                '</div>' +
+                '<div class="col-md-7">' +
+                '<strong>' + val.name + '</strong>' +
+                '<div class="product-giohang">' +
+                '<div>' +
+                '<p>Giá: </p>' +
+                '<p>' + val.price + '</p>' +
+                '</div>' +
+                '<div>' +
+                '<p>Số lượng: </p>' +
+                '<p>' + val.amount + '</p>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<hr>' +
                 '</div>'
         });
 
@@ -48,7 +48,7 @@ $(document).ready(function() {
     $.ajax({
         type: "get",
         url: "store/cart-session",
-        success: function(e) {
+        success: function (e) {
             $('#scroll-giohang').append(showCart(e));
         }
     });
@@ -70,18 +70,14 @@ $(document).ready(function() {
                 "price": price,
                 "img": img
             },
-            success: function(e) {
+            success: function (e) {
                 $('#scroll-giohang').html(showCart(e));
 
                 if (e) {
-                    $(".add-cart").click(function(event) {
-                        $("#add-cart-effect").fadeIn('slow').fadeOut('slow');
-                    });
+                    $("#add-cart-effect").fadeIn('slow').fadeOut('slow');
                 }
             }
         });
-
-
 
 
     });

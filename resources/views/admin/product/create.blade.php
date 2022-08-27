@@ -1,6 +1,7 @@
 @extends('admin.index')
 @section('content')
-    <form action="" method="post">
+    <form action="{{ route(ADMIN_PRODUCT) }}" method="post" enctype="multipart/form-data">
+        @csrf
         <div class="row mb-3">
             <div class="col-lg-6">
                 <div>
@@ -16,5 +17,28 @@
             </div>
         </div>
         @include('admin.product.form')
+        <input type="submit" value="submit">
     </form>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $(".group-img input").on('change', function () {
+                let $file = $(this);
+
+                if ($file.prop('files') && $file.prop('files')[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        console.log(e.target.result);
+                        $file.closest('.group-img').find('.imgPreview')
+                            .attr('src', e.target.result);
+                    };
+
+                    reader.readAsDataURL($file.prop('files')[0]);
+                }
+            })
+        });
+    </script>
+
 @endsection

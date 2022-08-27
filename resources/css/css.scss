@@ -4,12 +4,23 @@
 body{
     font-family: 'Poppins' ,sans-serif;
 }
-a:hover{
-    text-decoration: none;
-    color: white;
+a {
+    .border-product {
+        color: black;
+    }
+    .border-product:hover {
+        text-decoration: none;
+        color: black;
+    }
 }
-a{
-    color: white;
+button {
+    a {
+        color: white;
+    }
+    a:hover {
+        text-decoration: none;
+        color: white;
+    }
 }
 .bg-pink{
     background-color: #f29b88;
@@ -426,7 +437,32 @@ input:checked + .slider:before {
     color: white;
 }
 
+.product-option{
+    .item {
+        display: block;
+        width: 120px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        position: relative;
+    }
 
+    .item span {
+        display: flex;
+        justify-content: left;
+        justify-items: left;
+        margin-bottom: -8px;
+        font-weight: 600;
+    }
+
+    div{
+        cursor:pointer;
+        border:2px solid transparent;
+    }
+}
 
 
 

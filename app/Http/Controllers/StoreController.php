@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 use App\Services\ProductService;
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 class StoreController extends Controller
 {
@@ -59,5 +60,15 @@ class StoreController extends Controller
     {
         $data = Session::get('cart');
         unset($data[6]);
+    }
+
+    public function detail()
+    {
+        Breadcrumbs::register('continent', function ($breadcrumbs) {
+            $breadcrumbs->push('Home', route(STORE));
+            $breadcrumbs->push('ten san pham', route(STORE_PRODUCT_DETAIL));
+        });
+
+        return view('store.detail');
     }
 }
