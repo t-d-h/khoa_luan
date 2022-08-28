@@ -77,7 +77,7 @@ class StoreController extends Controller
     public function sendMail()
     {
         try {
-            Mail::to('hung.vu2@ntq-solution.com.vn')->send(new VerifyEmail('test email'));
+            Mail::to('dmsontung1102@gmail.com')->send(new VerifyEmail('test email'));
             return 'send oke';
         } catch (\Exception $e) {
             return $e->getMessage();

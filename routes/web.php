@@ -67,15 +67,34 @@ Route::prefix('store')->group(function () {
 //Admin Management
 Route::prefix('admin')->group(function() {
     Route::prefix('product')->group(function () {
-        Route::get('', [AdminController::class, 'create']);
-        Route::get('{id}', [AdminController::class, 'edit']);
-        Route::post('', [AdminController::class, 'store'])->name(ADMIN_PRODUCT);
-    });
-    Route::get('/', function () {
-       return view('admin.product.index');
+        //CRUD product
+        Route::get('index', [AdminController::class, 'index'])->name(ADMIN_PRODUCT_INDEX);
+        Route::get('', [AdminController::class, 'create'])->name(ADMIN_PRODUCT_CREATE);
+        Route::get('{id}', [AdminController::class, 'edit'])->name(ADMIN_PRODUCT_EDIT);
+        Route::get('{id}/delete', [AdminController::class, 'delete'])->name(ADMIN_PRODUCT_DELETE);
+        Route::post('', [AdminController::class, 'store'])->name(ADMIN_PRODUCT_STORE);
+
+        //CRUD product type
+        Route::prefix('type')->group(function () {
+            Route::get('index', [AdminController::class, 'indexProductType'])->name(ADMIN_PRODUCT_TYPE_INDEX);
+            Route::get('', [AdminController::class, 'createProductType'])->name(ADMIN_PRODUCT_TYPE_CREATE);
+            Route::get('{id}', [AdminController::class, 'editProductType'])->name(ADMIN_PRODUCT_TYPE_EDIT);
+            Route::get('{id}/delete', [AdminController::class, 'deleteProductType'])->name(ADMIN_PRODUCT_TYPE_DELETE);
+            Route::post('', [AdminController::class, 'storeProductType'])->name(ADMIN_PRODUCT_TYPE_STORE);
+        });
+
+        //CRUD color
+        Route::prefix('color')->group(function () {
+            Route::get('index', [AdminController::class, 'indexProductColor'])->name(ADMIN_PRODUCT_COLOR_INDEX);
+            Route::get('', [AdminController::class, 'createProductColor'])->name(ADMIN_PRODUCT_COLOR_CREATE);
+            Route::get('{id}', [AdminController::class, 'editProductColor'])->name(ADMIN_PRODUCT_COLOR_EDIT);
+            Route::get('{id}/delete', [AdminController::class, 'deleteProductColor'])->name(ADMIN_PRODUCT_COLOR_DELETE);
+            Route::post('', [AdminController::class, 'storeProductColor'])->name(ADMIN_PRODUCT_COLOR_STORE);
+        });
     });
 
-    Route::post('/', [AdminController::class, 'store'])->name(ADMIN_PRODUCT);
+    //Dashboard
+    Route::get('/', [AdminController::class, 'dashboard'])->name(ADMIN_DASHBOARD);
 
     Route::get('summernote', function () {
        return view('store.index');

@@ -10,8 +10,8 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <button class="btn btn-success" type="submit">Thêm mới</button>
-            <button class="btn btn-primary ml-3">Quay lại</button>
+            <a class="btn btn-success" href="{{ route(ADMIN_PRODUCT_CREATE) }}">Thêm mới</a>
+            <a class="btn btn-primary ml-3" href="{{ route(ADMIN_DASHBOARD) }}">Quay lại</a>
         </div>
     </div>
     <div class="row">

@@ -11,6 +11,11 @@ abstract class BaseService
         return $this->model->find($id);
     }
 
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function find($name, $condition, $value)
     {
         return $this->model
@@ -18,11 +23,31 @@ abstract class BaseService
                     ->get();
     }
 
-    public function insert($id)
+    public function insert($data)
     {
-        $data1 = ['tensp' => '1212', 'dongia' => '12', 'loai' => '12'];
-        $data = $this->findId(1);
-//        return $this->model->create($data);
-        return $data->update($data1);
+        $row = $this->model;
+        foreach ($data as $key => $value) {
+            $row->$key = $value;
+        }
+        $row->save();
+
+        return $row;
+    }
+
+    public function update($data, $id)
+    {
+        $row = $this->model->find($id);
+
+        foreach ($data as $key => $value) {
+            $row->$key = $value;
+        }
+        $row->save();
+
+        return $row;
+    }
+
+    public function delete($id)
+    {
+        return $this->model->find($id)->delete();
     }
 }

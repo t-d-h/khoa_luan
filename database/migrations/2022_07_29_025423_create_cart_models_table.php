@@ -19,6 +19,7 @@ class CreateCartModelsTable extends Migration
             $table->string('amount');
             $table->string('customer_id');
             $table->string('total');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class CreateProductColorModelsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('color_code');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

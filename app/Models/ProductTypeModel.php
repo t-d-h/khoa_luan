@@ -11,7 +11,10 @@ class ProductTypeModel extends Model
 
     protected $table = 'product_type_models';
 
-    public $fillable = ['name'];
+    public $fillable = [
+        'name',
+        'status'
+    ];
 
     public function product()
     {
