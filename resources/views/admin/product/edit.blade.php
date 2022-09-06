@@ -16,5 +16,6 @@
             </div>
         </div>
         @include('admin.product.form')
+        {!! $data->description !!}
     </form>
 @endsection

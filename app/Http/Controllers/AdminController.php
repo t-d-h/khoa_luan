@@ -36,12 +36,62 @@ class AdminController extends Controller
 
     public function edit()
     {
-        return view('admin.product.edit');
+        $data = $this->productService->findId(1);
+
+        return view('admin.product.edit', ['data' => $data]);
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $dataRequest = $request->all();
+
+        //Combination to 1 array
+        $arr = array();
+        for ($i = 0; $i < count($dataRequest['memory']); $i++) {
+            $file = $request->file('image')[$i];
+            $h = [
+                'id' => $i,
+                'memory' => $dataRequest['memory'][$i],
+                'color' => $dataRequest['color'][$i],
+                'amount' => $dataRequest['amount'][$i],
+                'price' => $dataRequest['price'][$i],
+                'image' => $file->getClientOriginalName()
+            ];
+            array_push($arr, $h);
+        }
+
+        //Unique collection
+        $collect = collect($arr);
+        for ($i = 0; $i < count($dataRequest['memory']); $i++) {
+            $query = $collect->where('memory', $dataRequest['memory'][$i])
+                             ->where('color', $dataRequest['color'][$i]);
+
+            if ($query->count() >= 2) {
+                $id = $query->first()['id'];
+                $collect->forget($id);
+            }
+        }
+        dd($collect);
+
+        try {
+            //Insert product
+                        $dataProduct = [
+                            'name'          => $dataRequest['name'],
+                            'type'          => $dataRequest['type'],
+                            'description'   => $dataRequest['description'],
+                            'status'        => isset($dataRequest['status']) ? 1 : 0
+                        ];
+                        $this->productService->insert($dataProduct);
+
+                        //Insert product component
+
+                        $dataProductComponent = [
+
+                        ];
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
         $file = $request->file('img');
         return $file->move('images', $file->getClientOriginalName());
     }
