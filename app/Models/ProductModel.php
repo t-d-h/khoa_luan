@@ -14,10 +14,8 @@ class ProductModel extends Model
     protected $fillable = [
         'name',
         'type',
-        'amount',
-        'price',
-        'color',
         'description',
+        'status'
     ];
 
     public function type()

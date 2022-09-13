@@ -22,24 +22,37 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $(document).on('change', '.group-img input', function () {
-                let $file = $(this);
-
-                if ($file.prop('files') && $file.prop('files')[0]) {
-                    const reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        console.log($file);
-                        $file.closest('.group-img').find('.imgPreview').attr('src', e.target.result);
-                    };
-
-                    reader.readAsDataURL($file.prop('files')[0]);
-                }
-            })
+            $('#input-multiple').select2({
+                width: '100%',
+                placeholder: "Chọn tùy chỉnh đặc biệt"
+            });
 
             $('#addGroupImg').click(function () {
-                $('#listItem').children('.row').first().clone().appendTo('#listItem');
+                var row = $('#listItem').children('.row').first().clone();
+                var button = '<div class="col-1">'+
+                             '<div class="btn btn-danger remove-component">Xóa</div>'+
+                             '</div>';
+                row.append(button).appendTo('#listItem');
             })
+        });
+
+        $(document).on('change', '.group-img input', function () {
+            let $file = $(this);
+
+            if ($file.prop('files') && $file.prop('files')[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    console.log($file);
+                    $file.closest('.group-img').find('.imgPreview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL($file.prop('files')[0]);
+            }
+        })
+
+        $(document).on('click', '.remove-component', function () {
+            $(this).closest('.row').remove();
         });
     </script>
 @endsection
