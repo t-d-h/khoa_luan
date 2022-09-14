@@ -24,6 +24,7 @@ define('ADMIN_PRODUCT_INDEX', 'admin.product.index');
 define('ADMIN_PRODUCT_CREATE', 'admin.product.create');
 define('ADMIN_PRODUCT_EDIT', 'admin.product.edit');
 define('ADMIN_PRODUCT_DELETE', 'admin.product.delete');
+define('GET_PRODUCT_SPECIAL', 'get.product.special');
 
 //Admmin product type CRUD
 define('ADMIN_PRODUCT_TYPE_STORE', 'admin.product.type.store');
@@ -45,3 +46,9 @@ define('ADMIN_PRODUCT_SPECIAL_INDEX', 'admin.product.special.index');
 define('ADMIN_PRODUCT_SPECIAL_CREATE', 'admin.product.special.create');
 define('ADMIN_PRODUCT_SPECIAL_EDIT', 'admin.product.special.edit');
 define('ADMIN_PRODUCT_SPECIAL_DELETE', 'admin.product.special.delete');
+
+define('PRODUCT_MEMORY', [
+    '32'    => '32GB',
+    '64'    => '64GB',
+    '128'   => '128GB'
+]);

@@ -46,15 +46,21 @@ class AdminController extends Controller
         $assign['color'] = $this->productColorService->getAllByStatus();
         $assign['type'] = $this->productTypeService->getAllByStatus();
         $assign['special'] = $this->productSpecialService->getAllByStatus();
+        $assign['memory'] = PRODUCT_MEMORY;
 
         return view('admin.product.create', $assign);
     }
 
-    public function edit()
+    public function edit($id)
     {
-        $data = $this->productService->findId(1);
+        $assign['color'] = $this->productColorService->getAllByStatus();
+        $assign['type'] = $this->productTypeService->getAllByStatus();
+        $assign['special'] = $this->productSpecialService->getAllByStatus();
+        $assign['memory'] = PRODUCT_MEMORY;
+        $assign['product'] = $this->productService->findId(1);
+        $assign['id'] = $id;
 
-        return view('admin.product.edit', ['data' => $data]);
+        return view('admin.product.edit', $assign);
     }
 
     public function store(Request $request)
@@ -97,6 +103,7 @@ class AdminController extends Controller
                 'status' => isset($dataRequest['status']) ? 1 : 0
             ];
             $product = $this->productService->insert($dataProduct);
+            $product->special()->attach($dataRequest['special']);
 
             //Insert product component
             $dataProductComponent = array();
@@ -301,5 +308,14 @@ class AdminController extends Controller
     {
         $this->productSpecialService->delete($id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
+    }
+
+    public function selectSpecial(Request $request)
+    {
+        $productComponent = $this->productComponentService->findId($request->input('id'));
+        $product = $productComponent->product;
+        $productSpecial = $product->special->pluck('id')->toArray();
+
+        return response()->json($productSpecial);
     }
 }

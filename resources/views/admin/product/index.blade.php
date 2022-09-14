@@ -24,8 +24,9 @@
                     <tr>
                         <th>#</th>
                         <th>Tên sản phẩm</th>
-                        <th>Loại sản phẩm</th>
                         <th>Sản phẩm đặc biệt</th>
+                        <th>Màu sắc</th>
+                        <th>Dung lượng</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
                         <th>Trạng thái</th>
@@ -38,8 +39,22 @@
                                 @if($key == 0)
                                     <td {{ 'rowspan=' . count($product->component) }}>{{ $i }}</td>
                                     <td {{ 'rowspan=' . count($product->component) }}>{{ $product->name }}</td>
+                                    <td {{ 'rowspan=' . count($product->component) }}>
+                                        @foreach($product->special as $special)
+                                            <div class="btn btn-info">{{ $special->name }}</div>
+                                        @endforeach
+                                    </td>
                                 @endif
-                                <td></td>
+                                    <td>{{ $row->color->name }}</td>
+                                    <td>{{ $row->memory }}</td>
+                                    <td>{{ $row->amount }}</td>
+                                    <td>{{ $row->price }}</td>
+                                    <td>
+                                        <a href="{{ route(ADMIN_PRODUCT_EDIT, $row->id) }}" class="btn btn-primary">Thay đổi</a>
+                                        <a href="{{ route(ADMIN_PRODUCT_DELETE, $row->id) }}"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xoá không?');"
+                                           class="btn btn-danger">Xoá</a>
+                                    </td>
                             </tr>
                         @endforeach
                     @endforeach

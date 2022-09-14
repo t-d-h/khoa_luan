@@ -15,7 +15,7 @@
                     <h5 class="card-title mb-0">Sản phẩm đặc biệt</h5>
                 </div>
                 <div class="card-body">
-                    <select id="input-multiple" name="special" multiple="multiple">
+                    <select id="input-multiple" name="special[]" multiple="multiple">
                         @foreach($special as $row)
                             <option value="{{ $row->id }}">{{ $row->name }}</option>
                         @endforeach
@@ -57,11 +57,14 @@
                     <h5 class="card-title mb-0">Mô tả sản phẩm</h5>
                 </div>
                 <div class="card-body">
-                    <textarea class="form-control" id="summernote" name="description"></textarea>
+                    <textarea class="form-control" id="summernote" name="description">
+                        {!! isset($id) ? $product->description : null !!}
+                    </textarea>
                 </div>
             </div>
         </div>
     </div>
+    @if(!isset($id))
     <div class="row">
         <div class="col-12 mb-3" id="listItem">
             <div class="row mb-3">
@@ -69,9 +72,9 @@
                     <label for="memory">Chọn dung lượng</label>
                     <select name="memory[]">
                         <option selected value="">Chọn bộ nhớ</option>
-                        <option>32GB</option>
-                        <option>64GB</option>
-                        <option>256GB</option>
+                        @foreach($memory as $key => $row)
+                            <option value="{{ $key }}">{{ $row }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-2">
@@ -104,6 +107,8 @@
         <div class="col-12">
             <div class="btn btn-primary" id="addGroupImg" style="width: 100px">Thêm</div>
         </div>
-
     </div>
+    @else
+
+    @endif
 </div>

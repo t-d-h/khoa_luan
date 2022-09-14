@@ -27,4 +27,9 @@ class ProductModel extends Model
     {
         return $this->hasMany(ProductComponentModel::class, 'product_id', 'id');
     }
+
+    public function special()
+    {
+        return $this->belongsToMany(SpecialModel::class, 'special_product_models', 'product_id', 'special_id');
+    }
 }

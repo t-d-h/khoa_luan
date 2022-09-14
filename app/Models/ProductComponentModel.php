@@ -22,7 +22,7 @@ class ProductComponentModel extends Model
 
     public function product()
     {
-        return $this->belongsTo(ProductModel::class, 'id', 'product_id');
+        return $this->belongsTo(ProductModel::class, 'product_id', 'id');
     }
 
     public function color()

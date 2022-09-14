@@ -67,6 +67,8 @@ Route::prefix('store')->group(function () {
 //Admin Management
 Route::prefix('admin')->group(function() {
     Route::prefix('product')->group(function () {
+        Route::get('select-special', [AdminController::class, 'selectSpecial'])->name(GET_PRODUCT_SPECIAL);
+
         //CRUD product
         Route::get('index', [AdminController::class, 'index'])->name(ADMIN_PRODUCT_INDEX);
         Route::get('', [AdminController::class, 'create'])->name(ADMIN_PRODUCT_CREATE);
