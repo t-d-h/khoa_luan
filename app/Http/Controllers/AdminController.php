@@ -3,35 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Services\ProductColorService;
+use App\Services\ProductComponentService;
+use App\Services\ProductSpecialService;
 use App\Services\ProductTypeService;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
     protected $productService;
     protected $productTypeService;
     protected $productColorService;
+    protected $productSpecialService;
+    protected $productComponentService;
 
     public function __construct(
         ProductService $productService,
         ProductTypeService $productTypeService,
-        ProductColorService $productColorService
+        ProductColorService $productColorService,
+        ProductSpecialService $productSpecialService,
+        ProductComponentService $productComponentService
     )
     {
         $this->productService = $productService;
         $this->productTypeService = $productTypeService;
         $this->productColorService = $productColorService;
+        $this->productSpecialService = $productSpecialService;
+        $this->productComponentService = $productComponentService;
     }
 
     public function index()
     {
-        return view('admin.product.index');
+        $products = $this->productService->getAllByStatus()->load('component.color');
+
+        return view('admin.product.index', ['products' => $products]);
     }
 
     public function create()
     {
-        return view('admin.product.create');
+        $assign['color'] = $this->productColorService->getAllByStatus();
+        $assign['type'] = $this->productTypeService->getAllByStatus();
+        $assign['special'] = $this->productSpecialService->getAllByStatus();
+
+        return view('admin.product.create', $assign);
     }
 
     public function edit()
@@ -48,14 +64,14 @@ class AdminController extends Controller
         //Combination to 1 array
         $arr = array();
         for ($i = 0; $i < count($dataRequest['memory']); $i++) {
-            $file = $request->file('image')[$i];
+            $file = $request->file('image')[$i] ?? null;
             $h = [
                 'id' => $i,
                 'memory' => $dataRequest['memory'][$i],
                 'color' => $dataRequest['color'][$i],
                 'amount' => $dataRequest['amount'][$i],
                 'price' => $dataRequest['price'][$i],
-                'image' => $file->getClientOriginalName()
+                'image' => $file ? $file->getClientOriginalName() : null
             ];
             array_push($arr, $h);
         }
@@ -71,29 +87,39 @@ class AdminController extends Controller
                 $collect->forget($id);
             }
         }
-        dd($collect);
 
         try {
             //Insert product
-                        $dataProduct = [
-                            'name'          => $dataRequest['name'],
-                            'type'          => $dataRequest['type'],
-                            'description'   => $dataRequest['description'],
-                            'status'        => isset($dataRequest['status']) ? 1 : 0
-                        ];
-                        $this->productService->insert($dataProduct);
+            $dataProduct = [
+                'name' => $dataRequest['name'],
+                'type' => $dataRequest['type'],
+                'description' => $dataRequest['description'],
+                'status' => isset($dataRequest['status']) ? 1 : 0
+            ];
+            $product = $this->productService->insert($dataProduct);
 
-                        //Insert product component
+            //Insert product component
+            $dataProductComponent = array();
 
-                        $dataProductComponent = [
+            foreach ($collect as $data) {
+                $row = [
+                    'product_id' => $product->id,
+                    'memory' => $data['memory'],
+                    'color_id' => $data['color'],
+                    'amount' => $data['amount'],
+                    'price' => $data['price'],
+                    'image' => $data['image'],
+                    'created_at' => Carbon::now()
+                ];
 
-                        ];
+                array_push($dataProductComponent, $row);
+            }
+            $this->productComponentService->insertMulti($dataProductComponent);
+
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Thêm mới thành công']);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Thêm mới thất bại']);
         }
-
-        $file = $request->file('img');
-        return $file->move('images', $file->getClientOriginalName());
     }
 
     public function delete($id)
@@ -122,6 +148,18 @@ class AdminController extends Controller
 
     public function storeProductType(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'unique:product_type_models,name,' . $request->input('id')
+        ]);
+
+        if (!$validator->passes() && !$request->has('id')) {
+            return response()->json(['status' => 0]);
+        }
+
+        if (!$validator->passes() && $request->has('id')) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Tên này đã tồn tại']);
+        }
+
         $dataRequest = $request->all();
 
         $data = [
@@ -131,7 +169,7 @@ class AdminController extends Controller
 
         if (isset($dataRequest['id'])) {
             $this->productTypeService->update($data, $dataRequest['id']);
-            return redirect()->back()->with(['message' => 'Thay đổi thành công']);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
         }
 
         $row = $this->productTypeService->insert($data);
@@ -146,7 +184,7 @@ class AdminController extends Controller
     public function deleteProductType($id)
     {
         $this->productTypeService->delete($id);
-        return redirect()->back()->with(['message' => 'Xoá thành công']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }
 
     public function indexProductColor()
@@ -170,6 +208,18 @@ class AdminController extends Controller
 
     public function storeProductColor(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'color' => 'unique:product_color_models,name,' . $request->input('id')
+        ]);
+
+        if (!$validator->passes() && !$request->has('id')) {
+            return response()->json(['status' => 0]);
+        }
+
+        if (!$validator->passes() && $request->has('id')) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Màu này đã tồn tại']);
+        }
+
         $dataRequest = $request->all();
 
         $data = [
@@ -180,7 +230,7 @@ class AdminController extends Controller
 
         if (isset($dataRequest['id'])) {
             $this->productColorService->update($data, $dataRequest['id']);
-            return redirect()->back()->with(['message' => 'Thay đổi thành công']);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
         }
 
         $row = $this->productColorService->insert($data);
@@ -195,6 +245,61 @@ class AdminController extends Controller
     public function deleteProductColor($id)
     {
         $this->productColorService->delete($id);
-        return redirect()->back()->with(['message' => 'Xoá thành công']);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
+    }
+
+    public function indexProductSpecial()
+    {
+        $data = $this->productSpecialService->all();
+
+        return view('admin.product_special.index', ['data' => $data]);
+    }
+
+    public function storeProductSpecial(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'unique:special_models,name,' . $request->input('id')
+        ]);
+
+        if (!$validator->passes() && !$request->has('id')) {
+            return response()->json(['status' => 0]);
+        }
+
+        if (!$validator->passes() && $request->has('id')) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Tên này đã tồn tại']);
+        }
+
+        $dataRequest = $request->all();
+
+        $data = [
+            'name'       => $dataRequest['name'],
+            'status'     => isset($dataRequest['status']) ? $dataRequest['status'] : 1
+        ];
+
+        if (isset($dataRequest['id'])) {
+            $this->productSpecialService->update($data, $dataRequest['id']);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
+        }
+
+        $row = $this->productSpecialService->insert($data);
+
+        if ($row) {
+            return response()->json(['status' => 1 ,'data' => $row]);
+        }
+
+        return response()->json(['status' => 0]);
+    }
+
+    public function editProductSpecial($id)
+    {
+        $row = $this->productSpecialService->findId($id);
+
+        return view('admin.product_special.edit', ['data' => $row, 'id' => $id]);
+    }
+
+    public function deleteProductSpecial($id)
+    {
+        $this->productSpecialService->delete($id);
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }
 }

@@ -16,8 +16,9 @@
                 </div>
                 <div class="card-body">
                     <select id="input-multiple" name="special" multiple="multiple">
-                        <option value="AL">Alabama</option>
-                        <option value="WY">Wyoming</option>
+                        @foreach($special as $row)
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -45,9 +46,9 @@
                 <div class="card-body">
                     <select class="form-select mb-3" name="type" required>
                         <option selected value="">Chọn loại sản phẩm</option>
-                        <option>One</option>
-                        <option>Two</option>
-                        <option>Three</option>
+                        @foreach($type as $row)
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -78,8 +79,9 @@
                     <br>
                     <select name="color[]">
                         <option selected value="">Chọn màu</option>
-                        <option value="1">xanh</option>
-                        <option value="2">đỏ</option>
+                        @foreach($color as $row)
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-2">

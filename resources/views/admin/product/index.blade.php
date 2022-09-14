@@ -1,3 +1,6 @@
+@php(
+    $i = 1
+)
 @extends('admin.index')
 @section('content')
     <div class="row mb-3">
@@ -28,6 +31,19 @@
                         <th>Trạng thái</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach($products as $product)
+                        @foreach($product->component as $key => $row)
+                            <tr>
+                                @if($key == 0)
+                                    <td {{ 'rowspan=' . count($product->component) }}>{{ $i }}</td>
+                                    <td {{ 'rowspan=' . count($product->component) }}>{{ $product->name }}</td>
+                                @endif
+                                <td></td>
+                            </tr>
+                        @endforeach
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>

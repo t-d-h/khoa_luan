@@ -1,13 +1,13 @@
 @extends('admin.index')
 @section('content')
-    <form action="{{ route(ADMIN_PRODUCT_TYPE_STORE) }}" method="post" id="add-type-form">
+    <form action="{{ route(ADMIN_PRODUCT_SPECIAL_STORE) }}" method="post" id="add-type-form">
     @csrf
         <div class="row mb-3">
             <div class="col-lg-6">
                 <div>
-                    <h1 class="h3 d-inline align-middle">Loại sản phẩm</h1>
+                    <h1 class="h3 d-inline align-middle">Sản phẩm đặc biệt</h1>
                     <a class="badge bg-dark text-white ms-2">
-                        Danh sách loại sản phẩm
+                        Danh sách sản phẩm đặc biệt
                     </a>
                 </div>
             </div>
@@ -42,8 +42,8 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route(ADMIN_PRODUCT_TYPE_EDIT, $value->id) }}" class="btn btn-primary">Thay đổi</a>
-                                        <a href="{{ route(ADMIN_PRODUCT_TYPE_DELETE, $value->id) }}"
+                                        <a href="{{ route(ADMIN_PRODUCT_SPECIAL_EDIT, $value->id) }}" class="btn btn-primary">Thay đổi</a>
+                                        <a href="{{ route(ADMIN_PRODUCT_SPECIAL_DELETE, $value->id) }}"
                                            onclick="return confirm('Bạn có chắc chắn muốn xoá không?');"
                                            class="btn btn-danger">Xoá</a>
                                     </td>
@@ -70,7 +70,7 @@
                     type: "post",
                     method:"POST",
                     dataType: 'json',
-                    url: "{{ route(ADMIN_PRODUCT_TYPE_STORE) }}",
+                    url: "{{ route(ADMIN_PRODUCT_SPECIAL_STORE) }}",
                     data: new FormData(form),
                     processData: false,
                     contentType:false,
@@ -80,10 +80,10 @@
                             let html = '<tr>'+
                                 '<td>'+ stt +'</td>'+
                                 '<td>'+ e.data.name + '</td>'+
-                                '<td><p class="text-bg-success">Hoạt động</p></td>'+
+                                '<td><p class="text-bg-success">Hiển thị</p></td>'+
                                 '<td>'+
                                 '<a href="http://127.0.0.1:8000/admin/product/type/'+e.data.id+'" class="btn btn-primary">Thay đổi</a>'+
-                                '<a href="http://127.0.0.1:8000/admin/product/type/'+e.data.id+'/delete" class="btn btn-danger">Xoá</a>'+
+                                '<a href="http://127.0.0.1:8000/admin/product/type/'+e.data.id+'/delete" class="btn btn-danger" >Xoá</a>'+
                                 '</td>'+
                                 '</tr>'
 

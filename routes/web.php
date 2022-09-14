@@ -91,6 +91,15 @@ Route::prefix('admin')->group(function() {
             Route::get('{id}/delete', [AdminController::class, 'deleteProductColor'])->name(ADMIN_PRODUCT_COLOR_DELETE);
             Route::post('', [AdminController::class, 'storeProductColor'])->name(ADMIN_PRODUCT_COLOR_STORE);
         });
+
+        //CRUD product special
+        Route::prefix('special')->group(function () {
+            Route::get('index', [AdminController::class, 'indexProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_INDEX);
+            Route::get('', [AdminController::class, 'createProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_CREATE);
+            Route::get('{id}', [AdminController::class, 'editProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_EDIT);
+            Route::get('{id}/delete', [AdminController::class, 'deleteProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_DELETE);
+            Route::post('', [AdminController::class, 'storeProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_STORE);
+        });
     });
 
     //Dashboard

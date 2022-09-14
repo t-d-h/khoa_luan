@@ -38,3 +38,10 @@ define('ADMIN_PRODUCT_COLOR_INDEX', 'admin.product.color.index');
 define('ADMIN_PRODUCT_COLOR_CREATE', 'admin.product.color.create');
 define('ADMIN_PRODUCT_COLOR_EDIT', 'admin.product.color.edit');
 define('ADMIN_PRODUCT_COLOR_DELETE', 'admin.product.color.delete');
+
+//Admmin product special CRUD
+define('ADMIN_PRODUCT_SPECIAL_STORE', 'admin.product.special.store');
+define('ADMIN_PRODUCT_SPECIAL_INDEX', 'admin.product.special.index');
+define('ADMIN_PRODUCT_SPECIAL_CREATE', 'admin.product.special.create');
+define('ADMIN_PRODUCT_SPECIAL_EDIT', 'admin.product.special.edit');
+define('ADMIN_PRODUCT_SPECIAL_DELETE', 'admin.product.special.delete');

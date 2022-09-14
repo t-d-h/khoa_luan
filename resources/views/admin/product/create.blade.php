@@ -1,5 +1,10 @@
 @extends('admin.index')
 @section('content')
+    @if(session()->has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <form action="{{ route(ADMIN_PRODUCT_STORE) }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row mb-3">

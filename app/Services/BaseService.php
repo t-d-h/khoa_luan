@@ -16,6 +16,13 @@ abstract class BaseService
         return $this->model->all();
     }
 
+    public function getAllByStatus()
+    {
+        return $this->model
+                    ->where('status', 1)
+                    ->get();
+    }
+
     public function find($name, $condition, $value)
     {
         return $this->model
@@ -32,6 +39,11 @@ abstract class BaseService
         $row->save();
 
         return $row;
+    }
+
+    public function insertMulti($data)
+    {
+        return $this->model->insert($data);
     }
 
     public function update($data, $id)

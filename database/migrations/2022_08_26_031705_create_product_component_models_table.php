@@ -20,7 +20,7 @@ class CreateProductComponentModelsTable extends Migration
             $table->string('color_id');
             $table->string('amount');
             $table->string('price');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

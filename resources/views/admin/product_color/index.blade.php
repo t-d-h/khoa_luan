@@ -1,7 +1,7 @@
 @extends('admin.index')
 @section('content')
     @if(session()->has('message'))
-        <div class="alert alert-success alert-dismissible fade" role="alert">
+        <div class="alert alert-success alert-dismissible" role="alert">
             {{ session()->get('message') }}
         </div>
     @endif
@@ -96,6 +96,7 @@
                                 '</tr>'
 
                             $('tbody').append(html);
+                            location.reload();
                         } else {
                             alert('Thêm thất bại');
                         }
