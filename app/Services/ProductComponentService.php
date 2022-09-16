@@ -10,4 +10,11 @@ class ProductComponentService extends BaseService
     {
         $this->model = $productComponentModel;
     }
+
+    public function deleteByCondition($condition)
+    {
+        return $this->model
+                    ->where('product_id', $condition)
+                    ->delete();
+    }
 }

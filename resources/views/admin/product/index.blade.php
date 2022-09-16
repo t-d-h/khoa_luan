@@ -37,7 +37,7 @@
                         @foreach($product->component as $key => $row)
                             <tr>
                                 @if($key == 0)
-                                    <td {{ 'rowspan=' . count($product->component) }}>{{ $i }}</td>
+                                    <td {{ 'rowspan=' . count($product->component) }}>{{ $i++ }}</td>
                                     <td {{ 'rowspan=' . count($product->component) }}>{{ $product->name }}</td>
                                     <td {{ 'rowspan=' . count($product->component) }}>
                                         @foreach($product->special as $special)

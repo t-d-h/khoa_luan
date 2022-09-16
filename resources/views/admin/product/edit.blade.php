@@ -1,9 +1,19 @@
 @extends('admin.index')
 @section('content')
-    @if(isset($id))
-        <input type="hidden" value="{{ $id }}" name="id">
+    @if(session()->has('message') && session()->get('status') == 'success')
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
+    @elseif(session()->has('message') && session()->get('status') == 'fail')
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
     @endif
-    <form action="" method="post">
+    <form action="{{ route(ADMIN_PRODUCT_STORE) }}" method="post">
+        @csrf
+        @if(isset($id))
+            <input type="hidden" value="{{ $id }}" name="id">
+        @endif
         <div class="row mb-3">
             <div class="col-lg-6">
                 <div>
@@ -43,6 +53,21 @@
                     $('#input-multiple').trigger('change');
                 }
             });
+        });
+
+        $(document).on('change', '.group-img input', function () {
+            let $file = $(this);
+
+            if ($file.prop('files') && $file.prop('files')[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    console.log($file);
+                    $file.closest('.group-img').find('.imgPreview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL($file.prop('files')[0]);
+            }
         });
     </script>
 @endsection

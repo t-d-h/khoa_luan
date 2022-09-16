@@ -1,7 +1,11 @@
 @extends('admin.index')
 @section('content')
-    @if(session()->has('message'))
+    @if(session()->has('message') && session()->get('status') == 'success')
         <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
+    @elseif(session()->has('message') && session()->get('status') == 'fail')
+        <div class="alert alert-danger alert-dismissible" role="alert">
             {{ session()->get('message') }}
         </div>
     @endif
@@ -34,6 +38,12 @@
 
             $('#addGroupImg').click(function () {
                 var row = $('#listItem').children('.row').first().clone();
+
+                //Reset value
+                row.find('img').attr('src', '#');
+                row.find('select').val(null);
+                row.find('input').val(null);
+
                 var button = '<div class="col-1">'+
                              '<div class="btn btn-danger remove-component">Xóa</div>'+
                              '</div>';

@@ -57,7 +57,8 @@ class AdminController extends Controller
         $assign['type'] = $this->productTypeService->getAllByStatus();
         $assign['special'] = $this->productSpecialService->getAllByStatus();
         $assign['memory'] = PRODUCT_MEMORY;
-        $assign['product'] = $this->productService->findId(1);
+        $assign['productComponent'] = $this->productComponentService->findId($id);
+        $assign['product'] = $assign['productComponent']->product;
         $assign['id'] = $id;
 
         return view('admin.product.edit', $assign);
@@ -95,17 +96,27 @@ class AdminController extends Controller
         }
 
         try {
-            //Insert product
             $dataProduct = [
                 'name' => $dataRequest['name'],
                 'type' => $dataRequest['type'],
                 'description' => $dataRequest['description'],
                 'status' => isset($dataRequest['status']) ? 1 : 0
             ];
-            $product = $this->productService->insert($dataProduct);
-            $product->special()->attach($dataRequest['special']);
 
-            //Insert product component
+            if (!isset($dataRequest['id'])) {
+                //Insert product
+                $product = $this->productService->insert($dataProduct);
+            } else {
+                //Update product
+                $productId = $this->productComponentService->findId($dataRequest['id'])->product->id;
+                $product = $this->productService->update($dataProduct, $productId);
+            }
+
+            if (!empty($dataRequest['special'])) {
+                $product->special()->sync($dataRequest['special']);
+            }
+
+            //Insert Product Component
             $dataProductComponent = array();
 
             foreach ($collect as $data) {
@@ -121,7 +132,23 @@ class AdminController extends Controller
 
                 array_push($dataProductComponent, $row);
             }
-            $this->productComponentService->insertMulti($dataProductComponent);
+
+            if (isset($dataRequest['id'])) {
+                $dataProductComponent = [
+                    'memory' => $dataRequest['memory'][0],
+                    'color_id' => $dataRequest['color'][0],
+                    'amount' => $dataRequest['amount'][0],
+                    'price' => $dataRequest['price'][0],
+                    'image' => $dataRequest['image'][0],
+                ];
+                if (empty($dataRequest['image'][0])) {
+                    unset($dataProductComponent['image']);
+                }
+
+                $this->productComponentService->update($dataProductComponent, $dataRequest['id']);
+            } else {
+                $this->productComponentService->insertMulti($dataProductComponent);
+            }
 
             return redirect()->back()->with(['status' => 'success', 'message' => 'Thêm mới thành công']);
         } catch (\Exception $e) {

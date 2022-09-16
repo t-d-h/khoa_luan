@@ -18,7 +18,7 @@ class ProductModel extends Model
         'status'
     ];
 
-    public function type()
+    public function productType()
     {
         return $this->hasOne(ProductTypeModel::class, 'id', 'type');
     }
