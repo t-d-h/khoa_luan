@@ -9,6 +9,13 @@
             {{ session()->get('message') }}
         </div>
     @endif
+
+    @if($errors->has('name'))
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ $errors->getBag('default')->first('name') }}
+        </div>
+    @endif
+
     <form action="{{ route(ADMIN_PRODUCT_STORE) }}" method="post">
         @csrf
         @if(isset($id))

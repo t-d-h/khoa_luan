@@ -47,8 +47,14 @@ define('ADMIN_PRODUCT_SPECIAL_CREATE', 'admin.product.special.create');
 define('ADMIN_PRODUCT_SPECIAL_EDIT', 'admin.product.special.edit');
 define('ADMIN_PRODUCT_SPECIAL_DELETE', 'admin.product.special.delete');
 
+//Product Component
+define('ADMIN_PRODUCT_COMPONENT_CREATE', 'admin.product.component.create');
+define('ADMIN_PRODUCT_COMPONENT_STORE', 'admin.product.component.store');
+
 define('PRODUCT_MEMORY', [
     '32'    => '32GB',
     '64'    => '64GB',
     '128'   => '128GB'
 ]);
+
+define('PAGINATE_DEFAULT', 5);

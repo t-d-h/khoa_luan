@@ -3,6 +3,15 @@
 )
 @extends('admin.index')
 @section('content')
+    @if(session()->has('message') && session()->get('status') == 'success')
+        <div class="alert alert-success alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
+    @elseif(session()->has('message') && session()->get('status') == 'fail')
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <div class="row mb-3">
         <div class="col-lg-6">
             <div>
@@ -24,12 +33,13 @@
                     <tr>
                         <th>#</th>
                         <th>Tên sản phẩm</th>
-                        <th>Sản phẩm đặc biệt</th>
+                        <th style="width: 200px">Sản phẩm đặc biệt</th>
+                        <th>Trạng thái</th>
                         <th>Màu sắc</th>
                         <th>Dung lượng</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
-                        <th>Trạng thái</th>
+                        <th colspan="2">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,8 +51,15 @@
                                     <td {{ 'rowspan=' . count($product->component) }}>{{ $product->name }}</td>
                                     <td {{ 'rowspan=' . count($product->component) }}>
                                         @foreach($product->special as $special)
-                                            <div class="btn btn-info">{{ $special->name }}</div>
+                                            <div class="btn btn-info mt-1">{{ $special->name }}</div>
                                         @endforeach
+                                    </td>
+                                    <td {{ 'rowspan=' . count($product->component) }}>
+                                        @if($product->status == 1)
+                                            <p class="text-bg-success text-center">Hiện thị</p>
+                                        @else
+                                            <p class="text-bg-danger text-center">Ẩn</p>
+                                        @endif
                                     </td>
                                 @endif
                                     <td>{{ $row->color->name }}</td>
@@ -55,11 +72,25 @@
                                            onclick="return confirm('Bạn có chắc chắn muốn xoá không?');"
                                            class="btn btn-danger">Xoá</a>
                                     </td>
+                                @if($key == 0)
+                                    <td {{ 'rowspan=' . count($product->component) }}>
+                                        <a href="{{ route(ADMIN_PRODUCT_COMPONENT_CREATE, $product->id) }}" class="btn btn-success">
+                                            Thêm
+                                        </a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div style="float: right">
+                {!! $products->links('vendor.pagination.bootstrap-4') !!}
+            </div>
         </div>
     </div>
 @endsection

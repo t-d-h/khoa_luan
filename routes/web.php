@@ -5,6 +5,10 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\MomoController;
 use App\Http\Controllers\VNPayController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\ProductColorController;
+use App\Http\Controllers\ProductSpecialController;
+use App\Http\Controllers\ProductComponentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,31 +80,35 @@ Route::prefix('admin')->group(function() {
         Route::get('{id}/delete', [AdminController::class, 'delete'])->name(ADMIN_PRODUCT_DELETE);
         Route::post('', [AdminController::class, 'store'])->name(ADMIN_PRODUCT_STORE);
 
+        //Product Component
+        Route::get('/{id}/component', [ProductComponentController::class, 'create'])->name(ADMIN_PRODUCT_COMPONENT_CREATE);
+        Route::post('/{id}/component', [ProductComponentController::class, 'store'])->name(ADMIN_PRODUCT_COMPONENT_STORE);
+
         //CRUD product type
         Route::prefix('type')->group(function () {
-            Route::get('index', [AdminController::class, 'indexProductType'])->name(ADMIN_PRODUCT_TYPE_INDEX);
-            Route::get('', [AdminController::class, 'createProductType'])->name(ADMIN_PRODUCT_TYPE_CREATE);
-            Route::get('{id}', [AdminController::class, 'editProductType'])->name(ADMIN_PRODUCT_TYPE_EDIT);
-            Route::get('{id}/delete', [AdminController::class, 'deleteProductType'])->name(ADMIN_PRODUCT_TYPE_DELETE);
-            Route::post('', [AdminController::class, 'storeProductType'])->name(ADMIN_PRODUCT_TYPE_STORE);
+            Route::get('index', [ProductTypeController::class, 'index'])->name(ADMIN_PRODUCT_TYPE_INDEX);
+            Route::get('', [ProductTypeController::class, 'create'])->name(ADMIN_PRODUCT_TYPE_CREATE);
+            Route::get('{id}', [ProductTypeController::class, 'edit'])->name(ADMIN_PRODUCT_TYPE_EDIT);
+            Route::get('{id}/delete', [ProductTypeController::class, 'delete'])->name(ADMIN_PRODUCT_TYPE_DELETE);
+            Route::post('', [ProductTypeController::class, 'store'])->name(ADMIN_PRODUCT_TYPE_STORE);
         });
 
         //CRUD color
         Route::prefix('color')->group(function () {
-            Route::get('index', [AdminController::class, 'indexProductColor'])->name(ADMIN_PRODUCT_COLOR_INDEX);
-            Route::get('', [AdminController::class, 'createProductColor'])->name(ADMIN_PRODUCT_COLOR_CREATE);
-            Route::get('{id}', [AdminController::class, 'editProductColor'])->name(ADMIN_PRODUCT_COLOR_EDIT);
-            Route::get('{id}/delete', [AdminController::class, 'deleteProductColor'])->name(ADMIN_PRODUCT_COLOR_DELETE);
-            Route::post('', [AdminController::class, 'storeProductColor'])->name(ADMIN_PRODUCT_COLOR_STORE);
+            Route::get('index', [ProductColorController::class, 'index'])->name(ADMIN_PRODUCT_COLOR_INDEX);
+            Route::get('', [ProductColorController::class, 'create'])->name(ADMIN_PRODUCT_COLOR_CREATE);
+            Route::get('{id}', [ProductColorController::class, 'edit'])->name(ADMIN_PRODUCT_COLOR_EDIT);
+            Route::get('{id}/delete', [ProductColorController::class, 'delete'])->name(ADMIN_PRODUCT_COLOR_DELETE);
+            Route::post('', [ProductColorController::class, 'store'])->name(ADMIN_PRODUCT_COLOR_STORE);
         });
 
         //CRUD product special
         Route::prefix('special')->group(function () {
-            Route::get('index', [AdminController::class, 'indexProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_INDEX);
-            Route::get('', [AdminController::class, 'createProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_CREATE);
-            Route::get('{id}', [AdminController::class, 'editProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_EDIT);
-            Route::get('{id}/delete', [AdminController::class, 'deleteProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_DELETE);
-            Route::post('', [AdminController::class, 'storeProductSpecial'])->name(ADMIN_PRODUCT_SPECIAL_STORE);
+            Route::get('index', [ProductSpecialController::class, 'index'])->name(ADMIN_PRODUCT_SPECIAL_INDEX);
+            Route::get('', [ProductSpecialController::class, 'create'])->name(ADMIN_PRODUCT_SPECIAL_CREATE);
+            Route::get('{id}', [ProductSpecialController::class, 'edit'])->name(ADMIN_PRODUCT_SPECIAL_EDIT);
+            Route::get('{id}/delete', [ProductSpecialController::class, 'delete'])->name(ADMIN_PRODUCT_SPECIAL_DELETE);
+            Route::post('', [ProductSpecialController::class, 'store'])->name(ADMIN_PRODUCT_SPECIAL_STORE);
         });
     });
 

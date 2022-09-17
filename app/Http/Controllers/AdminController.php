@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
+use App\Models\ProductModel;
 use App\Services\ProductColorService;
 use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
@@ -9,6 +11,7 @@ use App\Services\ProductTypeService;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
@@ -36,7 +39,8 @@ class AdminController extends Controller
 
     public function index()
     {
-        $products = $this->productService->getAllByStatus()->load('component.color');
+//        $products = $this->productService->all()->load('component.color');
+        $products = ProductModel::with('component.color')->paginate(PAGINATE_DEFAULT);
 
         return view('admin.product.index', ['products' => $products]);
     }
@@ -64,10 +68,9 @@ class AdminController extends Controller
         return view('admin.product.edit', $assign);
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $dataRequest = $request->all();
-
         //Combination to 1 array
         $arr = array();
         for ($i = 0; $i < count($dataRequest['memory']); $i++) {
@@ -135,17 +138,29 @@ class AdminController extends Controller
 
             if (isset($dataRequest['id'])) {
                 $dataProductComponent = [
-                    'memory' => $dataRequest['memory'][0],
-                    'color_id' => $dataRequest['color'][0],
-                    'amount' => $dataRequest['amount'][0],
-                    'price' => $dataRequest['price'][0],
-                    'image' => $dataRequest['image'][0],
+                    'memory'    => $dataRequest['memory'][0],
+                    'color_id'  => $dataRequest['color'][0],
+                    'amount'    => $dataRequest['amount'][0],
+                    'price'     => $dataRequest['price'][0],
+                    'image'     => $dataRequest['image'][0],
                 ];
                 if (empty($dataRequest['image'][0])) {
                     unset($dataProductComponent['image']);
                 }
 
+                //Check exist product component before update
+                $check = [
+                    'product_id'    => $productId,
+                    'memory'        => $dataRequest['memory'][0],
+                    'color'         => $dataRequest['color'][0],
+                ];
+
+                if ($this->productComponentService->isExist($check, $dataRequest['id'])) {
+                    return redirect()->back()->with(['status' => 'fail', 'message' => 'Thay đổi thất bại']);
+                }
+
                 $this->productComponentService->update($dataProductComponent, $dataRequest['id']);
+                return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
             } else {
                 $this->productComponentService->insertMulti($dataProductComponent);
             }
@@ -158,182 +173,15 @@ class AdminController extends Controller
 
     public function delete($id)
     {
-        return $this->productService->delete($id);
-    }
+        $component = $this->productComponentService->findId($id);
+        $product = $component->product;
 
-    public function indexProductType()
-    {
-        $data = $this->productTypeService->all();
-
-        return view('admin.product_type.index', ['data' => $data]);
-    }
-
-    public function createProductType()
-    {
-        return view('admin.product_type.create');
-    }
-
-    public function editProductType($id)
-    {
-        $data = $this->productTypeService->findId($id);
-
-        return view('admin.product_type.edit', ['data' => $data, 'id' => $id]);
-    }
-
-    public function storeProductType(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'unique:product_type_models,name,' . $request->input('id')
-        ]);
-
-        if (!$validator->passes() && !$request->has('id')) {
-            return response()->json(['status' => 0]);
+        if ($this->productComponentService->countProductId($product->id) == 1) {
+            $this->productService->delete($product->id);
+            $product->special()->where('product_id', $product->id)->detach();
         }
 
-        if (!$validator->passes() && $request->has('id')) {
-            return redirect()->back()->with(['status' => 'fail', 'message' => 'Tên này đã tồn tại']);
-        }
-
-        $dataRequest = $request->all();
-
-        $data = [
-            'name'       => $dataRequest['name'],
-            'status'     => isset($dataRequest['status']) ? $dataRequest['status'] : 1
-        ];
-
-        if (isset($dataRequest['id'])) {
-            $this->productTypeService->update($data, $dataRequest['id']);
-            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
-        }
-
-        $row = $this->productTypeService->insert($data);
-
-        if ($row) {
-            return response()->json(['status' => 1 ,'data' => $row]);
-        }
-
-        return response()->json(['status' => 0]);
-    }
-
-    public function deleteProductType($id)
-    {
-        $this->productTypeService->delete($id);
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
-    }
-
-    public function indexProductColor()
-    {
-        $data = $this->productColorService->all();
-
-        return view('admin.product_color.index', ['data' => $data]);
-    }
-
-    public function createProductColor()
-    {
-        return view('admin.product_color.create');
-    }
-
-    public function editProductColor($id)
-    {
-        $row = $this->productColorService->findId($id);
-
-        return view('admin.product_color.edit', ['data' => $row, 'id' => $id]);
-    }
-
-    public function storeProductColor(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'color' => 'unique:product_color_models,name,' . $request->input('id')
-        ]);
-
-        if (!$validator->passes() && !$request->has('id')) {
-            return response()->json(['status' => 0]);
-        }
-
-        if (!$validator->passes() && $request->has('id')) {
-            return redirect()->back()->with(['status' => 'fail', 'message' => 'Màu này đã tồn tại']);
-        }
-
-        $dataRequest = $request->all();
-
-        $data = [
-            'name'       => $dataRequest['color'],
-            'color_code' => $dataRequest['color-code'],
-            'status'     => isset($dataRequest['status']) ? $dataRequest['status'] : 1
-        ];
-
-        if (isset($dataRequest['id'])) {
-            $this->productColorService->update($data, $dataRequest['id']);
-            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
-        }
-
-        $row = $this->productColorService->insert($data);
-
-        if ($row) {
-            return response()->json(['status' => 1 ,'data' => $row]);
-        }
-
-        return response()->json(['status' => 0]);
-    }
-
-    public function deleteProductColor($id)
-    {
-        $this->productColorService->delete($id);
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
-    }
-
-    public function indexProductSpecial()
-    {
-        $data = $this->productSpecialService->all();
-
-        return view('admin.product_special.index', ['data' => $data]);
-    }
-
-    public function storeProductSpecial(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'unique:special_models,name,' . $request->input('id')
-        ]);
-
-        if (!$validator->passes() && !$request->has('id')) {
-            return response()->json(['status' => 0]);
-        }
-
-        if (!$validator->passes() && $request->has('id')) {
-            return redirect()->back()->with(['status' => 'fail', 'message' => 'Tên này đã tồn tại']);
-        }
-
-        $dataRequest = $request->all();
-
-        $data = [
-            'name'       => $dataRequest['name'],
-            'status'     => isset($dataRequest['status']) ? $dataRequest['status'] : 1
-        ];
-
-        if (isset($dataRequest['id'])) {
-            $this->productSpecialService->update($data, $dataRequest['id']);
-            return redirect()->back()->with(['status' => 'success', 'message' => 'Thay đổi thành công']);
-        }
-
-        $row = $this->productSpecialService->insert($data);
-
-        if ($row) {
-            return response()->json(['status' => 1 ,'data' => $row]);
-        }
-
-        return response()->json(['status' => 0]);
-    }
-
-    public function editProductSpecial($id)
-    {
-        $row = $this->productSpecialService->findId($id);
-
-        return view('admin.product_special.edit', ['data' => $row, 'id' => $id]);
-    }
-
-    public function deleteProductSpecial($id)
-    {
-        $this->productSpecialService->delete($id);
+        $this->productComponentService->delete($id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }
 
