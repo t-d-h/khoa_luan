@@ -66,6 +66,12 @@ class ProductTypeController extends Controller
 
     public function delete($id)
     {
+        $type = $this->productTypeService->findId($id);
+
+        if ($type->product) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Xoá thất bại']);
+        }
+
         $this->productTypeService->delete($id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }

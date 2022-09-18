@@ -67,6 +67,11 @@ class ProductColorController extends Controller
 
     public function delete($id)
     {
+        $color = $this->productColorService->findId($id);
+        if ($color->component) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Xoá thất bại']);
+        }
+
         $this->productColorService->delete($id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }
