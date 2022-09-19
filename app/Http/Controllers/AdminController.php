@@ -11,8 +11,7 @@ use App\Services\ProductTypeService;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -192,5 +191,16 @@ class AdminController extends Controller
         $productSpecial = $product->special->pluck('id')->toArray();
 
         return response()->json($productSpecial);
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->only(['email', 'password']);
+
+        if (Auth::guard('admin')->attempt($data)) {
+            return redirect()->to(route(ADMIN_PRODUCT_INDEX));
+        }
+
+        return view('admin.auth.login');
     }
 }

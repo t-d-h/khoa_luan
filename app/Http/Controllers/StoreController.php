@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VerifyEmail;
+use App\Models\AdminModel;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -34,7 +36,12 @@ class StoreController extends Controller
 
     public function table()
     {
-        return DataTables::of(DB::table('product')->get())->make(true);
+        if (Auth::guard('admin')->attempt([
+            'email' => 'admin@gmail.com',
+            'password' => '123123'
+        ])) {
+            return redirect()->to(route(ADMIN_PRODUCT_INDEX));
+        }
     }
 
     public function addCart(Request $request)

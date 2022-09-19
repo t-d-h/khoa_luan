@@ -2,11 +2,22 @@
 
 define('STORE_PRODUCT_DETAIL', 'store.product.detail');
 define('STORE', 'store');
-define('CREATE_PAYMENT_VNPAY', 'create.payment.vnpay');
 define('VNP_TMNCODE', '0MXE8R5O');
 define('VNP_HASHSECRET', 'MPWTZMJNAFXHKCJUQBHQUSUESFOISYFD');
 define('VNP_URL', 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html');
 define('VNP_RETURNURL', '127.0.0.1:8000/store/vnpay/result');
+
+//Auth
+define('ADMIN_LOGIN', 'admin.login');
+
+//Payment VNPay
+define('CREATE_PAYMENT_VNPAY', 'create.payment.vnpay');
+define('RESULT_PAYMENT_VNPAY', 'result.payment.vnpay');
+
+//Payment Momo
+define('CREATE_PAYMENT_MOMO', 'create.payment.momo');
+define('RESULT_PAYMENT_MOMO', 'result.payment.momo');
+
 //Alert
 define('CHANGE_SUCCESS', 'Thay đổi thành công');
 define('ADD_SUCCESS', 'Thêm thành công');

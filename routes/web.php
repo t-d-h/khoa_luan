@@ -23,12 +23,22 @@ use App\Http\Controllers\ProductComponentController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('view-table', function () {
     return view('app');
 });
 Route::get('table', [StoreController::class, 'table'])->name('table');
+
+//Auth
+Route::get('admin-login', function () {
+    return view('admin.auth.login');
+});
+Route::get('store-login', function () {
+    return view('store.auth.login');
+});
+
+Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN);
 
 //Store
 Route::prefix('store')->group(function () {
@@ -50,26 +60,24 @@ Route::prefix('store')->group(function () {
         Route::get('atm', function () {
            return view('atm.atm_momo');
         });
-        Route::post('atm', [MomoController::class, 'atm'])->name('momo.atm');
+        Route::post('atm', [MomoController::class, 'atm'])->name(CREATE_PAYMENT_MOMO);
 
         //Webhook momo
-        Route::get('result', function (\Illuminate\Http\Request $request) {
-            return $request->all();
-        });
+        Route::get('result', [MomoController::class, 'result'])->name(RESULT_PAYMENT_MOMO);
     });
 
     //Payment vnpay
     Route::prefix('vnpay')->group(function () {
         Route::get('atm', [VNPayController::class, 'atm']);
         Route::post('atm', [VNPAYController::class, 'createPayment'])->name(CREATE_PAYMENT_VNPAY);
-        Route::get('result', [VNPayController::class, 'result']);
+        Route::get('result', [VNPayController::class, 'result'])->name(RESULT_PAYMENT_VNPAY);
     });
 
     Route::get('send', [StoreController::class, 'sendMail']);
 });
 
 //Admin Management
-Route::prefix('admin')->group(function() {
+Route::prefix('admin')->middleware('admin')->group(function() {
     Route::prefix('product')->group(function () {
         Route::get('select-special', [AdminController::class, 'selectSpecial'])->name(GET_PRODUCT_SPECIAL);
 
