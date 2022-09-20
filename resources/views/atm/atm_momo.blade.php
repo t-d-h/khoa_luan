@@ -20,7 +20,7 @@
                 </div>
                 <div class="panel-body">
                     <form class="" method="POST" target="_blank" enctype="application/x-www-form-urlencoded"
-                          action="{{ route('momo.atm') }}">
+                          action="{{ route(CREATE_PAYMENT_MOMO) }}">
                         @csrf
                         <div class="row">
                             <div class="col-md-4">
@@ -93,7 +93,8 @@
                                 <div class="form-group">
                                     <label for="fxRate" class="col-form-label">NotifyUrl</label>
                                     <div class='input-group date' id='fxRate'>
-                                        <input type='text' name="notifyUrl" value=" http://127.0.0.1:8000/store/momo/ipn_momo"
+                                        <input type='text' name="notifyUrl"
+                                               value=" http://127.0.0.1:8000/store/momo/ipn_momo"
                                                class="form-control"/>
                                     </div>
                                 </div>
@@ -102,7 +103,8 @@
                                 <div class="form-group">
                                     <label for="fxRate" class="col-form-label">ReturnUrl</label>
                                     <div class='input-group date' id='fxRate'>
-                                        <input type='text' name="returnUrl" value="http://127.0.0.1:8000/store/momo/result_atm"
+                                        <input type='text' name="returnUrl"
+                                               value="{{ route(RESULT_PAYMENT_MOMO) }}"
                                                class="form-control"/>
                                     </div>
                                 </div>

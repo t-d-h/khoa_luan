@@ -17,7 +17,7 @@ class VNPayController extends Controller
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         $dataRequest = $request->all();
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://127.0.0.1:8000/store/vnpay/result";
+        $vnp_Returnurl = route(RESULT_PAYMENT_VNPAY);
         $vnp_TmnCode = "0MXE8R5O";
         $vnp_HashSecret = "MPWTZMJNAFXHKCJUQBHQUSUESFOISYFD";
 
@@ -88,7 +88,6 @@ class VNPayController extends Controller
             $inputData['vnp_Bill_State'] = $vnp_Bill_State;
         }
 
-//var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;

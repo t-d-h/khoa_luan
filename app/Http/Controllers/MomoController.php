@@ -49,4 +49,9 @@ class MomoController extends Controller
 
         return redirect($jsonResult['payUrl']);
     }
+
+    public function result(Request $request)
+    {
+        return $request->all();
+    }
 }
