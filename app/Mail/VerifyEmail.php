@@ -12,13 +12,16 @@ class VerifyEmail extends Mailable
     use Queueable, SerializesModels;
 
     protected $email;
+    protected $token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($email)
+    public function __construct($email, $token)
     {
+        $this->token = $token;
         $this->email = $email;
     }
 
@@ -30,6 +33,6 @@ class VerifyEmail extends Mailable
     public function build()
     {
         return $this->subject('test send mail')
-                    ->markdown('email.verify', ['email' => $this->email]);
+                    ->markdown('email.verify', ['token' => $this->token, 'email' => $this->email]);
     }
 }

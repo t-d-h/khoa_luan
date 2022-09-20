@@ -9,6 +9,10 @@ define('VNP_RETURNURL', '127.0.0.1:8000/store/vnpay/result');
 
 //Auth
 define('ADMIN_LOGIN', 'admin.login');
+define('STORE_LOGIN', 'store.login');
+define('STORE_REGISTER', 'store.register');
+define('STORE_LOGOUT', 'store.logout');
+define('STORE_VERIFY_TOKEN', 'store.verify.token');
 
 //Payment VNPay
 define('CREATE_PAYMENT_VNPAY', 'create.payment.vnpay');

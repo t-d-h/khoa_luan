@@ -55,13 +55,19 @@
             <li class="nav-item">
                 <a href="" class="nav-link">Liên hệ</a>
             </li>
+            @if(Auth::guard('web')->check())
             <li class="nav-item" style="position: relative">
-                <a class="nav-link login info-user">Đăng nhập</a>
+                <a class="nav-link login info-user">{{ Auth::guard('web')->user()->name }}</a>
                 <div class="dropdown-info-user mt-2 bg-pink">
                     <a href="" class="dropdown-item">Thông tin</a>
-                    <a href="" class="dropdown-item">Đăng xuất</a>
+                    <a href="{{ route(STORE_LOGOUT) }}" class="dropdown-item">Đăng xuất</a>
                 </div>
             </li>
+            @else
+                <li class="nav-item">
+                    <a href="{{ route(STORE_LOGIN) }}" class="nav-link">Đăng nhập</a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>

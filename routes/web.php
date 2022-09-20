@@ -34,9 +34,6 @@ Route::get('table', [StoreController::class, 'table'])->name('table');
 Route::get('admin-login', function () {
     return view('admin.auth.login');
 });
-Route::get('store-login', function () {
-    return view('store.auth.login');
-});
 
 Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN);
 
@@ -44,7 +41,16 @@ Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN)
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name(STORE);
 
-    //cart shop
+    //Auth
+    Route::get('login', function () {
+        return view('store.auth.login');
+    })->middleware('storeLogin');
+    Route::get('logout', [StoreController::class, 'logout'])->name(STORE_LOGOUT);
+    Route::post('login', [StoreController::class, 'login'])->name(STORE_LOGIN);
+    Route::post('register', [StoreController::class, 'register'])->name(STORE_REGISTER);
+    Route::get('active/{id}/{token}', [StoreController::class, 'active'])->name(STORE_VERIFY_TOKEN);
+
+    //Cart shop
     Route::get('cart', function () {
        return view('store.cart');
     });

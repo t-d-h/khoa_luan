@@ -16,21 +16,42 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form action="#">
-                <h1>Create Account</h1>
-                <input type="text" placeholder="Name"/>
-                <input type="email" placeholder="Email"/>
-                <input type="password" placeholder="Password"/>
-                <button>Sign Up</button>
+            <form action="{{ route(STORE_REGISTER) }}" method="post">
+                @csrf
+                <h1>Tạo tài khoản</h1>
+                @if(session()->has('message') && session()->get('status') == 'success')
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ session()->get('message') }}
+                    </div>
+                @elseif(session()->has('message') && session()->get('status') == 'fail')
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                <input type="text" name="name" placeholder="Nhập tên người dùng" required/>
+                <input type="email" name="email" placeholder="Nhập địa chỉ email" required/>
+                <input type="password" name="password" placeholder="Nhập mật khẩu" required/>
+                <input type="password" name="repassword" placeholder="Nhập lại mật khẩu" required/>
+                <button>Đăng kí</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form action="#">
-                <h1>Sign in</h1>
-                <input type="email" placeholder="Email"/>
-                <input type="password" placeholder="Password"/>
+            <form action="{{ route(STORE_LOGIN) }}" method="post">
+                @csrf
+                <h1>Đăng nhập</h1>
+                @if(session()->has('message') && session()->get('status') == 'success')
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ session()->get('message') }}
+                    </div>
+                @elseif(session()->has('message') && session()->get('status') == 'fail')
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                <input type="email" name="email" placeholder="Nhập địa chỉ email" required/>
+                <input type="password" name="password" placeholder="Nhập mật khẩu" required/>
                 <a href="#">Forgot your password?</a>
-                <button>Sign In</button>
+                <button>Đăng nhập</button>
             </form>
         </div>
         <div class="overlay-container">
