@@ -12,9 +12,23 @@ class CartModel extends Model
     protected $table = 'cart_models';
 
     public $fillable = [
-        'product_id',
+        'order_id',
+        'component_id',
         'amount',
         'customer_id',
         'total',
+        'payment_type',
+        'payment_number',
+        'status',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
+
+    public function component()
+    {
+        return $this->belongsTo(ProductComponentModel::class, 'component_id', 'id');
+    }
 }

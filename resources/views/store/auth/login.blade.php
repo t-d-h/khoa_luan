@@ -19,15 +19,7 @@
             <form action="{{ route(STORE_REGISTER) }}" method="post">
                 @csrf
                 <h1>Tạo tài khoản</h1>
-                @if(session()->has('message') && session()->get('status') == 'success')
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ session()->get('message') }}
-                    </div>
-                @elseif(session()->has('message') && session()->get('status') == 'fail')
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
+                @include('common.noti_message')
                 <input type="text" name="name" placeholder="Nhập tên người dùng" required/>
                 <input type="email" name="email" placeholder="Nhập địa chỉ email" required/>
                 <input type="password" name="password" placeholder="Nhập mật khẩu" required/>
@@ -39,18 +31,10 @@
             <form action="{{ route(STORE_LOGIN) }}" method="post">
                 @csrf
                 <h1>Đăng nhập</h1>
-                @if(session()->has('message') && session()->get('status') == 'success')
-                    <div class="alert alert-success alert-dismissible" role="alert">
-                        {{ session()->get('message') }}
-                    </div>
-                @elseif(session()->has('message') && session()->get('status') == 'fail')
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
+                @include('common.noti_message')
                 <input type="email" name="email" placeholder="Nhập địa chỉ email" required/>
                 <input type="password" name="password" placeholder="Nhập mật khẩu" required/>
-                <a href="#">Forgot your password?</a>
+                <a href="{{ route(STORE_FORM_FORGOT_PASSWORD) }}">Forgot your password?</a>
                 <button>Đăng nhập</button>
             </form>
         </div>
