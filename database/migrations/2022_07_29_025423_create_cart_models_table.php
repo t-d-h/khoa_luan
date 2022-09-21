@@ -15,10 +15,13 @@ class CreateCartModelsTable extends Migration
     {
         Schema::create('cart_models', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
-            $table->string('amount');
+            $table->string('order_id');
+            $table->string('component_id');
             $table->string('customer_id');
+            $table->string('amount');
             $table->string('total');
+            $table->string('payment_type');
+            $table->string('payment_number');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

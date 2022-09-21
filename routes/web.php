@@ -49,6 +49,13 @@ Route::prefix('store')->group(function () {
     Route::post('login', [StoreController::class, 'login'])->name(STORE_LOGIN);
     Route::post('register', [StoreController::class, 'register'])->name(STORE_REGISTER);
     Route::get('active/{id}/{token}', [StoreController::class, 'active'])->name(STORE_VERIFY_TOKEN);
+    Route::get('forgot-password', function () {
+       return view('store.auth.forgot_password');
+    })->name(STORE_FORM_FORGOT_PASSWORD);
+    Route::post('forgot-password', [StoreController::class, 'forgotPassword'])->name(STORE_FORGOT_PASSWORD);
+
+    Route::get('reset-password/{email}/{token}', [StoreController::class, 'formResetPassword'])->name(STORE_FORM_RESET_PASSWORD);
+    Route::post('reset-password', [StoreController::class, 'resetPassword'])->name(STORE_RESET_PASSWORD);
 
     //Cart shop
     Route::get('cart', function () {

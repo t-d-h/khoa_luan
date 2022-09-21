@@ -3,15 +3,6 @@
 )
 @extends('admin.index')
 @section('content')
-    @if(session()->has('message') && session()->get('status') == 'success')
-        <div class="alert alert-success alert-dismissible" role="alert">
-            {{ session()->get('message') }}
-        </div>
-    @elseif(session()->has('message') && session()->get('status') == 'fail')
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            {{ session()->get('message') }}
-        </div>
-    @endif
     <div class="row mb-3">
         <div class="col-lg-6">
             <div>

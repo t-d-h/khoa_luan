@@ -41,6 +41,7 @@
             @include('admin.navbar')
 
             <main class="content">
+                @include('common.noti_message')
                 @yield('content')
             </main>
 

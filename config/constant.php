@@ -13,6 +13,10 @@ define('STORE_LOGIN', 'store.login');
 define('STORE_REGISTER', 'store.register');
 define('STORE_LOGOUT', 'store.logout');
 define('STORE_VERIFY_TOKEN', 'store.verify.token');
+define('STORE_FORM_FORGOT_PASSWORD', 'store.form.forgot.password');
+define('STORE_FORGOT_PASSWORD', 'store.forgot.password');
+define('STORE_FORM_RESET_PASSWORD', 'store.form.reset.password');
+define('STORE_RESET_PASSWORD', 'store.reset.password');
 
 //Payment VNPay
 define('CREATE_PAYMENT_VNPAY', 'create.payment.vnpay');
