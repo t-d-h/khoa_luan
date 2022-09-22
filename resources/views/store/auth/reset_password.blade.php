@@ -39,7 +39,7 @@
                                 <form action="{{ route(STORE_RESET_PASSWORD) }}" method="post">
                                     @csrf
                                     <input type="hidden" name="email" value="{{ $email }}">
-                                    <input type="hidden" name="email" value="{{ $token }}">
+                                    <input type="hidden" name="token" value="{{ $token }}">
                                     <td style="padding:0 35px;">
                                         <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">You have
                                             requested to reset your password</h1>

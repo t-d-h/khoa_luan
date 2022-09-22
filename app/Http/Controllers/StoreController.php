@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Events\RegisterEvent;
 use App\Mail\ResetPasswordMail;
+use App\Models\SpecialModel;
 use App\Models\User;
 use App\Services\CustomerService;
+use App\Services\ProductSpecialService;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,22 +23,27 @@ class StoreController extends Controller
     public $productService;
     public $storeService;
     public $customerService;
+    public $productSpecialService;
 
     public function __construct(
         ProductService $productService,
         StoreService $storeService,
-        CustomerService $customerService
+        CustomerService $customerService,
+        ProductSpecialService $productSpecialService
     )
     {
         $this->productService = $productService;
         $this->storeService = $storeService;
         $this->customerService = $customerService;
+        $this->productSpecialService = $productSpecialService;
     }
 
     public function index()
     {
 //        dd($this->productService->insert(1));
-        return view('store.index');
+        $assign['specials'] = $this->productSpecialService->all()->load('product.component.color');
+
+        return view('store.index', $assign);
     }
 
     public function login(Request $request)
@@ -145,8 +152,14 @@ class StoreController extends Controller
     {
         $email = $request->input('email');
         $token = time();
+        $customer = User::where('email', $email)->first();
+
+        if (!empty($customer)) {
+            $this->customerService->update(['email_verified' => $token], $customer->id);
+        }
 
         Mail::to($email)->send(new ResetPasswordMail($email, $token));
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Đã gửi mã xác thực đến email']);
     }
 
     public function formResetPassword($email, $token)
@@ -158,16 +171,20 @@ class StoreController extends Controller
     {
         $dataRequest = $request->all();
         if ($dataRequest['password'] != $dataRequest['repassword']) {
-            return redirect()->back()->with(['status' => 'fail', 'message' => 'Đăng kí thất bại']);
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Cập nhật thất bại']);
         }
 
         $customer = User::where('email', $dataRequest['email'])->firstOrFail();
         $data = ['password' => Hash::make($dataRequest['password'])];
 
-        if ($this->customerService->update($data, $customer->id)) {
-            return redirect()->back()->with(['status' => 'success', 'message' => 'Cập nhật thanh công']);
+        if ($customer->email_verified != $dataRequest['token']) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => 'Cập nhật thất bại']);
         }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Đăng kí thất bại']);
+        if ($this->customerService->update($data, $customer->id)) {
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Cập nhật thành công']);
+        }
+
+        return redirect()->back()->with(['status' => 'fail', 'message' => 'Cập nhật thất bại']);
     }
 }
