@@ -15,4 +15,9 @@ class SpecialModel extends Model
         'name',
         'status'
     ];
+
+    public function product()
+    {
+        return $this->belongsToMany(ProductModel::class, 'special_product_models', 'special_id', 'product_id');
+    }
 }

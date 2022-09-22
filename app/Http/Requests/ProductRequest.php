@@ -21,8 +21,11 @@ class ProductRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $component = $this->productComponentService->findId($request->input('id'));
-        $productId = $component ? $component->product->id : '';
+        $productId = '';
+        if ($request->has('id')) {
+            $component = $this->productComponentService->findId($request->input('id'));
+            $productId = $component ? $component->product->id : '';
+        }
 
         return [
             'name'  => 'required|unique:product_models,name,' . $productId

@@ -24,8 +24,8 @@
     </a>
 </div>
 
-
-<!-- Sản phẩm nổi bật -->
+<!-- Main Content-->
+@foreach($products->)
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-12">
@@ -80,66 +80,7 @@
     </div>
 </div>
 
-
-<!-- Sản phẩm bán chạy -->
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-md-12">
-            <h2 class="title-product">Sản phẩm bán chạy</h2>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-md-3">
-            <a href="">
-                <div class="border-product">
-                    <input type="hidden" name="product_id" value="5">
-                    <img src="http://thoitrangbigsize.vn/wp-content/uploads/2019/03/2-16.jpg" class="img-thumbnail">
-                    <div class="pt-3 name"><strong>Tên sản phẩm 5</strong></div>
-                    <p>While/Black</p>
-                    <div><strong class="price">100.000 VNĐ</strong></div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a href="">
-                <div class="border-product">
-                    <input type="hidden" name="product_id" value="6">
-                    <img src="https://cetofashions.com/wp-content/uploads/2020/09/M1311.jpg" class="img-thumbnail">
-                    <div class="pt-3 name"><strong>Tên sản phẩm 6</strong></div>
-                    <p>While/Black</p>
-                    <div><strong class="price">100.000 VNĐ</strong></div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a href="">
-                <div class="border-product">
-                    <input type="hidden" name="product_id" value="7">
-                    <img src="https://cf.shopee.vn/file/8a83168eb686d4829f52f56ca1d3c4f8" class="img-thumbnail">
-                    <div class="pt-3 name"><strong>Tên sản phẩm 7</strong></div>
-                    <p>While/Black</p>
-                    <div><strong class="price">100.000 VNĐ</strong></div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3">
-            <a href="">
-                <div class="border-product">
-                    <input type="hidden" name="product_id" value="8">
-                    <img src="http://cungdeal.com/cungdeal/uploads/images/TN1273/1273%20(1).jpg" class="img-thumbnail">
-                    <div class="pt-3 name"><strong>Tên sản phẩm 8</strong></div>
-                    <p>While/Black</p>
-                    <div><strong class="price">100.000 VNĐ</strong></div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-
 <hr>
-
-<div id="summernote">Hello Summernote</div>
-{{--<textarea id="summernote"></textarea>--}}
 
 <!-- Sản phẩm mới -->
 <div class="new-product mt-5">
