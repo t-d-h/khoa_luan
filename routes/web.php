@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProductColorController;
 use App\Http\Controllers\ProductSpecialController;
 use App\Http\Controllers\ProductComponentController;
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,21 +42,21 @@ Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN)
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name(STORE);
 
-    //Auth
+    //Auth Customer
     Route::get('login', function () {
         return view('store.auth.login');
     })->middleware('storeLogin');
-    Route::get('logout', [StoreController::class, 'logout'])->name(STORE_LOGOUT);
-    Route::post('login', [StoreController::class, 'login'])->name(STORE_LOGIN);
-    Route::post('register', [StoreController::class, 'register'])->name(STORE_REGISTER);
-    Route::get('active/{id}/{token}', [StoreController::class, 'active'])->name(STORE_VERIFY_TOKEN);
+    Route::get('logout', [CustomerController::class, 'logout'])->name(STORE_LOGOUT);
+    Route::post('login', [CustomerController::class, 'login'])->name(STORE_LOGIN);
+    Route::post('register', [CustomerController::class, 'register'])->name(STORE_REGISTER);
+    Route::get('active/{id}/{token}', [CustomerController::class, 'active'])->name(STORE_VERIFY_TOKEN);
     Route::get('forgot-password', function () {
        return view('store.auth.forgot_password');
     })->name(STORE_FORM_FORGOT_PASSWORD);
-    Route::post('forgot-password', [StoreController::class, 'forgotPassword'])->name(STORE_FORGOT_PASSWORD);
+    Route::post('forgot-password', [CustomerController::class, 'forgotPassword'])->name(STORE_FORGOT_PASSWORD);
 
-    Route::get('reset-password/{email}/{token}', [StoreController::class, 'formResetPassword'])->name(STORE_FORM_RESET_PASSWORD);
-    Route::post('reset-password', [StoreController::class, 'resetPassword'])->name(STORE_RESET_PASSWORD);
+    Route::get('reset-password/{email}/{token}', [CustomerController::class, 'formResetPassword'])->name(STORE_FORM_RESET_PASSWORD);
+    Route::post('reset-password', [CustomerController::class, 'resetPassword'])->name(STORE_RESET_PASSWORD);
 
     //Cart shop
     Route::get('cart', function () {
