@@ -66,6 +66,9 @@ class ProductSpecialController extends Controller
 
     public function delete($id)
     {
+        $special = $this->productSpecialService->findId($id);
+        $special->product()->where('special_id', $special->id)->detach();
+
         $this->productSpecialService->delete($id);
         return redirect()->back()->with(['status' => 'success', 'message' => 'Xoá thành công']);
     }
