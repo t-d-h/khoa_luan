@@ -26,7 +26,17 @@
                     <td style="height:80px;">&nbsp;</td>
                 </tr>
                 <tr>
-                    <td style="height:20px;">&nbsp;</td>
+                    <td style="height:20px;">
+                        @if(session()->has('message') && session()->get('status') == 'success')
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                {{ session()->get('message') }}
+                            </div>
+                        @elseif(session()->has('message') && session()->get('status') == 'fail')
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                {{ session()->get('message') }}
+                            </div>
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <td>

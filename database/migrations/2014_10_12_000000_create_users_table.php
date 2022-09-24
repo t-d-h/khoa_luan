@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(0);
             $table->rememberToken();
+            $table->string('forgot_password')->nullable();
             $table->timestamps();
         });
     }

@@ -47,28 +47,28 @@ $(document).ready(function () {
 
     $.ajax({
         type: "get",
-        url: "store/cart-session",
+        url: "cart-session",
         success: function (e) {
             $('#scroll-giohang').append(showCart(e));
         }
     });
 
-    $('.add-cart').click(function () {
-        var product_id = $(this).parent().find('input[name=product_id]').val();
-        var img = $(this).parent().find('.img-thumbnail').attr('src');
-        var name = $(this).parent().find('.name').text();
-        var price = $(this).parent().find('.price').text();
-        var amount = '1';
+    $('#add-cart').click(function () {
+        // var product_id = $(this).parent().find('input[name=product_id]').val();
+        // var img = $(this).parent().find('.img-thumbnail').attr('src');
+        // var name = $(this).parent().find('.name').text();
+        // var price = $(this).parent().find('.price').text();
+        // var amount = '1';
+        var form =  $('form').serializeArray();
 
         $.ajax({
             type: "get",
-            url: "store/add-cart",
+            url: "add-cart",
             data: {
-                "id": product_id,
-                "name": name,
-                "amount": amount,
-                "price": price,
-                "img": img
+                "id": form[0].value,
+                "component": form[1].value,
+                "color": form[2].value,
+                "amount": form[3].value
             },
             success: function (e) {
                 $('#scroll-giohang').html(showCart(e));

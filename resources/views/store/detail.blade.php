@@ -18,6 +18,8 @@
                     </div>
                     <div class="col-md-6">
                         <div>
+                            <form action="" method="get">
+                                <input type="hidden" name="id" value="1">
                             <ul style="list-style: none;">
                                 <li><h3>TÊN SẢN PHẨM</h3></li>
                                 <li>
@@ -37,21 +39,21 @@
                                     <div class="product-option">
                                         <strong class="label">Lựa chọn phiên bản</strong>
                                         <div class="options" id="versionOption" data-id="4" style="display: flex">
-                                            <input type="hidden" name="memory" value="1">
+                                            <input type="hidden" name="component" value="1">
                                             <div class="form-group">
-                                                <div class="item" data-memory="1" style="background-color: gainsboro">
+                                                <div class="item" data-component="1" style="background-color: gainsboro">
                                                     <span><label for="memory"><strong>128GB</strong></label></span>
                                                     <strong>18,590,000 ₫</strong>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <div class="item" data-memory="2">
+                                                <div class="item" data-component="2">
                                                     <span><label for="memory"><strong>256GB</strong></label></span>
                                                     <strong>21,490,000 ₫</strong>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <div class="item" data-memory="3">
+                                                <div class="item" data-component="3">
                                                     <span><label for="memory"><strong>512GB</strong></label></span>
                                                     <strong>24,990,000 ₫</strong>
                                                 </div>
@@ -64,7 +66,7 @@
                                 <li class="mau-sanpham">
                                     <div style="width: 30%;">
                                         <h4>SIZE</h4>
-                                        <select>
+                                        <select name="color">
                                             <option>36</option>
                                             <option>37</option>
                                             <option>38</option>
@@ -74,7 +76,7 @@
                                         <h4>SỐ LƯỢNG</h4>
                                         <div class="slg-sanpham">
                                             <span class="giam">-</span>
-                                            <input type="number" name="" class="soluong-sanpham" value="1" readonly>
+                                            <input type="number" name="amount" class="soluong-sanpham" value="1" readonly>
                                             <span class="tang">+</span>
                                         </div>
                                     </div>
@@ -86,7 +88,7 @@
                                     <a href="">THANH TOÁN</a>
                                 </li>
                             </ul>
-
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -451,15 +453,11 @@
 
             });
 
-            $('#add-cart').click(function () {
-                $("#add-cart-effect").fadeIn('slow').fadeOut('slow');
-            });
-
             $('#versionOption .item').click(function () {
                 $('#versionOption .item').removeAttr('style');
                 $(this).css('background-color', 'gainsboro');
-                $('[name=memory]').val($(this).attr('data-memory'));
-                console.log($('[name=memory]').val());
+                $('[name=component]').val($(this).attr('data-component'));
+                console.log($('[name=component]').val());
             });
         });
     </script>

@@ -25,7 +25,6 @@
 </div>
 
 <!-- Main Content-->
-@foreach($products->)
 <div class="container">
     <div class="row mt-5">
         <div class="col-md-12">
@@ -34,15 +33,14 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-3">
-            <a href="">
                 <div class="border-product">
                     <input type="hidden" name="product_id" value="1">
                     <img src="https://mypro.vn/image/cache/catalog/giay/giaynikenam/giay-nike-downshifter-10-nam-den-do-01-800x800_0-800x800.jpg" class="img-thumbnail">
                     <div class="pt-3 name"><strong>Tên sản phẩm 1</strong></div>
                     <p>While/Black</p>
                     <div><strong class="price">100.000 VNĐ</strong></div>
+                    <a class="btn btn-danger">Mua ngay</a>
                 </div>
-            </a>
         </div>
         <div class="col-md-3">
             <a href="">

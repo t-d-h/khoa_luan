@@ -8,13 +8,12 @@ class StoreService extends BaseService
 {
     public function addCart($request, $id)
     {
-
         $data = [$id => $request];
         if (Session::has('cart')) {
             $session = Session::get('cart');
 
             if (array_key_exists($id, $session)) {
-                $session[$id]['amount'] += 1;
+                $session[$id]['amount'] += $request['amount'];
                 $data = $session;
             } else {
                 $data = $session + $data;

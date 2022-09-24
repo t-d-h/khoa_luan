@@ -95,7 +95,7 @@ class CustomerController extends Controller
         $customer = User::where('email', $email)->first();
 
         if (!empty($customer)) {
-            $this->customerService->update(['email_verified' => $token], $customer->id);
+            $this->customerService->update(['forgot_password' => $token], $customer->id);
         }
 
         Mail::to($email)->send(new ResetPasswordMail($email, $token));
@@ -117,7 +117,7 @@ class CustomerController extends Controller
         $customer = User::where('email', $dataRequest['email'])->firstOrFail();
         $data = ['password' => Hash::make($dataRequest['password'])];
 
-        if ($customer->email_verified != $dataRequest['token']) {
+        if ($customer->forgot_password != $dataRequest['token']) {
             return redirect()->back()->with(['status' => 'fail', 'message' => 'Cập nhật thất bại']);
         }
 

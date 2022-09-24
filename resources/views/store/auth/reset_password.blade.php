@@ -33,9 +33,6 @@
                         <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0"
                                style="max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
                             <tr>
-                                <td style="height:40px;">&nbsp;</td>
-                            </tr>
-                            <tr>
                                 <form action="{{ route(STORE_RESET_PASSWORD) }}" method="post">
                                     @csrf
                                     <input type="hidden" name="email" value="{{ $email }}">
@@ -47,12 +44,12 @@
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
 
                                         <div class="form-group" style="margin-bottom: 10px">
-                                            <label for="password" style="text-align: left; width: 100%">Password</label>
-                                            <input type="text" class="form-control" name="password">
+                                            <label for="password" style="text-align: left; width: 100%">Mật khẩu mới</label>
+                                            <input type="password" class="form-control" name="password">
                                         </div>
                                         <div class="form-group">
-                                            <label for="repassword" style="text-align: left; width: 100%">Password</label>
-                                            <input type="text" class="form-control" name="repassword">
+                                            <label for="repassword" style="text-align: left; width: 100%">Nhập lại mật khẩu</label>
+                                            <input type="password" class="form-control" name="repassword">
                                         </div>
 
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">

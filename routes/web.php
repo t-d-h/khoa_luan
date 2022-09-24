@@ -59,6 +59,16 @@ Route::prefix('store')->group(function () {
     Route::post('reset-password', [CustomerController::class, 'resetPassword'])->name(STORE_RESET_PASSWORD);
 
     //Cart shop
+    Route::prefix('cart')->group(function () {
+        Route::get('', function () {
+            return view('store.cart');
+        });
+        Route::get('cart-session', [StoreController::class, 'getCartSession']);
+        Route::get('add-cart', [StoreController::class, 'addCart'])->name('add.cart');
+        Route::get('remove-cart', [StoreController::class, 'removeCart']);
+        Route::get('{id}', [StoreController::class, 'detail']);
+    });
+
     Route::get('cart', function () {
        return view('store.cart');
     });
@@ -66,8 +76,6 @@ Route::prefix('store')->group(function () {
        return view('store.payment');
     });
     Route::get('detail', [StoreController::class, 'detail'])->name(STORE_PRODUCT_DETAIL);
-    Route::get('cart-session', [StoreController::class, 'getCartSession']);
-    Route::get('add-cart', [StoreController::class, 'addCart'])->name('add.cart');
 
     //Payment momo
     Route::prefix('momo')->group(function () {

@@ -6723,7 +6723,7 @@ _lib_utils_hooks__WEBPACK_IMPORTED_MODULE_0__.hooks.HTML5_FMT = {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -6737,17 +6737,17 @@ _lib_utils_hooks__WEBPACK_IMPORTED_MODULE_0__.hooks.HTML5_FMT = {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
@@ -6760,7 +6760,7 @@ _lib_utils_hooks__WEBPACK_IMPORTED_MODULE_0__.hooks.HTML5_FMT = {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -6775,12 +6775,12 @@ _lib_utils_hooks__WEBPACK_IMPORTED_MODULE_0__.hooks.HTML5_FMT = {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -6791,7 +6791,7 @@ _lib_utils_hooks__WEBPACK_IMPORTED_MODULE_0__.hooks.HTML5_FMT = {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
@@ -6826,34 +6826,33 @@ $(document).ready(function () {
 
   $.ajax({
     type: "get",
-    url: "store/cart-session",
+    url: "cart-session",
     success: function success(e) {
       $('#scroll-giohang').append(showCart(e));
     }
   });
-  $('.add-cart').click(function () {
-    var product_id = $(this).parent().find('input[name=product_id]').val();
-    var img = $(this).parent().find('.img-thumbnail').attr('src');
-    var name = $(this).parent().find('.name').text();
-    var price = $(this).parent().find('.price').text();
-    var amount = '1';
+  $('#add-cart').click(function () {
+    // var product_id = $(this).parent().find('input[name=product_id]').val();
+    // var img = $(this).parent().find('.img-thumbnail').attr('src');
+    // var name = $(this).parent().find('.name').text();
+    // var price = $(this).parent().find('.price').text();
+    // var amount = '1';
+    var form = $('form').serializeArray();
     $.ajax({
       type: "get",
-      url: "store/add-cart",
+      url: "add-cart",
       data: {
-        "id": product_id,
-        "name": name,
-        "amount": amount,
-        "price": price,
-        "img": img
+        "id": form[0].value,
+        "component": form[1].value,
+        "color": form[2].value,
+        "amount": form[3].value
       },
       success: function success(e) {
+          console.log(e);
         $('#scroll-giohang').html(showCart(e));
 
         if (e) {
-          $(".add-cart").click(function (event) {
-            $("#add-cart-effect").fadeIn('slow').fadeOut('slow');
-          });
+          $("#add-cart-effect").fadeIn('slow').fadeOut('slow');
         }
       }
     });

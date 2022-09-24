@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
+use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
 use App\Services\StoreService;
 use Illuminate\Http\Request;
@@ -16,18 +17,21 @@ class StoreController extends Controller
     public $storeService;
     public $customerService;
     public $productSpecialService;
+    public $productComponentService;
 
     public function __construct(
-        ProductService $productService,
-        StoreService $storeService,
-        CustomerService $customerService,
-        ProductSpecialService $productSpecialService
+        ProductService          $productService,
+        StoreService            $storeService,
+        CustomerService         $customerService,
+        ProductSpecialService   $productSpecialService,
+        ProductComponentService $productComponentService
     )
     {
         $this->productService = $productService;
         $this->storeService = $storeService;
         $this->customerService = $customerService;
         $this->productSpecialService = $productSpecialService;
+        $this->productComponentService = $productComponentService;
     }
 
     public function index()
@@ -42,16 +46,26 @@ class StoreController extends Controller
     {
 //        dd(Session::get('cart'));
         $dataRequest = $request->all();
-        $dataRequest['time'] = strtotime(now());
+        $product = $this->productService->findId($dataRequest['id']);
+        $component = $this->productComponentService->findId($dataRequest['component']);
 
-        $this->storeService->addCart($dataRequest, $dataRequest['id']);
+        $data = [
+            'id' => $component->id,
+            'name' => $product->name,
+            'amount' => $dataRequest['amount'],
+            'color' => $dataRequest['color'],
+            'price' => $component->price,
+            'img' => $component->image,
+            'time' => strtotime(now())
+        ];
+
+        $this->storeService->addCart($data, $component->id);
 
         return response()->json(Session::get('cart'));
     }
 
     public function getCartSession()
     {
-//        return Session::flush();
         if (Session::has('cart')) {
             return response()->json(Session::get('cart'));
         }
@@ -61,14 +75,14 @@ class StoreController extends Controller
 
     public function removeCart()
     {
-        $data = Session::get('cart');
-        unset($data[6]);
+        Session::flush();
+        return Session::get('cart');
     }
 
     public function detail()
     {
         Breadcrumbs::register('continent', function ($breadcrumbs) {
-            $breadcrumbs->push('Home', route(STORE));
+            $breadcrumbs->push('Trang Chủ', route(STORE));
             $breadcrumbs->push('ten san pham', route(STORE_PRODUCT_DETAIL));
         });
 

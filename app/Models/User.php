@@ -23,7 +23,8 @@ class User extends Authenticatable
         'email',
         'password',
         'status',
-        'remember_token'
+        'remember_token',
+        'forgot_password'
     ];
 
     public function cart()
