@@ -36,6 +36,11 @@ class AdminController extends Controller
         $this->productComponentService = $productComponentService;
     }
 
+    public function dashboard()
+    {
+        return view('admin.product.dashboard');
+    }
+
     public function index()
     {
 //        $products = $this->productService->all()->load('component.color');

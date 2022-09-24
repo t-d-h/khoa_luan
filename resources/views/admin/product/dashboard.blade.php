@@ -1,4 +1,7 @@
 @extends('admin.index')
+@section('extendScript')
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+@endsection
 @section('content')
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
@@ -102,12 +105,26 @@
             <div class="col-xl-6 col-xxl-7">
                 <div class="card flex-fill w-100">
                     <div class="card-header">
-
+                        <div class="float-end">
+                            <form class="row g-2">
+                                <div class="col-auto">
+                                    <select class="form-select form-select-sm bg-light border-0">
+                                        <option>Jan</option>
+                                        <option value="1">Feb</option>
+                                        <option value="2">Mar</option>
+                                        <option value="3">Apr</option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="text" class="form-control form-control-sm bg-light rounded-2 border-0" style="width: 100px;" placeholder="Search..">
+                                </div>
+                            </form>
+                        </div>
                         <h5 class="card-title mb-0">Recent Movement</h5>
                     </div>
-                    <div class="card-body py-3">
-                        <div class="chart chart-sm">
-                            <canvas id="chartjs-dashboard-line"></canvas>
+                    <div class="card-body pt-2 pb-3">
+                        <div class="chart chart-sm"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                            <canvas id="chartjs-dashboard-line" style="display: block; height: 250px; width: 626px;" width="782" height="312" class="chartjs-render-monitor"></canvas>
                         </div>
                     </div>
                 </div>
@@ -115,62 +132,30 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-6 col-xxl-3 d-flex order-2 order-xxl-3">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Browser Usage</h5>
-                    </div>
-                    <div class="card-body d-flex">
-                        <div class="align-self-center w-100">
-                            <div class="py-3">
-                                <div class="chart chart-xs">
-                                    <canvas id="chartjs-dashboard-pie"></canvas>
-                                </div>
-                            </div>
-
-                            <table class="table mb-0">
-                                <tbody>
-                                <tr>
-                                    <td>Chrome</td>
-                                    <td class="text-end">4306</td>
-                                </tr>
-                                <tr>
-                                    <td>Firefox</td>
-                                    <td class="text-end">3801</td>
-                                </tr>
-                                <tr>
-                                    <td>IE</td>
-                                    <td class="text-end">1689</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
-                <div class="card flex-fill w-100">
-                    <div class="card-header">
-
-                        <h5 class="card-title mb-0">Real-Time</h5>
-                    </div>
-                    <div class="card-body px-4">
-                        <div id="world_map" style="height:350px;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+            <div class="col-6 d-flex order-1 order-xxl-1">
                 <div class="card flex-fill">
                     <div class="card-header">
 
-                        <h5 class="card-title mb-0">Calendar</h5>
+                        <h5 class="card-title mb-0">Lịch</h5>
                     </div>
                     <div class="card-body d-flex">
                         <div class="align-self-center w-100">
                             <div class="chart">
                                 <div id="datetimepicker-dashboard"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 d-flex order-2 order-xxl-3">
+                <div class="card flex-fill w-100">
+                    <div class="card-header">
+
+                        <h5 class="card-title mb-0">Sản phẩm</h5>
+                    </div>
+                    <div class="card-body d-flex">
+                        <div class="align-self-center w-100">
+                            <div id="pie-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -182,7 +167,7 @@
                 <div class="card flex-fill">
                     <div class="card-header">
 
-                        <h5 class="card-title mb-0">Latest Projects</h5>
+                        <h5 class="card-title mb-0">Hoạt động khách hàng</h5>
                     </div>
                     <table class="table table-hover my-0">
                         <thead>
@@ -258,17 +243,174 @@
             <div class="col-12 col-lg-4 col-xxl-3 d-flex">
                 <div class="card flex-fill w-100">
                     <div class="card-header">
-
-                        <h5 class="card-title mb-0">Monthly Sales</h5>
+                        <h5 class="card-title mb-0">Doanh thu của năm</h5>
                     </div>
-                    <div class="card-body d-flex w-100">
-                        <div class="align-self-center chart chart-lg">
-                            <canvas id="chartjs-dashboard-bar"></canvas>
-                        </div>
+                    <div id="column-chart">
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function () {
+            //Column Chart
+            var options = {
+                series: [{
+                    name: 'Tổng tiền',
+                    data: [44, 55, 41, 67, 22, 43, 21, 33, 45, 31, 87, 200]
+                }],
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        borderRadius: 10,
+                        columnWidth: '50%',
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: 2
+                },
+
+                grid: {
+                    row: {
+                        colors: ['#fff', '#f2f2f2']
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        rotate: -45
+                    },
+                    categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
+                    ],
+                    tickPlacement: 'on'
+                },
+                yaxis: {
+                    title: {
+                        text: 'Tổng tiền',
+                    },
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: "horizontal",
+                        shadeIntensity: 0.25,
+                        gradientToColors: undefined,
+                        inverseColors: true,
+                        opacityFrom: 0.85,
+                        opacityTo: 0.85,
+                        stops: [50, 0, 100]
+                    },
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#column-chart"), options);
+            chart.render();
+
+            //Pie Chart
+            var pieOptions = {
+                series: [44, 55, 13, 43, 22],
+                chart: {
+                    width: 380,
+                    type: 'pie',
+                },
+                labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }]
+            };
+
+            var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
+            pieChart.render();
+
+            // Line chart
+            new Chart(document.getElementById("chartjs-dashboard-line"), {
+                type: "line",
+                data: {
+                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [{
+                        label: "Sales ($)",
+                        fill: true,
+                        backgroundColor: "#253240",
+                        borderColor: window.theme.primary,
+                        data: [
+                            2115,
+                            1562,
+                            1584,
+                            1892,
+                            1587,
+                            1923,
+                            2566,
+                            2448,
+                            2805,
+                            3438,
+                            2917,
+                            3327
+                        ]
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    tooltips: {
+                        intersect: false
+                    },
+                    hover: {
+                        intersect: true
+                    },
+                    plugins: {
+                        filler: {
+                            propagate: false
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            reverse: true,
+                            gridLines: {
+                                color: "rgba(0,0,0,0.0)"
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                stepSize: 1000
+                            },
+                            display: true,
+                            borderDash: [3, 3],
+                            gridLines: {
+                                color: "rgba(0,0,0,0.0)",
+                                fontColor: "#fff"
+                            }
+                        }]
+                    }
+                }
+            });
+
+            //Calendar
+            var date = new Date(Date.now());
+            var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
+            document.getElementById("datetimepicker-dashboard").flatpickr({
+                inline: true,
+                prevArrow: "<span data-feather=\"sliders\" title=\"Previous month\"><</span>",
+                nextArrow: "<span data-feather=\"sliders\" title=\"Next month\">></span>",
+                defaultDate: defaultDate
+            });
+        });
+    </script>
 @endsection
