@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
+use App\Services\ProductColorService;
 use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
 use App\Services\StoreService;
@@ -18,13 +19,15 @@ class StoreController extends Controller
     public $customerService;
     public $productSpecialService;
     public $productComponentService;
+    public $productColorService;
 
     public function __construct(
         ProductService          $productService,
         StoreService            $storeService,
         CustomerService         $customerService,
         ProductSpecialService   $productSpecialService,
-        ProductComponentService $productComponentService
+        ProductComponentService $productComponentService,
+        ProductColorService     $productColorService
     )
     {
         $this->productService = $productService;
@@ -32,6 +35,7 @@ class StoreController extends Controller
         $this->customerService = $customerService;
         $this->productSpecialService = $productSpecialService;
         $this->productComponentService = $productComponentService;
+        $this->productColorService = $productColorService;
     }
 
     public function index()
@@ -40,6 +44,14 @@ class StoreController extends Controller
         $assign['specials'] = $this->productSpecialService->all()->load('product.component.color');
 
         return view('store.index', $assign);
+    }
+
+    public function cart()
+    {
+        $assign['data'] = Session::has('cart') ? Session::get('cart') : '';
+        dd($assign['data']);
+
+        return view('store.cart');
     }
 
     public function addCart(Request $request)
@@ -79,13 +91,21 @@ class StoreController extends Controller
         return Session::get('cart');
     }
 
-    public function detail()
+    public function detail($id)
     {
-        Breadcrumbs::register('continent', function ($breadcrumbs) {
+        $assign['product'] = $this->productService->findId($id);
+        $assign['component'] = $assign['product']->component->first();
+        $name = $assign['product']->name;
+
+        $data = $this->productComponentService->getColor($assign['product']->id);
+        $colorIds = array_unique($data->pluck('color_id')->toArray());
+        $assign['color'] = $this->productColorService->getColorByIds($colorIds);
+
+        Breadcrumbs::register('continent', function ($breadcrumbs) use ($name){
             $breadcrumbs->push('Trang Chủ', route(STORE));
-            $breadcrumbs->push('ten san pham', route(STORE_PRODUCT_DETAIL));
+            $breadcrumbs->push($name, route(STORE_PRODUCT_DETAIL));
         });
 
-        return view('store.detail');
+        return view('store.detail', $assign);
     }
 }

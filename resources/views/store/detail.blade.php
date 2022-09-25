@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
     <!-- Content -->
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
                 {{ Breadcrumbs::render('continent') }}
@@ -10,13 +10,13 @@
 
         <hr style="width: 100%; margin-top: 8px; height: 4px;">
 
-        <div class="row mt-5" id="sanpham">
+        <div class="row mt-3" id="sanpham">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6">
-                        <img src="images/800x800/1.jpg" class="img-thumbnail">
+                    <div class="col-md-5">
+                        <img src="{{ asset('images/' . $component->first()->image) }}" class="img-thumbnail" style="width: 400px">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div>
                             <form action="" method="get">
                                 <input type="hidden" name="id" value="1">
@@ -26,7 +26,7 @@
                                     <span>Mã sản phẩm: </span>
                                     <span><b>A82198</b></span>
                                 </li>
-                                <li><h3>300.000 VND</h3></li>
+                                <li><h3>{{ $component->first()->price }} VND</h3></li>
                                 <hr>
                                 <li><p>"Urbas Pineapple or Ananas Pack" với quai dán tiện lợi gây ấn tượng với những
                                         phối màu "rất vui". Kĩ thuật in foxing lần đầu tiên được sử dụng với dòng chữ
@@ -35,30 +35,36 @@
                                         rõ hơn tính cách của dòng sản phẩm Urbas và thông điệp muốn truyền tải của bộ
                                         sản phẩm.</p></li>
                                 <hr>
-                                <li style="display: flex;">
+                                <li>
                                     <div class="product-option">
                                         <strong class="label">Lựa chọn phiên bản</strong>
-                                        <div class="options" id="versionOption" data-id="4" style="display: flex">
-                                            <input type="hidden" name="component" value="1">
-                                            <div class="form-group">
-                                                <div class="item" data-component="1" style="background-color: gainsboro">
-                                                    <span><label for="memory"><strong>128GB</strong></label></span>
-                                                    <strong>18,590,000 ₫</strong>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="item" data-component="2">
-                                                    <span><label for="memory"><strong>256GB</strong></label></span>
-                                                    <strong>21,490,000 ₫</strong>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="item" data-component="3">
-                                                    <span><label for="memory"><strong>512GB</strong></label></span>
-                                                    <strong>24,990,000 ₫</strong>
-                                                </div>
-                                            </div>
+                                        <div class="options" id="versionProduct" data-id="4" style="display: flex">
+                                            <input type="hidden" name="component"
+                                                   value="{{ $component->first()->id }}">
 
+{{--                                                <div class="form-group">--}}
+{{--                                                    <div class="item" data-component="{{ $row->id }}">--}}
+{{--                                                        <span>--}}
+{{--                                                            <label for="memory">--}}
+{{--                                                                <strong>{{ $row->memory }}GB</strong>--}}
+{{--                                                            </label>--}}
+{{--                                                        </span>--}}
+{{--                                                        <strong>{{ $row->price }} ₫</strong>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+
+                                        </div>
+                                    </div>
+                                    <div class="color-option">
+                                        <strong class="label">Lựa chọn màu sắc</strong>
+                                        <div class="options" id="versionColor" data-id="4" style="display: flex">
+                                            @foreach($color as $row)
+                                                <div class="form-group">
+                                                    <div class="item" data-color="{{ $row->id }}">
+                                                        {{ $row->name }}
+                                                    </div>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </li>
@@ -453,11 +459,20 @@
 
             });
 
-            $('#versionOption .item').click(function () {
-                $('#versionOption .item').removeAttr('style');
+            $('#versionProduct').find('.form-group:nth-child(2)').find('.item').css('background-color', 'gainsboro');
+            $('#versionColor').find('.form-group:nth-child(1)').find('.item').css('background-color', 'gainsboro');
+
+            $('#versionProduct .item').click(function () {
+                $('#versionProduct .item').removeAttr('style');
                 $(this).css('background-color', 'gainsboro');
                 $('[name=component]').val($(this).attr('data-component'));
                 console.log($('[name=component]').val());
+            });
+
+            $('#versionColor .item').click(function () {
+                $('#versionColor .item').removeAttr('style');
+                $(this).css('background-color', 'gainsboro');
+                console.log($(this).attr('data-color'));
             });
         });
     </script>

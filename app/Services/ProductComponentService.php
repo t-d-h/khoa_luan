@@ -34,4 +34,11 @@ class ProductComponentService extends BaseService
                     ->where('product_id', $productId)
                     ->count();
     }
+
+    public function getColor($condition)
+    {
+        return $this->model
+                    ->where('product_id', $condition)
+                    ->get();
+    }
 }

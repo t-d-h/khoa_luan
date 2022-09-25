@@ -11,4 +11,12 @@ class ProductColorService extends BaseService
     {
         $this->model = $productColorModel;
     }
+
+    public function getColorByIds(array $ids)
+    {
+        return $this->model
+                    ->select('id', 'name')
+                    ->whereIn('id', $ids)
+                    ->get();
+    }
 }

@@ -49,6 +49,7 @@ define('ADMIN_PRODUCT_CREATE', 'admin.product.create');
 define('ADMIN_PRODUCT_EDIT', 'admin.product.edit');
 define('ADMIN_PRODUCT_DELETE', 'admin.product.delete');
 define('GET_PRODUCT_SPECIAL', 'get.product.special');
+define('GET_PRODUCT_COLOR', 'get.product.color');
 
 //Admmin product type CRUD
 define('ADMIN_PRODUCT_TYPE_STORE', 'admin.product.type.store');
