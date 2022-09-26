@@ -48,8 +48,8 @@ class StoreController extends Controller
 
     public function cart()
     {
-        $assign['data'] = Session::has('cart') ? Session::get('cart') : '';
-        dd($assign['data']);
+        $session = Session::has('cart') ? Session::get('cart') : '';
+        dd($session);
 
         return view('store.cart');
     }
@@ -62,13 +62,14 @@ class StoreController extends Controller
         $component = $this->productComponentService->findId($dataRequest['component']);
 
         $data = [
-            'id' => $component->id,
-            'name' => $product->name,
-            'amount' => $dataRequest['amount'],
-            'color' => $dataRequest['color'],
-            'price' => $component->price,
-            'img' => $component->image,
-            'time' => strtotime(now())
+            'id'        => $component->id,
+            'name'      => $product->name,
+            'amount'    => $dataRequest['amount'],
+            'color'     => $dataRequest['color'],
+            'price'     => $component->price,
+            'memory'    => $component->memory,
+            'img'       => $component->image,
+            'time'      => strtotime(now())
         ];
 
         $this->storeService->addCart($data, $component->id);
@@ -107,5 +108,13 @@ class StoreController extends Controller
         });
 
         return view('store.detail', $assign);
+    }
+
+    public function getMemory(Request $request)
+    {
+        $dataRequest = $request->all();
+        $memory = $this->productComponentService->getMemory($dataRequest['id'], $dataRequest['color']);
+
+        return response()->json(['data' => $memory]);
     }
 }

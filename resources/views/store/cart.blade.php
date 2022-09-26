@@ -4,9 +4,10 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
+            @foreach($component as $row)
             <div class="row">
                 <div class="col-md-3">
-                    <img src="images/800x800/8.jpg" class="img-thumbnail">
+                    <img src="{{ asset('image/' . $row->image) }}" class="img-thumbnail">
                 </div>
                 <div class="col-md-6">
                     <div class="infor-gio">
@@ -42,83 +43,8 @@
                 </div>
             </div>
             <hr style="width: 100%;">
+            @endforeach
 
-            <div class="row">
-                <div class="col-md-3">
-                    <img src="images/800x800/8.jpg" class="img-thumbnail">
-                </div>
-                <div class="col-md-6">
-                    <div class="infor-gio">
-                        <h5>Tên sản phẩm</h5>
-                        <p>Giá: 300.000 VND</p>
-                        <div class="mau-sanpham">
-                            <div style="width: 30%;">
-                                <h4>SIZE</h4>
-                                <select>
-                                    <option>36</option>
-                                    <option>37</option>
-                                    <option>38</option>
-                                </select>
-                            </div>
-                            <div>
-                                <h4>SỐ LƯỢNG</h4>
-                                <div class="slg-sanpham">
-                                    <span class="giam">-</span>
-                                    <input type="number" name="" class="soluong-sanpham" value="1" readonly>
-                                    <span class="tang">+</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="giohang-sub">
-                        <h5><span class="price">200</span><span> .000VND</span></h5>
-                        <p>Còn hàng</p>
-                        <button class="btn btn-light">Thích</button>
-                        <button class="btn btn-dark">Xóa</button>
-                    </div>
-                </div>
-            </div>
-            <hr style="width: 100%;">
-
-            <div class="row">
-                <div class="col-md-3">
-                    <img src="images/800x800/8.jpg" class="img-thumbnail">
-                </div>
-                <div class="col-md-6">
-                    <div class="infor-gio">
-                        <h5>Tên sản phẩm</h5>
-                        <p>Giá: 300.000 VND</p>
-                        <div class="mau-sanpham">
-                            <div style="width: 30%;">
-                                <h4>SIZE</h4>
-                                <select>
-                                    <option>36</option>
-                                    <option>37</option>
-                                    <option>38</option>
-                                </select>
-                            </div>
-                            <div>
-                                <h4>SỐ LƯỢNG</h4>
-                                <div class="slg-sanpham">
-                                    <span class="giam">-</span>
-                                    <input type="number" name="" class="soluong-sanpham" value="1" readonly>
-                                    <span class="tang">+</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="giohang-sub">
-                        <h5><span class="price">300</span><span> .000VND</span></h5>
-                        <p>Còn hàng</p>
-                        <button class="btn btn-light">Thích</button>
-                        <button class="btn btn-dark">Xóa</button>
-                    </div>
-                </div>
-            </div>
 
             <!-- Bottem -->
             <hr style="width: 100%; height: 4px; background-color: black;">

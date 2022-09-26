@@ -64,6 +64,7 @@ Route::prefix('store')->group(function () {
         Route::get('cart-session', [StoreController::class, 'getCartSession']);
         Route::get('add-cart', [StoreController::class, 'addCart'])->name('add.cart');
         Route::get('remove-cart', [StoreController::class, 'removeCart']);
+        Route::get('get-memory', [StoreController::class, 'getMemory'])->name(STORE_GET_MEMORY);
         Route::get('{id}', [StoreController::class, 'detail']);
     });
 
