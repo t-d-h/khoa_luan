@@ -19,7 +19,7 @@
                     <div class="col-md-7">
                         <div>
                             <form action="" method="get">
-                                <input type="hidden" name="id" value="1">
+                                <input type="hidden" name="id" value="{{ $product->id }}">
                             <ul style="list-style: none;">
                                 <li><h3>TÊN SẢN PHẨM</h3></li>
                                 <li>
@@ -39,43 +39,20 @@
                                     <div class="product-option">
                                         <strong class="label">Lựa chọn phiên bản</strong>
                                         <div class="options" id="versionProduct" data-id="4" style="display: flex">
-                                            <input type="hidden" name="component"
-                                                   value="{{ $component->first()->id }}">
-
-{{--                                                <div class="form-group">--}}
-{{--                                                    <div class="item" data-component="{{ $row->id }}">--}}
-{{--                                                        <span>--}}
-{{--                                                            <label for="memory">--}}
-{{--                                                                <strong>{{ $row->memory }}GB</strong>--}}
-{{--                                                            </label>--}}
-{{--                                                        </span>--}}
-{{--                                                        <strong>{{ $row->price }} ₫</strong>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-
-                                        </div>
-                                    </div>
-                                    <div class="color-option">
-                                        <strong class="label">Lựa chọn màu sắc</strong>
-                                        <div class="options" id="versionColor" data-id="4" style="display: flex">
-                                            @foreach($color as $row)
-                                                <div class="form-group">
-                                                    <div class="item" data-color="{{ $row->id }}">
-                                                        {{ $row->name }}
-                                                    </div>
-                                                </div>
-                                            @endforeach
+                                            <input type="hidden" name="component" value="">
                                         </div>
                                     </div>
                                 </li>
                                 <hr>
                                 <li class="mau-sanpham">
                                     <div style="width: 30%;">
-                                        <h4>SIZE</h4>
-                                        <select name="color">
-                                            <option>36</option>
-                                            <option>37</option>
-                                            <option>38</option>
+                                        <h4>Color</h4>
+                                        <select name="color" required>
+                                            @foreach($color as $row)
+                                                <option value="{{ $row->id }}">
+                                                    {{ $row->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div>
@@ -184,70 +161,6 @@
                 </div>
                 <!--/.First slide-->
 
-                <!--Second slide-->
-                <div class="carousel-item">
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="border-product">
-                                <img src="https://cetofashions.com/wp-content/uploads/2020/09/M1311.jpg"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://cetofashions.com/wp-content/uploads/2020/09/M1311.jpg"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://cetofashions.com/wp-content/uploads/2020/09/M1311.jpg"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://cetofashions.com/wp-content/uploads/2020/09/M1311.jpg"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!--/.Second slide-->
-
                 <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -344,71 +257,6 @@
                 </div>
                 <!--/.First slide-->
 
-                <!--Second slide-->
-                <div class="carousel-item">
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="border-product">
-                                <img src="https://fsport247.com/wp-content/uploads/2021/05/nike-air-max-97.png"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://fsport247.com/wp-content/uploads/2021/05/nike-air-max-97.png"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://fsport247.com/wp-content/uploads/2021/05/nike-air-max-97.png"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img src="https://fsport247.com/wp-content/uploads/2021/05/nike-air-max-97.png"
-                                     class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!--/.Second slide-->
-
-
                 <a class="carousel-control-prev" href="#multi-item" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -425,6 +273,40 @@
 @endsection
 @section('script')
     <script type="text/javascript">
+        function getMemory() {
+            var form =  $('form').serializeArray();
+
+            $.ajax({
+                type: "get",
+                url: "{{ route(STORE_GET_MEMORY) }}",
+                data: {
+                    "id": form[0].value,
+                    "color": form[2].value,
+                },
+                success: function (e) {
+                    if (e) {
+                        var html = '';
+                        $.each(e.data, function (key, value) {
+                            // console.log(value);
+                            html += '<div class="form-group">'+
+                                        '<div class="item" data-component="' + value.id + '">'+
+                                            '<span>'+
+                                            '<label for="memory">'+
+                                            '<strong>' + value.memory + 'GB</strong>'+
+                                            '</label>'+
+                                            '</span>'+
+                                            '<strong>' + parseInt(value.price).toLocaleString() + '₫</strong>'+
+                                        '</div>'+
+                                    '</div>'
+                        });
+
+                        //Delete and apple new option
+                        $('.product-option').find('.form-group').remove();
+                        $('.product-option').find('.options').append(html);
+                    }
+                }
+            });
+        }
         $(document).ready(function () {
             //thay doi so luong
             $(".tang").click(function (event) {
@@ -459,20 +341,20 @@
 
             });
 
-            $('#versionProduct').find('.form-group:nth-child(2)').find('.item').css('background-color', 'gainsboro');
-            $('#versionColor').find('.form-group:nth-child(1)').find('.item').css('background-color', 'gainsboro');
+            getMemory();
 
-            $('#versionProduct .item').click(function () {
+            $('select[name="color"]').change(function () {
+                getMemory();
+                $('[name=component]').val('');
+            });
+
+            $('#versionProduct').find('.form-group:nth-child(2)').find('.item').css('background-color', 'gainsboro');
+
+            $(document).on('click', '#versionProduct .item', function () {
                 $('#versionProduct .item').removeAttr('style');
                 $(this).css('background-color', 'gainsboro');
                 $('[name=component]').val($(this).attr('data-component'));
-                console.log($('[name=component]').val());
-            });
-
-            $('#versionColor .item').click(function () {
-                $('#versionColor .item').removeAttr('style');
-                $(this).css('background-color', 'gainsboro');
-                console.log($(this).attr('data-color'));
+                // console.log($('[name=component]').val());
             });
         });
     </script>
