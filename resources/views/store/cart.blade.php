@@ -4,47 +4,52 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
-            @foreach($component as $row)
-            <div class="row">
-                <div class="col-md-3">
-                    <img src="{{ asset('image/' . $row->image) }}" class="img-thumbnail">
-                </div>
-                <div class="col-md-6">
-                    <div class="infor-gio">
-                        <h5>Tên sản phẩm</h5>
-                        <p>Giá: 300.000 VND</p>
-                        <div class="mau-sanpham">
-                            <div style="width: 30%;">
-                                <h4>SIZE</h4>
-                                <select>
-                                    <option>36</option>
-                                    <option>37</option>
-                                    <option>38</option>
-                                </select>
-                            </div>
-                            <div>
-                                <h4>SỐ LƯỢNG</h4>
-                                <div class="slg-sanpham">
-                                    <span class="giam">-</span>
-                                    <input type="number" name="" class="soluong-sanpham" value="1" readonly>
-                                    <span class="tang">+</span>
+            @if(isset($data))
+                <form action="" method="get">
+                @foreach($data as $row)
+                    <input type="hidden" name="component[]" value="{{ $row['id'] }}">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <img src="{{ asset('image/' . $row['img']) }}" class="img-thumbnail">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="infor-gio">
+                                <h5>{{ $row['name'] ?? null }}</h5>
+                                <p>Giá: {{ number_format($row['price']) }} VND</p>
+                                <div class="mau-sanpham">
+                                    <div style="width: 30%;">
+                                        <h4>Color</h4>
+                                        <select readonly>
+                                            <option>{{ $row['color'] }}</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <h4>SỐ LƯỢNG</h4>
+                                        <div class="slg-sanpham" style="width: 110px; margin-right: 50px;">
+                                            <span class="giam">-</span>
+                                            <input type="number" name="amount" class="soluong-sanpham" value="{{ $row['amount'] }}" readonly style="width: 45px">
+                                            <span class="tang">+</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="giohang-sub">
+                                <h5>
+                                    <span class="price">{{ number_format($row['price']) }}</span>
+                                    <span>VND</span>
+                                </h5>
+                                <p>Còn hàng</p>
+                                <button class="btn btn-light">Thích</button>
+                                <button class="btn btn-dark">Xóa</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="giohang-sub">
-                        <h5><span class="price">300</span><span> .000VND</span></h5>
-                        <p>Còn hàng</p>
-                        <button class="btn btn-light">Thích</button>
-                        <button class="btn btn-dark">Xóa</button>
-                    </div>
-                </div>
-            </div>
-            <hr style="width: 100%;">
-            @endforeach
-
+                    <hr style="width: 100%;">
+                @endforeach
+                </form>
+            @endif
 
             <!-- Bottem -->
             <hr style="width: 100%; height: 4px; background-color: black;">
@@ -68,7 +73,10 @@
                         <p>Giảm</p>
                     </div>
                     <div style="text-align: right;">
-                        <p><span id="price-don">800</span><span> .000VND</span></p>
+                        <p>
+                            <span id="price-don"></span>
+                            <span>VND</span>
+                        </p>
                         <p>0 VND</p>
                     </div>
                 </div>
@@ -87,6 +95,18 @@
 @endsection
 @section('script')
 <script type="text/javascript">
+    function updatePrice(status, element) {
+        var row = element.closest('.row');
+        var dongia = Number(row.find('.price').html().replace(',', ''));
+        // console.log(dongia);
+        var donhang = Number(element.closest('.container').find('#price-don').html());
+        if (status == 'tang') {
+            var total = dongia + donhang;
+        } else {
+            var total = donhang - dongia;
+        }
+        element.closest('.container').find('#price-don').html(total);
+    }
     $(document).ready(function() {
         //thay doi so luong
         $(".tang").click(function (event) {
@@ -98,13 +118,9 @@
                 color: 'red'
             });
 
-            var row = $(this).closest('.row');
-            var dongia = Number(row.find('.price').html());
-            var donhang = Number($(this).closest('.container').find('#price-don').html());
-            $(this).closest('.container').find('#price-don').html(dongia + donhang);
-            //alert(dongia);
-
+            updatePrice('tang', $(this));
         });
+
         $(".giam").click(function (event) {
             var tg = $(this).closest('.slg-sanpham');
             var sl = Number(tg.find('.soluong-sanpham').val());
@@ -118,6 +134,7 @@
                 });
             }
 
+            updatePrice('giam', $(this));
         });
     });
 </script>

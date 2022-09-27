@@ -49,9 +49,9 @@ class StoreController extends Controller
     public function cart()
     {
         $session = Session::has('cart') ? Session::get('cart') : '';
-        dd($session);
+//        dd($session);
 
-        return view('store.cart');
+        return view('store.cart', ['data' => $session]);
     }
 
     public function addCart(Request $request)

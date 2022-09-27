@@ -55,11 +55,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div>
+                                    <div style="width: 250px;">
                                         <h4>SỐ LƯỢNG</h4>
                                         <div class="slg-sanpham">
                                             <span class="giam">-</span>
-                                            <input type="number" name="amount" class="soluong-sanpham" value="1" readonly>
+                                            <input type="number" name="amount" class="soluong-sanpham" value="1" readonly style="width: 45px">
                                             <span class="tang">+</span>
                                         </div>
                                     </div>
