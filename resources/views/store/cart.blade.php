@@ -1,12 +1,14 @@
+@php($i=0)
 @extends('index')
 @section('content')
 <!-- Content -->
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-8">
-            @if(isset($data))
+            @if(!empty($data))
                 <form action="" method="get">
                 @foreach($data as $row)
+                    {{ $i += $row['price'] * $row['amount']}}
                     <input type="hidden" name="component[]" value="{{ $row['id'] }}">
                     <div class="row">
                         <div class="col-md-3">
@@ -26,7 +28,7 @@
                                     <div>
                                         <h4>SỐ LƯỢNG</h4>
                                         <div class="slg-sanpham" style="width: 110px; margin-right: 50px;">
-                                            <span class="giam">-</span>
+                                            <span class="giam" style="color: red !important;cursor: pointer !important;">-</span>
                                             <input type="number" name="amount" class="soluong-sanpham" value="{{ $row['amount'] }}" readonly style="width: 45px">
                                             <span class="tang">+</span>
                                         </div>
@@ -42,7 +44,9 @@
                                 </h5>
                                 <p>Còn hàng</p>
                                 <button class="btn btn-light">Thích</button>
-                                <button class="btn btn-dark">Xóa</button>
+                                <a class="btn btn-dark" href="{{ route(STORE_DELETE_CART, $row['id']) }}">
+                                    Xóa
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -54,7 +58,9 @@
             <!-- Bottem -->
             <hr style="width: 100%; height: 4px; background-color: black;">
             <div style="display: flex; justify-content: space-around;">
-                <button class="btn btn-dark"><a href="">XÓA HẾT</a></button>
+                <button class="btn btn-dark">
+                    <a href="{{ route(STORE_REMOVE_CART) }}">XÓA HẾT</a>
+                </button>
                 <button class="btn btn-dark"><a href="">QUAY LẠI MUA HÀNG</a></button>
             </div>
         </div>
@@ -74,7 +80,7 @@
                     </div>
                     <div style="text-align: right;">
                         <p>
-                            <span id="price-don"></span>
+                            <span id="price-don">{{ $i }}</span>
                             <span>VND</span>
                         </p>
                         <p>0 VND</p>
@@ -84,7 +90,10 @@
                 <div class="thanhtoan">
                     <div>
                         <p>TỔNG: </p>
-                        <p id="price-tong">800.000 <span>VND</span></p>
+                        <p id="price-tong">
+                            <span>{{ $i }}</span>
+                            <span>VND</span>
+                        </p>
                     </div>
                     <button class="btn btn-warning">THANH TOÁN</button>
                 </div>
@@ -106,6 +115,7 @@
             var total = donhang - dongia;
         }
         element.closest('.container').find('#price-don').html(total);
+        $('#price-tong').find('span').first().html(total);
     }
     $(document).ready(function() {
         //thay doi so luong
@@ -124,17 +134,12 @@
         $(".giam").click(function (event) {
             var tg = $(this).closest('.slg-sanpham');
             var sl = Number(tg.find('.soluong-sanpham').val());
-            if (sl > 2) {
-                tg.find('.soluong-sanpham').val(sl - 1);
+            if (sl >= 2) {
+                tg.find('.soluong-sanpham').val(sl - 1)
+                updatePrice('giam', $(this));
             } else {
                 tg.find('.soluong-sanpham').val(1);
-                $(this).css({
-                    cursor: 'not-allowed',
-                    color: 'black'
-                });
             }
-
-            updatePrice('giam', $(this));
         });
     });
 </script>

@@ -60,10 +60,11 @@ Route::prefix('store')->group(function () {
 
     //Cart shop
     Route::prefix('cart')->group(function () {
-        Route::get('', [StoreController::class, 'cart']);
+        Route::get('', [StoreController::class, 'cart'])->name(STORE_CART);
         Route::get('cart-session', [StoreController::class, 'getCartSession']);
         Route::get('add-cart', [StoreController::class, 'addCart'])->name('add.cart');
-        Route::get('remove-cart', [StoreController::class, 'removeCart']);
+        Route::get('remove-cart', [StoreController::class, 'removeCart'])->name(STORE_REMOVE_CART);
+        Route::get('delete/{id}', [StoreController::class, 'deleteCart'])->name(STORE_DELETE_CART);
         Route::get('get-memory', [StoreController::class, 'getMemory'])->name(STORE_GET_MEMORY);
         Route::get('{id}', [StoreController::class, 'detail']);
     });

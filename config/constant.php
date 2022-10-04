@@ -9,8 +9,10 @@ define('VNP_URL', 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html');
 define('VNP_RETURNURL', '127.0.0.1:8000/store/vnpay/result');
 
 //Store cart
+define('STORE_CART', 'store.cart');
 define('STORE_ADD_CART', 'store.add.cart');
 define('STORE_REMOVE_CART', 'store.remove.cart');
+define('STORE_DELETE_CART', 'store.delete.cart');
 define('STORE_GET_MEMORY', 'store.get.memory');
 
 //Auth

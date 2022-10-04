@@ -48,8 +48,7 @@ class StoreController extends Controller
 
     public function cart()
     {
-        $session = Session::has('cart') ? Session::get('cart') : '';
-//        dd($session);
+        $session = Session::has('cart') ? Session::get('cart') : null;
 
         return view('store.cart', ['data' => $session]);
     }
@@ -65,7 +64,7 @@ class StoreController extends Controller
             'id'        => $component->id,
             'name'      => $product->name,
             'amount'    => $dataRequest['amount'],
-            'color'     => $dataRequest['color'],
+            'color'     => $component->color->name,
             'price'     => $component->price,
             'memory'    => $component->memory,
             'img'       => $component->image,
@@ -89,7 +88,17 @@ class StoreController extends Controller
     public function removeCart()
     {
         Session::flush();
-        return Session::get('cart');
+
+        return redirect()->to(route(STORE_CART));
+    }
+
+    public function deleteCart($id)
+    {
+        $session = Session::get('cart');
+        unset($session[$id]);
+        Session::put('cart', $session);
+
+        return redirect()->to(route(STORE_CART));
     }
 
     public function detail($id)

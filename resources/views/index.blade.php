@@ -21,14 +21,14 @@
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-md navbar-dark bg-pink">
-    <a href="" class="navbar-brand">Store</a>
+    <a href="{{ route(STORE) }}" class="navbar-brand">Store</a>
     <button class="navbar-toggler mr-5" data-toggle="collapse" data-target="#ResponsiveNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="ResponsiveNavbar">
         <ul class="navbar-nav ml-auto mr-5">
             <li class="nav-item">
-                <a href="" class="nav-link active">Trang chủ</a>
+                <a href="{{ route(STORE) }}" class="nav-link active">Trang chủ</a>
             </li>
             <li class="nav-item dropdown">
                 <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Sản phẩm</a>
@@ -47,7 +47,7 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link">Giỏ hàng</a>
+                <a href="{{ route(STORE_CART) }}" class="nav-link">Giỏ hàng</a>
             </li>
             <li class="nav-item">
                 <a href="" class="nav-link">Thông tin</a>
@@ -82,29 +82,7 @@
         <button class="btn"><i class="gg-shopping-cart"></i></button>
         <div class="dropdown-giohang">
             <div id="scroll-giohang">
-                <div class="row">
-                    <div class="col-md-5">
-                        <img src="images/800x800/8.jpg">
-                    </div>
-                    <div class="col-md-7">
-                        <strong>Tên sản phẩm 3</strong>
-                        <div class="product-giohang">
-                            <div>
-                                <p>Giá: </p>
-                                <p>100.000 VND</p>
-                            </div>
-                            <div>
-                                <p>Size: </p>
-                                <p>34</p>
-                            </div>
-                            <div>
-                                <p>Số lượng: </p>
-                                <p>1</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
+
             </div>
             <div class="row mt-2">
                 <div class="col-md-12" id="tong-giohang">

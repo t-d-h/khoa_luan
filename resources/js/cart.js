@@ -23,7 +23,7 @@ $(document).ready(function () {
             row += '<div class="row">' +
                 '<input type="hidden" name="product_id" value="' + val.id + '">' +
                 '<div class="col-md-5">' +
-                '<img src="' + val.img + '">' +
+                '<img src="http://127.0.0.1:8000/images/' + val.img + '">' +
                 '</div>' +
                 '<div class="col-md-7">' +
                 '<strong>' + val.name + '</strong>' +
