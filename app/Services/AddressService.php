@@ -10,4 +10,13 @@ class AddressService extends BaseService
     {
         $this->model = $addressModel;
     }
+
+    public function getCity()
+    {
+        return $this->model
+                    ->select('city_id', 'city_name')
+                    ->orderBy('city_id')
+                    ->groupBy('city_id')
+                    ->get();
+    }
 }

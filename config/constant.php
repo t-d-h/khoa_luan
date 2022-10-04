@@ -24,6 +24,11 @@ define('STORE_FORGOT_PASSWORD', 'store.forgot.password');
 define('STORE_FORM_RESET_PASSWORD', 'store.form.reset.password');
 define('STORE_RESET_PASSWORD', 'store.reset.password');
 
+//Cutomer
+define('STORE_CUSTOMER_INFO', 'store.customer.info');
+define('STORE_CUSTOMER_SAVE_INFO', 'store.customer.save.info');
+define('STORE_GET_DISTRICT', 'store.get.district');
+
 //Payment VNPay
 define('CREATE_PAYMENT_VNPAY', 'create.payment.vnpay');
 define('RESULT_PAYMENT_VNPAY', 'result.payment.vnpay');
