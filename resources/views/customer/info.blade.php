@@ -1,5 +1,6 @@
 @extends('store.index')
 @section('content')
+    @include('common.noti_message')
     <div class="container mt-4 py-2" style="background-color: #e9e9e9">
         <form class="well form-horizontal" action="{{ route(STORE_CUSTOMER_SAVE_INFO) }}" method="post" id="contact_form">
             <input type="hidden" name="id" value="{{ $customer->id }}">
@@ -41,7 +42,7 @@
                                 <select name="city" class="form-control" id="city" required>
                                     <option value="">Chọn thành phố</option>
                                     @foreach($cities as $city)
-                                        <option value="{{ $city->city_id }}" {{ $city->city_id == $customer->city_id ? 'checked' : ''}}>
+                                        <option value="{{ $city->city_id }}" {{ $city->city_id == $customer->city_id ? 'selected' : ''}}>
                                             {{ $city->city_name }}
                                         </option>
                                     @endforeach
@@ -68,7 +69,8 @@
                         <div class="inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                                <input name="phone" placeholder="(+84) 12 3456789" class="form-control" type="text" autocomplete="off" required />
+                                <input name="phone" placeholder="(+84) 12 3456789" class="form-control" type="text"
+                                       autocomplete="off" value="{{ $customer->phone }}" required />
                             </div>
                         </div>
                     </div>
@@ -80,6 +82,14 @@
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
                                 <select name="district" id="district" class="form-control" required>
                                     <option value="">Chọn quận, huyện</option>
+                                    @if(isset($districts))
+                                        @foreach($districts as $district)
+                                            <option value="{{ $district->district_id }}"
+                                                {{ $district->district_id == $customer->district_id ? 'selected' : '' }}>
+                                                {{ $district->district_name }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -92,7 +102,8 @@
                         <div class="inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-                                <input name="address" placeholder="Nhập địa chỉ" class="form-control" type="text" autocomplete="off" required>
+                                <input name="address" placeholder="Nhập địa chỉ" class="form-control" type="text"
+                                       autocomplete="off" value="{{ $customer->address }}" required>
                             </div>
                         </div>
                     </div>

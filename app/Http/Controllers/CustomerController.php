@@ -138,6 +138,9 @@ class CustomerController extends Controller
     {
         $assign['cities'] = $this->addressService->getCity();
         $assign['customer'] = Auth::guard('web')->user();
+        if (!empty($assign['customer']->city_id)) {
+            $assign['districts'] = $this->addressService->find('city_id', '=', $assign['customer']->city_id);
+        }
 
         return view('customer.info', $assign);
     }
@@ -152,6 +155,21 @@ class CustomerController extends Controller
 
     public function saveInfo(Request $request)
     {
-        dd($request->all());
+        try {
+            $dataRequest = $request->all();
+            $data = [
+                'first_name'    => $dataRequest['first_name'],
+                'name'          => $dataRequest['last_name'],
+                'phone'         => $dataRequest['phone'],
+                'city_id'       => $dataRequest['city'],
+                'district_id'   => $dataRequest['district'],
+                'address'       => $dataRequest['address']
+            ];
+
+            $this->customerService->update($data, Auth::guard('web')->user()->id);
+            return redirect()->back()->with(['status' => 'success', 'message' => CHANGE_SUCCESS]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'fail', 'message' => CHANGE_FAIL]);
+        }
     }
 }
