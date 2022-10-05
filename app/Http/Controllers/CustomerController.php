@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\RegisterEvent;
 use App\Mail\ResetPasswordMail;
 use App\Models\User;
+use App\Services\AddressService;
 use App\Services\CustomerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,15 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
     public $customerService;
+    public $addressService;
 
-    public function __construct(CustomerService $customerService)
+    public function __construct(
+        CustomerService $customerService,
+        AddressService $addressService
+    )
     {
         $this->customerService = $customerService;
+        $this->addressService = $addressService;
     }
 
     public function login(Request $request)
@@ -126,5 +132,26 @@ class CustomerController extends Controller
         }
 
         return redirect()->back()->with(['status' => 'fail', 'message' => 'Cập nhật thất bại']);
+    }
+
+    public function info()
+    {
+        $assign['cities'] = $this->addressService->getCity();
+        $assign['customer'] = Auth::guard('web')->user();
+
+        return view('customer.info', $assign);
+    }
+
+    public function getDistrict(Request $request)
+    {
+        $cityId = $request->input('city_id');
+        $districts = $this->addressService->find('city_id', '=', $cityId);
+
+        return response()->json(['data' => $districts]);
+    }
+
+    public function saveInfo(Request $request)
+    {
+        dd($request->all());
     }
 }

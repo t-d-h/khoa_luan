@@ -58,6 +58,12 @@ Route::prefix('store')->group(function () {
     Route::get('reset-password/{email}/{token}', [CustomerController::class, 'formResetPassword'])->name(STORE_FORM_RESET_PASSWORD);
     Route::post('reset-password', [CustomerController::class, 'resetPassword'])->name(STORE_RESET_PASSWORD);
 
+    Route::prefix('customer')->middleware('customerLogin')->group(function () {
+        Route::get('get-district', [CustomerController::class, 'getDistrict'])->name(STORE_GET_DISTRICT);
+        Route::get('info', [CustomerController::class, 'info'])->name(STORE_CUSTOMER_INFO);
+        Route::post('save', [CustomerController::class, 'saveInfo'])->name(STORE_CUSTOMER_SAVE_INFO);
+    });
+
     //Cart shop
     Route::prefix('cart')->group(function () {
         Route::get('', [StoreController::class, 'cart'])->name(STORE_CART);
