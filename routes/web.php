@@ -72,6 +72,7 @@ Route::prefix('store')->group(function () {
         Route::get('remove-cart', [StoreController::class, 'removeCart'])->name(STORE_REMOVE_CART);
         Route::get('delete/{id}', [StoreController::class, 'deleteCart'])->name(STORE_DELETE_CART);
         Route::get('get-memory', [StoreController::class, 'getMemory'])->name(STORE_GET_MEMORY);
+        Route::post('create-payment', [StoreController::class, 'createPayment'])->name(STORE_CREATE_PAYMENT);
         Route::get('{id}', [StoreController::class, 'detail']);
     });
 
@@ -82,9 +83,7 @@ Route::prefix('store')->group(function () {
 
     //Payment momo
     Route::prefix('momo')->group(function () {
-        Route::get('atm', function () {
-           return view('atm.atm_momo');
-        });
+        Route::get('atm', [MomoController::class, 'index'])->name(VIEW_PAYMENT_MOMO);
         Route::post('atm', [MomoController::class, 'atm'])->name(CREATE_PAYMENT_MOMO);
 
         //Webhook momo

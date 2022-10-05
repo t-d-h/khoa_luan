@@ -126,4 +126,13 @@ class StoreController extends Controller
 
         return response()->json(['data' => $memory]);
     }
+
+    public function createPayment(Request $request)
+    {
+        $data = $request->all();
+
+        $request->session()->forget('payment');
+        $request->session()->push('payment', $data);
+        return redirect()->to(route(VIEW_PAYMENT_MOMO));
+    }
 }
