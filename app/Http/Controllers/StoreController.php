@@ -3,23 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Services\CustomerService;
+use App\Services\MomoService;
+use App\Services\PaymentService;
 use App\Services\ProductColorService;
 use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
 use App\Services\StoreService;
+use App\Services\VnpayService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Services\ProductService;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
 class StoreController extends Controller
 {
-    public $productService;
-    public $storeService;
-    public $customerService;
-    public $productSpecialService;
-    public $productComponentService;
-    public $productColorService;
+    protected $productService;
+    protected $storeService;
+    protected $customerService;
+    protected $productSpecialService;
+    protected $productComponentService;
+    protected $productColorService;
+    protected $momoService;
+    protected $vnpayService;
+    protected $paymentService;
 
     public function __construct(
         ProductService          $productService,
@@ -27,15 +34,21 @@ class StoreController extends Controller
         CustomerService         $customerService,
         ProductSpecialService   $productSpecialService,
         ProductComponentService $productComponentService,
-        ProductColorService     $productColorService
+        ProductColorService     $productColorService,
+        MomoService             $momoService,
+        VnpayService            $vnpayService,
+        PaymentService          $paymentService
     )
     {
-        $this->productService = $productService;
-        $this->storeService = $storeService;
-        $this->customerService = $customerService;
-        $this->productSpecialService = $productSpecialService;
-        $this->productComponentService = $productComponentService;
-        $this->productColorService = $productColorService;
+        $this->productService           = $productService;
+        $this->storeService             = $storeService;
+        $this->customerService          = $customerService;
+        $this->productSpecialService    = $productSpecialService;
+        $this->productComponentService  = $productComponentService;
+        $this->productColorService      = $productColorService;
+        $this->momoService              = $momoService;
+        $this->vnpayService             = $vnpayService;
+        $this->paymentService           = $paymentService;
     }
 
     public function index()
@@ -129,10 +142,36 @@ class StoreController extends Controller
 
     public function createPayment(Request $request)
     {
-        $data = $request->all();
+        if (!Auth::guard('web')->check()) {
+            return redirect()->to(route(STORE_LOGIN));
+        }
 
-        $request->session()->forget('payment');
-        $request->session()->push('payment', $data);
-        return redirect()->to(route(VIEW_PAYMENT_MOMO));
+        $dataRequest = $request->all();
+
+        //Save payment to db
+        $paymentInfo = [];
+        foreach ($dataRequest['component'] as $key => $value) {
+            $paymentInfo[] = [
+                'component' => $value,
+                'amount'    => $dataRequest['amount'][$key]
+            ];
+        }
+
+        $data = [
+            'order_id'      => time(),
+            'customer_id'   => Auth::guard('web')->user()->id,
+            'payment_type'  => $dataRequest['payment_type'],
+            'total'         => $dataRequest['total'],
+            'payment_info'  => json_encode($paymentInfo)
+        ];
+        $this->paymentService->insert($data);
+
+        if ($dataRequest['payment_type'] == 'momo') {
+            $payUrl = $this->momoService->createPayment($data['order_id'], $dataRequest['total']);
+        } else {
+            $payUrl = $this->vnpayService->createPayment($data['order_id'], $dataRequest['total']);
+        }
+
+        return redirect()->to($payUrl);
     }
 }
