@@ -62,4 +62,16 @@ abstract class BaseService
     {
         return $this->model->find($id)->delete();
     }
+
+    public function updateWithCondition($data, $condition, $value)
+    {
+        $row = $this->model->where($condition, $value)->first();
+
+        foreach ($data as $key => $value) {
+            $row->$key = $value;
+        }
+        $row->save();
+
+        return $row;
+    }
 }

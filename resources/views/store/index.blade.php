@@ -89,5 +89,33 @@
     </div>
 </div>
 @endsection
+@section('script')
+    <script>
+        function showCart(data) {
+            var row = '';
+            var sort = [];
+            $.each(data, function (index, value) {
+                sort.push(value);
+            });
+            sort.sort(function (a, b) {
+                return a.time - b.time;
+            });
+            $.each(sort, function (index, val) {
+                row += '<div class="row">' + '<input type="hidden" name="product_id" value="' + val.id + '">' + '<div class="col-md-5">' + '<img src="' + val.img + '">' + '</div>' + '<div class="col-md-7">' + '<strong>' + val.name + '</strong>' + '<div class="product-giohang">' + '<div>' + '<p>Giá: </p>' + '<p>' + val.price + '</p>' + '</div>' + '<div>' + '<p>Số lượng: </p>' + '<p>' + val.amount + '</p>' + '</div>' + '</div>' + '</div>' + '<hr>' + '</div>';
+            });
+            return row;
+        }
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "get",
+                url: "/store/cart/cart-session",
+                success: function success(e) {
+                    $('#scroll-giohang').append(showCart(e));
+                }
+            });
+        })
+    </script>
+@endsection
 
 

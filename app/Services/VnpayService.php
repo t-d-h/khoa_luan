@@ -1,64 +1,58 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
-use App\Services\PaymentService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Models\PaymentModel;
+use Illuminate\Support\Facades\Auth;
 
-class VNPayController extends Controller
+class VnpayService extends BaseService
 {
-    protected $paymentService;
-
-    public function __construct(PaymentService $paymentService)
+    public function __construct(PaymentModel $paymentModel)
     {
-        $this->paymentService = $paymentService;
+        $this->model = $paymentModel;
     }
 
-    public function atm()
+    public function createPayment($orderId, $total)
     {
-        return view('atm.vnpay');
-    }
-
-    public function createPayment(Request $request)
-    {
+        $customer = Auth::guard('web')->user();
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-        $dataRequest = $request->all();
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route(RESULT_PAYMENT_VNPAY);
         $vnp_TmnCode = "0MXE8R5O";
         $vnp_HashSecret = "MPWTZMJNAFXHKCJUQBHQUSUESFOISYFD";
 
-        $vnp_TxnRef = $dataRequest['order_id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = $dataRequest['order_desc'];
-        $vnp_OrderType = $dataRequest['order_type'];
-        $vnp_Amount = $dataRequest['amount'] * 100;
-        $vnp_Locale = $dataRequest['language'];
-        $vnp_BankCode = $dataRequest['bank_code'];
+        $vnp_TxnRef = $orderId;
+        $vnp_OrderInfo = 'Noi dung thanh toan';
+        $vnp_OrderType = 'topup';
+        $vnp_Amount = $total * 100;
+        $vnp_Locale = 'vn';
+        $vnp_BankCode = null;
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-//Add Params of 2.0.1 Version
-        $vnp_ExpireDate = $dataRequest['txtexpire'];
-//Billing
-        $vnp_Bill_Mobile = $dataRequest['txt_billing_mobile'];
-        $vnp_Bill_Email = $dataRequest['txt_billing_email'];
-        $fullName = trim($dataRequest['txt_billing_fullname']);
+
+        $vnp_ExpireDate = date('YmdHis',strtotime('+15 minutes',strtotime(date("YmdHis"))));
+
+        //Billing
+        $vnp_Bill_Mobile = '0934998386';
+        $vnp_Bill_Email = 'NVA@vnpay.vn';
+        $fullName = trim('NGUYEN VAN A');
         if (isset($fullName) && trim($fullName) != '') {
             $name = explode(' ', $fullName);
             $vnp_Bill_FirstName = array_shift($name);
             $vnp_Bill_LastName = array_pop($name);
         }
-        $vnp_Bill_Address = $dataRequest['txt_inv_addr1'];
-        $vnp_Bill_City = $dataRequest['txt_bill_city'];
-        $vnp_Bill_Country = $dataRequest['txt_bill_country'];
-        $vnp_Bill_State = $dataRequest['txt_bill_state'];
-// Invoice
-        $vnp_Inv_Phone = $dataRequest['txt_inv_mobile'];
-        $vnp_Inv_Email = $dataRequest['txt_inv_email'];
-        $vnp_Inv_Customer = $dataRequest['txt_inv_customer'];
-        $vnp_Inv_Address = $dataRequest['txt_inv_addr1'];
-        $vnp_Inv_Company = $dataRequest['txt_inv_company'];
-        $vnp_Inv_Taxcode = $dataRequest['txt_inv_taxcode'];
-        $vnp_Inv_Type = $dataRequest['cbo_inv_type'];
+        $vnp_Bill_Address = $customer->address;
+        $vnp_Bill_City = 'Ha Noi';
+        $vnp_Bill_Country = 'VN';
+        $vnp_Bill_State = null;
+
+        // Invoice
+        $vnp_Inv_Phone = '02437764668';
+        $vnp_Inv_Email = 'pholv@vnpay.vn';
+        $vnp_Inv_Customer = 'Tran Van B';
+        $vnp_Inv_Address = 'Dia chi 1';
+        $vnp_Inv_Company = 'Cong ty co phan ..';
+        $vnp_Inv_Taxcode = '0102182292';
+        $vnp_Inv_Type = 'I';
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
@@ -118,23 +112,7 @@ class VNPayController extends Controller
         $returnData = array('code' => '00'
         , 'message' => 'success'
         , 'data' => $vnp_Url);
-        return redirect()->to($returnData['data']);
-    }
 
-    public function result(Request $request)
-    {
-        $dataRequest = $request->all();
-
-        try {
-            $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $dataRequest['vnp_TxnRef']);
-
-            return redirect()->to(route(STORE_CART))->with(['status' => 'success', 'message' => 'Thanh toán thành công']);
-        } catch (\Exception $e) {
-            Log::error('VnPay Fail: ' . $e->getMessage());
-            abort(404);
-        }
+        return $returnData['data'];
     }
 }
-
-
-

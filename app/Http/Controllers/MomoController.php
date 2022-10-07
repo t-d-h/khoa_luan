@@ -2,26 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use App\Traits\MomoTrait;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Auth;
 
 class MomoController extends Controller
 {
     use MomoTrait;
 
+    protected $paymentService;
+
+    public function __construct(PaymentService $paymentService)
+    {
+        $this->paymentService = $paymentService;
+    }
+
+    public function index()
+    {
+        return view('atm.atm_momo');
+    }
+
     public function atm(Request $request)
     {
+        $payment = $request->session()->get('payment');
         $dataRequest = $request->all();
 
-        $partnerCode = $dataRequest['partnerCode'];
-        $accessKey = $dataRequest['accessKey'];
-        $secretKey = $dataRequest['secretKey'];
+        //Save payment to db
+        $paymentInfo = [];
+        foreach ($payment[0]['component'] as $key => $value) {
+            $paymentInfo[] = [
+                'component' => $value,
+                'amount'    => $payment[0]['amount'][$key]
+            ];
+        }
+
+        $data = [
+            'order_id'      => time(),
+            'customer_id'   => Auth::guard('web')->user()->id,
+            'payment_type'  => 'momo',
+            'total'         => $payment[0]['total'],
+            'payment_info'  => json_encode($paymentInfo)
+        ];
+        $this->paymentService->insert($data);
+
+        $partnerCode = MOMO_PARTNER_CODE;
+        $accessKey = MOMO_ACCESS_KEY;
+        $secretKey = MOMO_SECRET_KEY;
         $orderInfo = $dataRequest['orderInfo'];
-        $amount = $dataRequest['amount'];
-        $orderId = $dataRequest['orderId'] ?? time();
-        $returnUrl = $dataRequest['returnUrl'];
-        $notifyUrl = $dataRequest['notifyUrl'];
-        $bankCode = $dataRequest['bankCode'];
+        $amount = $payment[0]['total'];
+        $orderId = time()."";
+        $returnUrl = route(RESULT_PAYMENT_MOMO);
+        $notifyUrl = MOMO_NOTIFY_URL;
+        $bankCode = MOMO_BANK_CODE;
         $requestType = "payWithMoMoATM";
         $requestId = time()."";
         $extraData = "";
@@ -52,6 +86,15 @@ class MomoController extends Controller
 
     public function result(Request $request)
     {
-        return $request->all();
+        try {
+            $data = $request->all();
+            if ($data['message'] == 'Success') {
+                $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $data['orderId']);
+            }
+
+            return redirect()->to(route(STORE_CART))->with(['status' => 'success', 'message' => 'Thanh toán thành công']);
+        } catch (\Exception $e) {
+            abort(404);
+        }
     }
 }

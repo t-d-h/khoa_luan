@@ -76,30 +76,31 @@
 @yield('content')
 
 <!-- Taskbar left -->
-<div class="taskbar-left">
-    <div class="giohang">
-        <p id="soluong">1</p>
-        <button class="btn"><i class="gg-shopping-cart"></i></button>
-        <div class="dropdown-giohang">
-            <div id="scroll-giohang">
+@if(Request::url() != route(STORE_CART))
+    <div class="taskbar-left">
+        <div class="giohang">
+            <p id="soluong">1</p>
+            <button class="btn"><i class="gg-shopping-cart"></i></button>
+            <div class="dropdown-giohang">
+                <div id="scroll-giohang">
 
-            </div>
-            <div class="row mt-2">
-                <div class="col-md-12" id="tong-giohang">
-                    <b>Tổng:</b>
-                    <p>100.000VND</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-danger w-75">Thanh toán</button>
+                <div class="row mt-2">
+                    <div class="col-md-12" id="tong-giohang">
+                        <b>Tổng:</b>
+                        <p>100.000VND</p>
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-danger w-75">Thanh toán</button>
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
-
-</div>
+@endif
 
 <!-- Footer -->
 <div class="container-flude bg-dark">
