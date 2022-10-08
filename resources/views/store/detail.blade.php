@@ -14,7 +14,29 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="{{ asset('images/' . $component->image) }}" class="img-thumbnail" style="width: 400px">
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                @foreach($product->component as $key => $item)
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $key }}" {{ $key == 0 ? 'class="active"' : '' }}></li>
+                                @endforeach
+                            </ol>
+                            <div class="carousel-inner">
+                                @foreach($product->component as $key => $item)
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <img src="{{ asset('images/' . $item->image) }}" class="d-block w-100"
+                                             alt="anh">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-7">
                         <div>
@@ -28,8 +50,8 @@
                                             <b>Màu sắc:</b>
 
                                         </div>
-                                        @foreach($product->component as $component)
-                                            <div style="width: 20px;height: 20px;border: 2px solid;border-radius: 100%;margin-right: 5px;background-color: {{ $component->color->color_code }}">
+                                        @foreach($color as $row)
+                                            <div style="width: 20px;height: 20px;border: 2px solid;border-radius: 100%;margin-right: 5px;background-color: {{ $row->color_code }}">
                                             </div>
                                         @endforeach
                                     </div>
@@ -102,154 +124,20 @@
 
                 <!--First slide-->
                 <div class="carousel-item active">
-
                     <div class="row">
-                        <div class="col-md-3">
-                            <div class="border-product">
-                                <img
-                                    src="https://mypro.vn/image/cache/catalog/giay/giaynikenam/giay-nike-downshifter-10-nam-den-do-01-800x800_0-800x800.jpg"
-                                    class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
+                        @foreach($sameProduct as $row)
+                            <div class="col-md-3 clearfix d-none d-md-block">
+                                <div class="border-product">
+                                    <img
+                                        src="{{ asset('images') . '/' . $row->component->first()->image }}"
+                                        class="img-thumbnail">
+                                    <div class="pt-3"><strong>{{ $row->name }}</strong></div>
+                                    <p>While/Black</p>
+                                    <div><strong>{{ $row->component->first()->price }} VNĐ</strong></div>
+                                    <a href="{{ route(STORE_CART_DETAIL, $row->id) }}" class="btn btn-danger">Mua ngay</a>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://bizweb.dktcdn.net/thumb/1024x1024/100/347/092/products/nike-alphadunk-bq5401-900.jpg?v=1614076993833"
-                                    class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://image.yes24.vn/Upload/catalogcontentbos2019/thoitrangtheone/free-rn-5-running-shoe-4chrbs.jpg"
-                                    class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://image.yes24.vn/Upload/catalogcontentbos2019/thoitrangtheone/free-rn-5-running-shoe-4chrbs.jpg"
-                                    class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <!--/.First slide-->
-            </div>
-            <!--/.Slides-->
-
-        </div>
-    </div>
-
-    <hr>
-
-    <!-- Phụ kiện -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12 mb-5">
-                <h2 class="text-center">Phụ kiện</h2>
-            </div>
-        </div>
-
-        <div id="multi-item" class="carousel slide carousel-multi-item" data-ride="carousel">
-            <!--Slides-->
-            <div class="carousel-inner" role="listbox">
-
-                <!--First slide-->
-                <div class="carousel-item active">
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="border-product">
-                                <img
-                                    src="https://mypro.vn/image/cache/catalog/giay/giaynikenam/giay-nike-downshifter-10-nam-den-do-01-800x800_0-800x800.jpg"
-                                    class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://bizweb.dktcdn.net/thumb/1024x1024/100/347/092/products/nike-alphadunk-bq5401-900.jpg?v=1614076993833"
-                                    class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://image.yes24.vn/Upload/catalogcontentbos2019/thoitrangtheone/free-rn-5-running-shoe-4chrbs.jpg"
-                                    class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 clearfix d-none d-md-block">
-                            <div class="border-product">
-                                <img
-                                    src="https://image.yes24.vn/Upload/catalogcontentbos2019/thoitrangtheone/free-rn-5-running-shoe-4chrbs.jpg"
-                                    class="img-thumbnail" class="img-thumbnail">
-                                <div class="pt-3"><strong>Tên sản phẩm</strong></div>
-                                <p>While/Black</p>
-                                <div><strong>100.000 VNĐ</strong></div>
-                                <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
 
                 </div>

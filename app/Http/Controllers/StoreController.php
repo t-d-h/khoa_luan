@@ -100,7 +100,7 @@ class StoreController extends Controller
 
     public function removeCart()
     {
-        Session::flush();
+        Session::forget('cart');
 
         return redirect()->to(route(STORE_CART));
     }
@@ -119,6 +119,7 @@ class StoreController extends Controller
         $assign['product'] = $this->productService->findId($id);
         $assign['component'] = $assign['product']->component->first();
         $name = $assign['product']->name;
+        $assign['sameProduct'] = $this->productService->getSameProduct($id, $assign['product']->type);
 
         $data = $this->productComponentService->getColor($assign['product']->id);
         $colorIds = array_unique($data->pluck('color_id')->toArray());
@@ -147,12 +148,12 @@ class StoreController extends Controller
             return redirect()->to(route(STORE_LOGIN));
         }
 
+        $dataRequest = $request->all();
+
         //Check item
         if (empty($dataRequest['component'])) {
             return redirect()->to(route(STORE));
         }
-
-        $dataRequest = $request->all();
 
         //Save payment to db
         $paymentInfo = [];

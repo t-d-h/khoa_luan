@@ -10,4 +10,14 @@ class ProductService extends BaseService
     {
         $this->model = $productModel;
     }
+
+    public function getSameProduct($productId, $type)
+    {
+        return $this->model
+                    ->where('id', '!=', $productId)
+                    ->where('type', $type)
+                    ->where('status', 1)
+                    ->take(4)
+                    ->get();
+    }
 }
