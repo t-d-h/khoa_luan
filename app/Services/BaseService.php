@@ -16,6 +16,13 @@ abstract class BaseService
         return $this->model->all();
     }
 
+    public function allAvailable()
+    {
+        return $this->model
+                    ->where('status', 1)
+                    ->get();
+    }
+
     public function getAllByStatus()
     {
         return $this->model

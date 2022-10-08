@@ -59,7 +59,7 @@
             <li class="nav-item" style="position: relative">
                 <a class="nav-link login info-user">{{ Auth::guard('web')->user()->name }}</a>
                 <div class="dropdown-info-user mt-2 bg-pink">
-                    <a href="" class="dropdown-item">Thông tin</a>
+                    <a href="{{ route(STORE_CUSTOMER_INFO) }}" class="dropdown-item">Thông tin</a>
                     <a href="{{ route(STORE_LOGOUT) }}" class="dropdown-item">Đăng xuất</a>
                 </div>
             </li>

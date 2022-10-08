@@ -14,7 +14,7 @@
                         <input type="hidden" name="component[]" value="{{ $row['id'] }}">
                         <div class="row">
                             <div class="col-md-3">
-                                <img src="{{ asset('image/' . $row['img']) }}" class="img-thumbnail">
+                                <img src="{{ asset('images/' . $row['img']) }}" class="img-thumbnail">
                             </div>
                             <div class="col-md-6">
                                 <div class="infor-gio">
@@ -67,7 +67,9 @@
                     <button class="btn btn-dark">
                         <a href="{{ route(STORE_REMOVE_CART) }}">XÓA HẾT</a>
                     </button>
-                    <button class="btn btn-dark"><a href="">QUAY LẠI MUA HÀNG</a></button>
+                    <button class="btn btn-dark">
+                        <a href="{{ route(STORE) }}">QUAY LẠI MUA HÀNG</a>
+                    </button>
                 </div>
             </div>
             <div class="col-md-4">
@@ -86,7 +88,7 @@
                         </div>
                         <div style="text-align: right;">
                             <p>
-                                <span id="price-don">{{ number_format($i) }}</span>
+                                <span id="price-don">{{ number_format($i, 0, '.', '.') }}</span>
                                 <span>VND</span>
                             </p>
                             <p>0 VND</p>
@@ -113,7 +115,7 @@
                         <div>
                             <p>TỔNG: </p>
                             <p id="price-tong">
-                                <span>{{ number_format($i) }}</span>
+                                <span>{{ number_format($i, 0, '.', '.') }}</span>
                                 <span>VND</span>
                             </p>
                         </div>
@@ -129,8 +131,8 @@
 <script type="text/javascript">
     function updatePrice(status, element) {
         var row = element.closest('.row');
-        var dongia = Number(row.find('.price').html().replace(/,/g, ''));
-        var donhang = Number($('#price-don').html().replace(/,/g, ''));
+        var dongia = Number(row.find('.price').html().replace(/,/g, ""));
+        var donhang = Number($('#price-don').html().replace(/\./g, ""));
 
         if (status == 'tang') {
             var total = dongia + donhang;

@@ -14,26 +14,33 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-5">
-                        <img src="{{ asset('images/' . $component->first()->image) }}" class="img-thumbnail" style="width: 400px">
+                        <img src="{{ asset('images/' . $component->image) }}" class="img-thumbnail" style="width: 400px">
                     </div>
                     <div class="col-md-7">
                         <div>
                             <form action="" method="get">
                                 <input type="hidden" name="id" value="{{ $product->id }}">
                             <ul style="list-style: none;">
-                                <li><h3>TÊN SẢN PHẨM</h3></li>
+                                <li><h3>{{ $product->name }}</h3></li>
                                 <li>
-                                    <span>Mã sản phẩm: </span>
-                                    <span><b>A82198</b></span>
+                                    <div style="display: flex">
+                                        <div style="margin-right: 10px">
+                                            <b>Màu sắc:</b>
+
+                                        </div>
+                                        @foreach($product->component as $component)
+                                            <div style="width: 20px;height: 20px;border: 2px solid;border-radius: 100%;margin-right: 5px;background-color: {{ $component->color->color_code }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </li>
-                                <li><h3>{{ $component->first()->price }} VND</h3></li>
+                                <li>
+                                    <h3>{{ number_format($component->first()->price) }} VND</h3>
+                                </li>
                                 <hr>
-                                <li><p>"Urbas Pineapple or Ananas Pack" với quai dán tiện lợi gây ấn tượng với những
-                                        phối màu "rất vui". Kĩ thuật in foxing lần đầu tiên được sử dụng với dòng chữ
-                                        "Pineapple Ananas" chạy dọc viền quanh. Điểm nhấn cuối cùng chính là thiết kế
-                                        quả Dứa được thêu tỉ mỉ ở quai dán thay cho logo cách điệu thường thấy càng làm
-                                        rõ hơn tính cách của dòng sản phẩm Urbas và thông điệp muốn truyền tải của bộ
-                                        sản phẩm.</p></li>
+                                <li>
+                                    <p>IPhone là một điện thoại thông minh được sản xuất bởi Apple kết hợp máy tính, iPod, máy ảnh kỹ thuật số và điện thoại di động thành một thiết bị có giao diện màn hình cảm ứng. IPhone chạy hệ điều hành iOS và vào năm 2021 khi iPhone 13 được giới thiệu, nó đã cung cấp tới 1 TB dung lượng lưu trữ và camera 12 megapixel.</p>
+                                </li>
                                 <hr>
                                 <li>
                                     <div class="product-option">
@@ -68,7 +75,7 @@
                                     THÊM VÀO GIỎ HÀNG
                                 </li>
                                 <li class="add" style="background-color: #f15e2c;">
-                                    <a href="">THANH TOÁN</a>
+                                    <a href="{{ route(STORE_CART) }}">THANH TOÁN</a>
                                 </li>
                             </ul>
                             </form>
@@ -160,15 +167,6 @@
 
                 </div>
                 <!--/.First slide-->
-
-                <a class="carousel-control-prev" href="#multi-item-example" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#multi-item-example" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
             <!--/.Slides-->
 
@@ -256,15 +254,6 @@
 
                 </div>
                 <!--/.First slide-->
-
-                <a class="carousel-control-prev" href="#multi-item" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#multi-item" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
             <!--/.Slides-->
 

@@ -73,7 +73,8 @@ Route::prefix('store')->group(function () {
         Route::get('delete/{id}', [StoreController::class, 'deleteCart'])->name(STORE_DELETE_CART);
         Route::get('get-memory', [StoreController::class, 'getMemory'])->name(STORE_GET_MEMORY);
         Route::post('create-payment', [StoreController::class, 'createPayment'])->name(STORE_CREATE_PAYMENT);
-        Route::get('{id}', [StoreController::class, 'detail']);
+        Route::get('list-category', [StoreController::class, 'listCategory']);
+        Route::get('{id}', [StoreController::class, 'detail'])->name(STORE_CART_DETAIL);
     });
 
     Route::get('payment', function () {

@@ -54,7 +54,7 @@ class StoreController extends Controller
     public function index()
     {
 //        dd($this->productService->insert(1));
-        $assign['specials'] = $this->productSpecialService->all()->load('product.component.color');
+        $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
 
         return view('store.index', $assign);
     }
@@ -142,8 +142,14 @@ class StoreController extends Controller
 
     public function createPayment(Request $request)
     {
+        //Check login
         if (!Auth::guard('web')->check()) {
             return redirect()->to(route(STORE_LOGIN));
+        }
+
+        //Check item
+        if (empty($dataRequest['component'])) {
+            return redirect()->to(route(STORE));
         }
 
         $dataRequest = $request->all();
@@ -173,5 +179,10 @@ class StoreController extends Controller
         }
 
         return redirect()->to($payUrl);
+    }
+
+    public function listCategory()
+    {
+        return view('store.list_category');
     }
 }

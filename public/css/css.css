@@ -493,7 +493,7 @@ input:checked + .slider:before {
   color: white;
 }
 
-.product-option .item {
+.product-option .item, .color-option .item {
   display: block;
   width: 120px;
   margin-right: 10px;
@@ -504,14 +504,14 @@ input:checked + .slider:before {
   background: #fff;
   position: relative;
 }
-.product-option .item span {
+.product-option .item span, .color-option .item span {
   display: flex;
   justify-content: left;
   justify-items: left;
   margin-bottom: -8px;
   font-weight: 600;
 }
-.product-option div {
+.product-option div, .color-option div {
   cursor: pointer;
   border: 2px solid transparent;
 }
