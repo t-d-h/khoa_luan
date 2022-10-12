@@ -10,4 +10,12 @@ class PaymentService extends BaseService
     {
         $this->model = $paymentModel;
     }
+
+    public function getEarningOfMonth($month)
+    {
+        return $this->model
+                    ->where('status', 1)
+                    ->whereMonth('created_at', $month)
+                    ->get();
+    }
 }
