@@ -37,6 +37,14 @@ abstract class BaseService
                     ->get();
     }
 
+    public function findAvailable($name, $condition, $value)
+    {
+        return $this->model
+                    ->where('status', 1)
+                    ->where($name, $condition, $value)
+                    ->get();
+    }
+
     public function insert($data)
     {
         $row = $this->model;

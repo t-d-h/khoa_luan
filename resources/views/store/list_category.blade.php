@@ -1,9 +1,9 @@
 @extends('index')
 @section('content')
 <!-- Sản phẩm -->
-<form action="" method="get">
-    <input type="hidden" name="product-special" value="">
-    <input type="hidden" name="product-type" value="">
+<form action="{{ route(STORE_LIST_CATEGORY) }}" method="get">
+    <input type="hidden" name="product-special" value="{{ app('request')->input('product-special') ?? '' }}">
+    <input type="hidden" name="product-type" value="{{ app('request')->input('product-type') ?? '' }}">
     <div class="container option">
         <div class="row mt-5">
             <div class="col-md-3 mt-5">
@@ -11,7 +11,7 @@
                     <h3>TRẠNG THÁI</h3>
                     <ul class="dropdown-content" style="list-style-type: inherit;">
                         @foreach($specials as $row)
-                            <li class="special-type" data-special="{{ $row->id }}">{{ $row->name }}</li>
+                            <li class="special-type" data-special="{{ $row->id }}" style="{{ $row->id == app('request')->input('product-special') ? 'background-color:lightgray' : ''  }}">{{ $row->name }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -20,7 +20,7 @@
                     <h3>DÒNG SẢN PHẨM</h3>
                     <ul class="dropdown-content" style="list-style-type: inherit;">
                         @foreach($productType as $row)
-                            <li class="product-type" data-type="{{ $row->id }}">{{ $row->name }}</li>
+                            <li class="product-type" data-type="{{ $row->id }}" style="{{ $row->id == app('request')->input('product-type') ? 'background-color:lightgray' : ''  }}">{{ $row->name }}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -111,19 +111,12 @@
 @section('script')
     <script type="text/javascript">
         function submitForm() {
-            var form =  $('form').serializeArray();
-            $.ajax({
-                type: "get",
-                url: "add-cart",
-                data: {
-                    "product-special": form[0].value,
-                    "product-type": form[1].value,
-                },
-                success: function (e) {
-                    console.log(e.data);
-                }
-            });
+            $('form').submit();
         }
+
+        $(document).ready(function () {
+
+        })
 
         $(document).on('click', '.special-type', function () {
             $(".special-type").css('background-color', 'white');

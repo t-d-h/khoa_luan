@@ -188,8 +188,11 @@ class StoreController extends Controller
 
     public function listCategory(Request $request)
     {
+        $dataRequest = $request->all();
         $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
-        $assign['productType'] = $this->productTypeService->allAvailable();
+        $assign['productType'] = $this->productSpecialService->allAvailable();
+
+
 
         return view('store.list_category', $assign);
     }
