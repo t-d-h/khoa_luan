@@ -23,7 +23,7 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to(\route(STORE));
 })->name('welcome');
 
 Route::get('view-table', function () {
@@ -73,7 +73,7 @@ Route::prefix('store')->group(function () {
         Route::get('delete/{id}', [StoreController::class, 'deleteCart'])->name(STORE_DELETE_CART);
         Route::get('get-memory', [StoreController::class, 'getMemory'])->name(STORE_GET_MEMORY);
         Route::post('create-payment', [StoreController::class, 'createPayment'])->name(STORE_CREATE_PAYMENT);
-        Route::get('list-category', [StoreController::class, 'listCategory']);
+        Route::get('list-category', [StoreController::class, 'listCategory'])->name(STORE_LIST_CATEGORY);
         Route::get('{id}', [StoreController::class, 'detail'])->name(STORE_CART_DETAIL);
     });
 
