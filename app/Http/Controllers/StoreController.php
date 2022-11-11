@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SpecialModel;
+use App\Models\SpecialProductModel;
 use App\Services\CustomerService;
 use App\Services\MomoService;
 use App\Services\PaymentService;
@@ -191,8 +193,9 @@ class StoreController extends Controller
         $dataRequest = $request->all();
         $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
         $assign['productType'] = $this->productSpecialService->allAvailable();
-
-
+        $productIds = SpecialProductModel::where('special_id', !empty($dataRequest['product-special']) ? $dataRequest['product-special'] : true)->pluck('product_id')->toArray();
+        $type = !empty($dataRequest['product-type']) ? $dataRequest['product-type'] : true;
+        $assign['products'] = $this->productService->filterProduct($productIds, $type);
 
         return view('store.list_category', $assign);
     }

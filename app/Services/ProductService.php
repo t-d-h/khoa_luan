@@ -20,4 +20,14 @@ class ProductService extends BaseService
                     ->take(4)
                     ->get();
     }
+
+    public function filterProduct($productIds, $typeId)
+    {
+        return $this->model
+                    ->whereIn('id', $productIds)
+                    ->whereHas('productType', function ($q) use ($typeId){
+                        return $q->where('id', $typeId);
+                    })
+                    ->get();
+    }
 }
