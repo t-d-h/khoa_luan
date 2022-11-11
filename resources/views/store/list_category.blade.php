@@ -5,6 +5,7 @@
     <input type="hidden" name="product-special" value="{{ app('request')->input('product-special') ?? '' }}">
     <input type="hidden" name="product-type" value="{{ app('request')->input('product-type') ?? '' }}">
     <input type="hidden" name="price-type" value="{{ app('request')->input('price-type') ?? '' }}">
+    <input type="hidden" name="sort" value="{{ app('request')->input('sort') ?? '' }}">
     <div class="container option">
         <div class="row mt-5">
             <div class="col-md-3 mt-5">
@@ -44,12 +45,12 @@
                 <div class="row">
                     <div class="search-bar col-12">
                         <div>
-                            Tăng dần <input type="radio" name="gia" class="sort">
-                            Giảm dần <input type="radio" name="gia"  class="sort">
+                            Tăng dần <input type="radio" class="sort" value="1" {{ app('request')->input('sort') == '1' ? 'checked' : '' }}>
+                            Giảm dần <input type="radio" class="sort" value="0" {{ app('request')->input('sort') == '0' ? 'checked' : '' }}>
                         </div>
                         <form>
-                            <input type="search" name="" placeholder="Nhập tên sản phẩm">
-                            <input type="submit" name="" class="btn btn-success">
+                            <input type="search" name="name" placeholder="Nhập tên sản phẩm">
+                            <input type="submit" class="btn btn-success">
                         </form>
                     </div>
                 </div>
@@ -62,9 +63,6 @@
                                 <p>While/Black</p>
                                 <div><strong>{{ $product->component->first()->price ?? null }}</strong></div>
                                 <button class="btn btn-danger">Mua ngay</button>
-                                <div class="add-cart">
-                                    <button class="btn btn-success">Thêm vào giỏ</button>
-                                </div>
                             </div>
                         </div>
                     @endforeach
@@ -104,6 +102,13 @@
 
             let priceType = $(this).data('price');
             $('input[name="price-type"]').val(priceType);
+            submitForm()
+        })
+
+        $(document).on('click', '.sort', function () {
+            $(this).attr('checked');
+
+            $('input[name="sort"]').val($(this).val());
             submitForm()
         })
     </script>
