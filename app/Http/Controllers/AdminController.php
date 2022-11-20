@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\ProductModel;
+use App\Services\PaymentService;
 use App\Services\ProductColorService;
 use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
@@ -20,24 +21,28 @@ class AdminController extends Controller
     protected $productColorService;
     protected $productSpecialService;
     protected $productComponentService;
+    protected $paymentService;
 
     public function __construct(
         ProductService $productService,
         ProductTypeService $productTypeService,
         ProductColorService $productColorService,
         ProductSpecialService $productSpecialService,
-        ProductComponentService $productComponentService
+        ProductComponentService $productComponentService,
+        PaymentService $paymentService
     )
     {
-        $this->productService = $productService;
-        $this->productTypeService = $productTypeService;
-        $this->productColorService = $productColorService;
-        $this->productSpecialService = $productSpecialService;
-        $this->productComponentService = $productComponentService;
+        $this->productService           = $productService;
+        $this->productTypeService       = $productTypeService;
+        $this->productColorService      = $productColorService;
+        $this->productSpecialService    = $productSpecialService;
+        $this->productComponentService  = $productComponentService;
+        $this->paymentService           = $paymentService;
     }
 
     public function dashboard()
     {
+        dd($this->paymentService->getEarningOfMonth(10));
         return view('admin.product.dashboard');
     }
 
