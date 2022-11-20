@@ -55,8 +55,9 @@ define('CHANGE_FAIL', 'Thay đổi thất bại');
 define('ADD_FAIL', 'Thêm thất bại');
 define('DELETE_FAIL', 'Xoá thất bại');
 
-//Admin dashboard
+//Admin dashboard + ajax
 define('ADMIN_DASHBOARD', 'admin.dashboard');
+define('AJAX_GET_PRODUCT_TYPE', 'ajax.get.product.type');
 
 //Admin product CRUD
 define('ADMIN_PRODUCT_STORE', 'admin.product.store');

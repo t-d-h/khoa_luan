@@ -208,4 +208,16 @@ class AdminController extends Controller
 
         return view('admin.auth.login');
     }
+
+    public function getProductAjax()
+    {
+        $types = $this->productTypeService->allAvailable();
+        $product = [];
+        foreach ($types as $type) {
+            $product[] = ProductModel::where('type', $type->id)->count();
+        }
+
+        $types = $types->pluck('name');
+        return response()->json(['type' => $types, 'product' => $product]);
+    }
 }

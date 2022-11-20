@@ -172,11 +172,11 @@
                     <table class="table table-hover my-0">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th class="d-none d-xl-table-cell">Start Date</th>
-                            <th class="d-none d-xl-table-cell">End Date</th>
-                            <th>Status</th>
-                            <th class="d-none d-md-table-cell">Assignee</th>
+                            <th>Tên</th>
+                            <th class="d-none d-xl-table-cell">Địa chỉ email</th>
+                            <th class="d-none d-xl-table-cell">Ngày bắt đầu</th>
+                            <th>Giới tính</th>
+                            <th class="d-none d-md-table-cell">Số điện thoại</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -315,28 +315,35 @@
             chart.render();
 
             //Pie Chart
-            var pieOptions = {
-                series: [44, 55, 13, 43, 22],
-                chart: {
-                    width: 380,
-                    type: 'pie',
-                },
-                labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
+            $.ajax({
+                type: "get",
+                url: "/admin/get-product-type",
+                success: function success(e) {
+                    console.log(e)
+                    var pieOptions = {
+                        series: e.product,
                         chart: {
-                            width: 200
+                            width: 380,
+                            type: 'pie',
                         },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            };
+                        labels: e.type,
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    };
 
-            var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
-            pieChart.render();
+                    var pieChart = new ApexCharts(document.querySelector("#pie-chart"), pieOptions);
+                    pieChart.render();
+                }
+            });
 
             // Line chart
             new Chart(document.getElementById("chartjs-dashboard-line"), {

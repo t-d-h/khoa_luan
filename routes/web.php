@@ -145,8 +145,9 @@ Route::prefix('admin')->middleware('admin')->group(function() {
         });
     });
 
-    //Dashboard
+    //Dashboard + ajax
     Route::get('/', [AdminController::class, 'dashboard'])->name(ADMIN_DASHBOARD);
+    Route::get('get-product-type', [AdminController::class, 'getProductAjax'])->name(AJAX_GET_PRODUCT_TYPE);
 
     Route::get('summernote', function () {
        return view('store.index');
