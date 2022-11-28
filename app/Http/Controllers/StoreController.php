@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SpecialModel;
+use App\Models\SpecialProductModel;
 use App\Services\CustomerService;
 use App\Services\MomoService;
 use App\Services\PaymentService;
 use App\Services\ProductColorService;
 use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
+use App\Services\ProductTypeService;
 use App\Services\StoreService;
 use App\Services\VnpayService;
 use Illuminate\Http\Request;
@@ -27,6 +30,7 @@ class StoreController extends Controller
     protected $momoService;
     protected $vnpayService;
     protected $paymentService;
+    protected $productTypeService;
 
     public function __construct(
         ProductService          $productService,
@@ -37,7 +41,8 @@ class StoreController extends Controller
         ProductColorService     $productColorService,
         MomoService             $momoService,
         VnpayService            $vnpayService,
-        PaymentService          $paymentService
+        PaymentService          $paymentService,
+        ProductTypeService      $productTypeService
     )
     {
         $this->productService           = $productService;
@@ -49,6 +54,7 @@ class StoreController extends Controller
         $this->momoService              = $momoService;
         $this->vnpayService             = $vnpayService;
         $this->paymentService           = $paymentService;
+        $this->productTypeService       = $productTypeService;
     }
 
     public function index()
@@ -182,8 +188,15 @@ class StoreController extends Controller
         return redirect()->to($payUrl);
     }
 
-    public function listCategory()
+    public function listCategory(Request $request)
     {
-        return view('store.list_category');
+        $dataRequest = $request->all();
+        $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
+        $assign['productType'] = $this->productSpecialService->allAvailable();
+        $productIds = SpecialProductModel::where('special_id', !empty($dataRequest['product-special']) ? $dataRequest['product-special'] : true)->pluck('product_id')->toArray();
+        $type = !empty($dataRequest['product-type']) ? $dataRequest['product-type'] : true;
+        $assign['products'] = $this->productService->filterProduct($productIds, $type);
+
+        return view('store.list_category', $assign);
     }
 }
