@@ -26,7 +26,12 @@ class ProductService extends BaseService
         return $this->model
                     ->whereIn('id', $productIds)
                     ->whereHas('productType', function ($q) use ($typeId){
-                        return $q->where('id', $typeId);
+                        if (empty($typeId)) {
+                            $query =  'id != 0';
+                        } else {
+                            $query = 'id = ' . $typeId;
+                        }
+                        return $q->whereRaw($query);
                     })
                     ->get();
     }

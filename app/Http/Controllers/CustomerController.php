@@ -7,6 +7,8 @@ use App\Mail\ResetPasswordMail;
 use App\Models\User;
 use App\Services\AddressService;
 use App\Services\CustomerService;
+use App\Services\PaymentService;
+use App\Services\ProductComponentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,14 +19,20 @@ class CustomerController extends Controller
 {
     public $customerService;
     public $addressService;
+    public $paymentService;
+    public $productComponentService;
 
     public function __construct(
         CustomerService $customerService,
-        AddressService $addressService
+        AddressService $addressService,
+        PaymentService $paymentService,
+        ProductComponentService $productComponentService
     )
     {
         $this->customerService = $customerService;
         $this->addressService = $addressService;
+        $this->paymentService = $paymentService;
+        $this->productComponentService = $productComponentService;
     }
 
     public function login(Request $request)
@@ -171,5 +179,34 @@ class CustomerController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with(['status' => 'fail', 'message' => CHANGE_FAIL]);
         }
+    }
+
+    public function bill()
+    {
+        $user = Auth::guard('web')->user()->id;
+        $assign['payments'] = $this->paymentService->find('customer_id', '=', $user);
+
+        return view('store.payment', $assign);
+    }
+
+    public function getBillInfo(Request $request)
+    {
+        $paymentInfo = $this->paymentService->find('order_id', '=',$request->input('id'))->first();
+        $products = json_decode($paymentInfo->payment_info);
+        $info = [];
+        foreach ($products as $product) {
+            $component = $this->productComponentService->findId($product->component);
+            $info[] = [
+                'product_name'  => $component->product->name,
+                'memory'        => $component->memory,
+                'color'         => $component->color->name,
+                'amount'        => $product->amount,
+                'price'         => $component->price,
+                'product_total' => $product->amount * $component->price,
+                'total'         => $paymentInfo->total
+            ];
+        }
+
+        return response()->json(['data' => $info]);
     }
 }

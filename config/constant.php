@@ -31,6 +31,7 @@ define('STORE_RESET_PASSWORD', 'store.reset.password');
 
 //Cutomer
 define('STORE_CUSTOMER_INFO', 'store.customer.info');
+define('STORE_CUSTOMER_BILL', 'store.customer.bill');
 define('STORE_CUSTOMER_SAVE_INFO', 'store.customer.save.info');
 define('STORE_GET_DISTRICT', 'store.get.district');
 
