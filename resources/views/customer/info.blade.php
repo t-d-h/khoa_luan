@@ -8,7 +8,7 @@
                 @csrf
                 <div class="col-12">
                     <!-- Form Name -->
-                    <legend>Contact Us Today!</legend>
+                    <legend>Thông tin cá nhân</legend>
                 </div>
 
                 <div class="col-6">

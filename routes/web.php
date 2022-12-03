@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductColorController;
 use App\Http\Controllers\ProductSpecialController;
 use App\Http\Controllers\ProductComponentController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\StripeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN)
 //Store
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name(STORE);
+    Route::get('product-type', [StoreController::class, 'getProductType']);
 
     //Auth Customer
     Route::get('login', function () {
@@ -98,6 +100,11 @@ Route::prefix('store')->group(function () {
         Route::get('atm', [VNPayController::class, 'atm']);
         Route::post('atm', [VNPAYController::class, 'createPayment'])->name(CREATE_PAYMENT_VNPAY);
         Route::get('result', [VNPayController::class, 'result'])->name(RESULT_PAYMENT_VNPAY);
+    });
+
+    //Payment stripe
+    Route::prefix('stripe')->group(function () {
+       Route::get('success', [StripeController::class, 'success']);
     });
 
     Route::get('send', [StoreController::class, 'sendMail']);

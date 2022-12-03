@@ -36,11 +36,8 @@
     					height: auto !important;">
                     <div class="row">
                         <div class="col-md-12">
-                            <div>
-                                <a href="" class="dropdown-item">Iphone</a>
-                                <a href="" class="dropdown-item">Samsung</a>
-                                <a href="" class="dropdown-item">Nokia</a>
-                                <a href="" class="dropdown-item">Thụ kiện</a>
+                            <div id="product-type">
+
                             </div>
                         </div>
                     </div>
@@ -158,6 +155,19 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $.ajax({
+            type: "get",
+            url: "/store/product-type",
+            success: function (e) {
+                var html = '';
+                $.each(e.types, function (key, value) {
+                    html += '<a href="http://127.0.0.1:8000/store/cart/list-category?product-type='+ value.id +'" class="dropdown-item">'+ value.name +'</a>'
+                })
+
+                $('#product-type').html(html);
+            }
+        });
+
         $('.info-user').click(function () {
             if ($('.dropdown-info-user').css('display') == 'none') {
                 $('.dropdown-info-user').css('display', 'block');

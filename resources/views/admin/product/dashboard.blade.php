@@ -171,71 +171,27 @@
                     </div>
                     <table class="table table-hover my-0">
                         <thead>
-                        <tr>
-                            <th>Tên</th>
-                            <th class="d-none d-xl-table-cell">Địa chỉ email</th>
-                            <th class="d-none d-xl-table-cell">Ngày bắt đầu</th>
-                            <th>Giới tính</th>
-                            <th class="d-none d-md-table-cell">Số điện thoại</th>
-                        </tr>
+                            <tr>
+                                <th>Tên</th>
+                                <th class="d-none d-xl-table-cell">Địa chỉ email</th>
+                                <th class="d-none d-xl-table-cell">Ngày bắt đầu</th>
+                                <th>Trạng thái</th>
+                                <th class="d-none d-md-table-cell">Số điện thoại</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Project Apollo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                        </tr>
-                        <tr>
-                            <td>Project Fireball</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-danger">Cancelled</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project Hades</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Nitro</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">Vanessa Tucker</td>
-                        </tr>
-                        <tr>
-                            <td>Project Phoenix</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
-                        <tr>
-                            <td>Project X</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Sharon Lessman</td>
-                        </tr>
-                        <tr>
-                            <td>Project Romeo</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-success">Done</span></td>
-                            <td class="d-none d-md-table-cell">Christina Mason</td>
-                        </tr>
-                        <tr>
-                            <td>Project Wombat</td>
-                            <td class="d-none d-xl-table-cell">01/01/2021</td>
-                            <td class="d-none d-xl-table-cell">31/06/2021</td>
-                            <td><span class="badge bg-warning">In progress</span></td>
-                            <td class="d-none d-md-table-cell">William Harris</td>
-                        </tr>
+                            @foreach($customers as $customer)
+                                <tr>
+                                    <td>{{ $customer->first_name }} {{ $customer->name }}</td>
+                                    <td class="d-none d-xl-table-cell">{{ $customer->email }}</td>
+                                    <td class="d-none d-xl-table-cell">{{ date_format($customer->created_at, 'd-m-Y') }}</td>
+                                    <td>
+                                        <span class="badge {{ $customer->status == 1 ? 'bg-success' : 'bg-danger'}}">
+                                            {{ $customer->status == 1 ? 'Hoạt động' : 'Dừng' }}</span>
+                                    </td>
+                                    <td class="d-none d-md-table-cell">{{ $customer->phone }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

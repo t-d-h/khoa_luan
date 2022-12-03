@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class VNPayController extends Controller
 {
@@ -127,7 +128,7 @@ class VNPayController extends Controller
 
         try {
             $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $dataRequest['vnp_TxnRef']);
-
+            Session::pull('cart');
             return redirect()->to(route(STORE_CART))->with(['status' => 'success', 'message' => 'Thanh toán thành công']);
         } catch (\Exception $e) {
             Log::error('VnPay Fail: ' . $e->getMessage());

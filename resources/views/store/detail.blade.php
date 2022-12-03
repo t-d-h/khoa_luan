@@ -97,7 +97,7 @@
                                     THÊM VÀO GIỎ HÀNG
                                 </li>
                                 <li class="add" style="background-color: #f15e2c;">
-                                    <a href="{{ route(STORE_CART) }}">THANH TOÁN</a>
+                                    <a style="display: block" href="{{ route(STORE_CART) }}">THANH TOÁN</a>
                                 </li>
                             </ul>
                             </form>

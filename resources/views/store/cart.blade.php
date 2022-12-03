@@ -109,6 +109,11 @@
                             <label for="">Vnpay</label>
                             <input type="radio" name="payment_type" value="vnpay">
                         </div>
+                        <div style="margin-top: 10px">
+                            <img src="{{ asset('images/creadit-card.jpg') }}" alt="vnpay_icon" style="width: 30px">
+                            <label for="">Stripe</label>
+                            <input type="radio" name="payment_type" value="stripe">
+                        </div>
                     </div>
                     <hr class="mt-2">
                     <div class="thanhtoan">

@@ -12,6 +12,7 @@ use App\Services\ProductComponentService;
 use App\Services\ProductSpecialService;
 use App\Services\ProductTypeService;
 use App\Services\StoreService;
+use App\Services\StripeService;
 use App\Services\VnpayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class StoreController extends Controller
     protected $vnpayService;
     protected $paymentService;
     protected $productTypeService;
+    protected $stripeService;
 
     public function __construct(
         ProductService          $productService,
@@ -42,7 +44,8 @@ class StoreController extends Controller
         MomoService             $momoService,
         VnpayService            $vnpayService,
         PaymentService          $paymentService,
-        ProductTypeService      $productTypeService
+        ProductTypeService      $productTypeService,
+        StripeService           $stripeService
     )
     {
         $this->productService           = $productService;
@@ -55,6 +58,7 @@ class StoreController extends Controller
         $this->vnpayService             = $vnpayService;
         $this->paymentService           = $paymentService;
         $this->productTypeService       = $productTypeService;
+        $this->stripeService            = $stripeService;
     }
 
     public function index()
@@ -181,8 +185,10 @@ class StoreController extends Controller
 
         if ($dataRequest['payment_type'] == 'momo') {
             $payUrl = $this->momoService->createPayment($data['order_id'], $dataRequest['total']);
-        } else {
+        } elseif ($dataRequest['payment_type'] == 'vnpay') {
             $payUrl = $this->vnpayService->createPayment($data['order_id'], $dataRequest['total']);
+        } else {
+            $payUrl = $this->stripeService->createPayment($data['order_id'], $dataRequest['total']);
         }
 
         return redirect()->to($payUrl);
@@ -193,7 +199,12 @@ class StoreController extends Controller
         $dataRequest = $request->all();
         $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
         $assign['productType'] = $this->productTypeService->allAvailable();
-        $productIds = SpecialProductModel::where('special_id', !empty($dataRequest['product-special']) ? $dataRequest['product-special'] : true)->pluck('product_id')->toArray();
+        if (!empty($dataRequest['product-special'])) {
+            $productIds = SpecialProductModel::where('special_id', $dataRequest['product-special'])->pluck('product_id')->toArray();
+        } else {
+            $productIds = SpecialProductModel::groupBy('product_id')->pluck('product_id')->toArray();
+        }
+
         $type = !empty($dataRequest['product-type']) ? $dataRequest['product-type'] : null;
         $assign['products'] = $this->productService->filterProduct($productIds, $type);
         if (!empty($request->input('name'))) {
@@ -204,5 +215,11 @@ class StoreController extends Controller
         }
 
         return view('store.list_category', $assign);
+    }
+
+    public function getProductType()
+    {
+        $types = $this->productTypeService->allAvailable();
+        return response()->json(['types' => $types]);
     }
 }

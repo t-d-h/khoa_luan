@@ -27,14 +27,6 @@
                     </ul>
                 </div>
                 <hr>
-                <div class="dropdown-danhsach">
-                    <h3>GIÁ</h3>
-                    <ul class="dropdown-content" style="list-style-type: inherit;">
-                        <li class="price-type" data-price="1" style="{{ app('request')->input('price-type') == '1' ? 'background-color:lightgray' : '' }}">< 5000</li>
-                        <li class="price-type" data-price="2" style="{{ app('request')->input('price-type') == '2' ? 'background-color:lightgray' : '' }}">5000 - 10000</li>
-                        <li class="price-type" data-price="3" style="{{ app('request')->input('price-type') == '3' ? 'background-color:lightgray' : '' }}">> 10000</li>
-                    </ul>
-                </div>
             </div>
             <div class="col-md-9">
                 <div class="row">
@@ -58,7 +50,7 @@
                     @foreach($products as $product)
                         <div class="col-md-4">
                             <div class="border-product">
-                                <img src="{{ $product->component->first()->image ?? null }}">
+                                <img class="img-thumbnail" src="{{ asset('images/' . $product->component->first()->image ?? null) }}">
                                 <div class="pt-3"><strong>{{ $product->name }}</strong></div>
                                 <p>While/Black</p>
                                 <div><strong>{{ $product->component->first()->price ?? null }}</strong></div>
