@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\MomoTrait;
 use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class MomoController extends Controller
 {
@@ -91,6 +92,7 @@ class MomoController extends Controller
             if ($data['message'] == 'Success') {
                 $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $data['orderId']);
             }
+            Session::pull('cart');
 
             return redirect()->to(route(STORE_CART))->with(['status' => 'success', 'message' => 'Thanh toán thành công']);
         } catch (\Exception $e) {

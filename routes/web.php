@@ -61,6 +61,8 @@ Route::prefix('store')->group(function () {
     Route::prefix('customer')->middleware('customerLogin')->group(function () {
         Route::get('get-district', [CustomerController::class, 'getDistrict'])->name(STORE_GET_DISTRICT);
         Route::get('info', [CustomerController::class, 'info'])->name(STORE_CUSTOMER_INFO);
+        Route::get('bill', [CustomerController::class, 'bill'])->name(STORE_CUSTOMER_BILL);
+        Route::get('get-bill-info', [CustomerController::class, 'getBillInfo']);
         Route::post('save', [CustomerController::class, 'saveInfo'])->name(STORE_CUSTOMER_SAVE_INFO);
     });
 

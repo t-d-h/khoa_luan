@@ -192,10 +192,16 @@ class StoreController extends Controller
     {
         $dataRequest = $request->all();
         $assign['specials'] = $this->productSpecialService->allAvailable()->load('product.component.color');
-        $assign['productType'] = $this->productSpecialService->allAvailable();
+        $assign['productType'] = $this->productTypeService->allAvailable();
         $productIds = SpecialProductModel::where('special_id', !empty($dataRequest['product-special']) ? $dataRequest['product-special'] : true)->pluck('product_id')->toArray();
-        $type = !empty($dataRequest['product-type']) ? $dataRequest['product-type'] : true;
+        $type = !empty($dataRequest['product-type']) ? $dataRequest['product-type'] : null;
         $assign['products'] = $this->productService->filterProduct($productIds, $type);
+        if (!empty($request->input('name'))) {
+            $name = $request->input('name');
+            $assign['products'] = $assign['products']->filter(function ($item) use ($name) {
+                return str_contains($item['name'], $name);
+            });
+        }
 
         return view('store.list_category', $assign);
     }
