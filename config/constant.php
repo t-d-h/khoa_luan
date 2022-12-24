@@ -91,6 +91,10 @@ define('ADMIN_PRODUCT_SPECIAL_CREATE', 'admin.product.special.create');
 define('ADMIN_PRODUCT_SPECIAL_EDIT', 'admin.product.special.edit');
 define('ADMIN_PRODUCT_SPECIAL_DELETE', 'admin.product.special.delete');
 
+//Admin invoice
+define('ADMIN_INVOICE_INDEX', 'admin.invoice.index');
+define('ADMIN_INVOICE_UPDATE', 'admin.invoice.update');
+
 //Product Component
 define('ADMIN_PRODUCT_COMPONENT_CREATE', 'admin.product.component.create');
 define('ADMIN_PRODUCT_COMPONENT_STORE', 'admin.product.component.store');

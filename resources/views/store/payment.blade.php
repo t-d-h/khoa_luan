@@ -45,16 +45,21 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-12">
-                            <table class="table-bordered table-dark w-100" id="info-modal">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tên sản phẩm</th>
-                                    <th>Dung lượng</th>
-                                    <th>Màu</th>
-                                    <th>Số lượng</th>
-                                    <th>Đơn giá</th>
-                                    <th>Tổng</th>
-                                </tr>
+                            <table class="table-bordered table-dark w-100">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Dung lượng</th>
+                                        <th>Màu</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="info-modal">
+
+                                </tbody>
                             </table>
                         </div>
                     </div>

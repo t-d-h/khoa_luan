@@ -10,6 +10,7 @@
             <div class="col-md-8">
                 @if(!empty($data))
                     @foreach($data as $row)
+{{--                        {{ dd($row) }}--}}
                         <div style="display: none">{{ $i += $row['price'] * $row['amount'] }}</div>
                         <input type="hidden" name="component[]" value="{{ $row['id'] }}">
                         <div class="row">

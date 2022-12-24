@@ -8,10 +8,10 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://suprememobiles.in/public/vendor/conceps-admin/assets/global/plugins/ckeditor/image_uploader/uploads/213815c6.jpg" class="d-block w-100" alt="anh">
+            <img src="https://theme.hstatic.net/200000191303/1000790874/14/ms_banner_img2.jpg?v=22" class="d-block w-100" alt="anh">
         </div>
         <div class="carousel-item">
-            <img src="https://theme.hstatic.net/200000191303/1000790874/14/ms_banner_img2.jpg?v=22" class="d-block w-100" alt="anh">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRDPtZfRGWfj9LUxZwuidKnrbQM3K-uE4FSz_aFgbMK1mkEbNGRF0vg4DVc0OfJkRcKvU&usqp=CAU" class="d-block w-100" alt="anh">
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

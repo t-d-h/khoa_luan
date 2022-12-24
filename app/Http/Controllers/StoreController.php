@@ -168,9 +168,14 @@ class StoreController extends Controller
         //Save payment to db
         $paymentInfo = [];
         foreach ($dataRequest['component'] as $key => $value) {
+            $component = $this->productComponentService->find('id', '=', $value)->first();
+            if ($component->amount < $dataRequest['amount'][$key]) {
+                return back()->with(['status' => 'fail', 'message' => 'Thanh toán thất bại do hết hàng']);
+            }
+
             $paymentInfo[] = [
                 'component' => $value,
-                'amount'    => $dataRequest['amount'][$key]
+                'amount'    => $dataRequest['amount'][$key],
             ];
         }
 

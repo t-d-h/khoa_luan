@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -99,6 +100,7 @@ class CustomerController extends Controller
     public function logout()
     {
         Auth::guard('web')->logout();
+        Session::forget('cart');
         return redirect()->to(route(STORE));
     }
 
@@ -197,6 +199,7 @@ class CustomerController extends Controller
         foreach ($products as $product) {
             $component = $this->productComponentService->findId($product->component);
             $info[] = [
+                'order_id'      => $paymentInfo->order_id,
                 'product_name'  => $component->product->name,
                 'memory'        => $component->memory,
                 'color'         => $component->color->name,

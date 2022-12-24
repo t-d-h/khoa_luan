@@ -47,9 +47,9 @@
                 Khách hàng
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="pages-profile.html">
-                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+            <li class="sidebar-item {{ Request::url() == route(ADMIN_INVOICE_INDEX) ? 'active' : '' }}">
+                <a class="sidebar-link" href="{{ route(ADMIN_INVOICE_INDEX) }}">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Thông tin đơn hàng</span>
                 </a>
             </li>
 

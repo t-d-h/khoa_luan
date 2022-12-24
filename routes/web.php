@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductSpecialController;
 use App\Http\Controllers\ProductComponentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +153,11 @@ Route::prefix('admin')->middleware('admin')->group(function() {
             Route::get('{id}/delete', [ProductSpecialController::class, 'delete'])->name(ADMIN_PRODUCT_SPECIAL_DELETE);
             Route::post('', [ProductSpecialController::class, 'store'])->name(ADMIN_PRODUCT_SPECIAL_STORE);
         });
+    });
+
+    Route::prefix('invoice')->group(function () {
+        Route::get('', [InvoiceController::class, 'index'])->name(ADMIN_INVOICE_INDEX);
+        Route::post('', [InvoiceController::class, 'update'])->name(ADMIN_INVOICE_UPDATE);
     });
 
     //Dashboard + ajax

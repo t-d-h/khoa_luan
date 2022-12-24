@@ -89,7 +89,7 @@ class MomoController extends Controller
     {
         try {
             $data = $request->all();
-            if ($data['message'] == 'Success') {
+            if (!empty($data['orderId'])) {
                 $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $data['orderId']);
             }
             Session::pull('cart');
