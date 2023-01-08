@@ -89,6 +89,10 @@ class MomoController extends Controller
     {
         try {
             $data = $request->all();
+            if ($data['errorCode'] == '42') {
+                return redirect()->to(route(STORE_CART));
+            }
+
             if (!empty($data['orderId'])) {
                 $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $data['orderId']);
             }

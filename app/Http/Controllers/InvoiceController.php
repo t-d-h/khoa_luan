@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         PaymentService $paymentService
     )
     {
-        $this->paymentService       = $paymentService;
+        $this->paymentService = $paymentService;
     }
 
     public function index()
@@ -32,6 +32,12 @@ class InvoiceController extends Controller
         $assign['invoices'] = $this->paymentService->all();
 
         return view('admin.invoice.index', $assign);
+    }
+
+    public function detail(Request $request)
+    {
+        $invoice = $this->paymentService->find('order_id', '=', $request->input('order_id'));
+        return view('admin.in');
     }
 
     public function update(Request $request)

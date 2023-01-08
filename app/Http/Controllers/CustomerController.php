@@ -197,15 +197,15 @@ class CustomerController extends Controller
         $products = json_decode($paymentInfo->payment_info);
         $info = [];
         foreach ($products as $product) {
-            $component = $this->productComponentService->findId($product->component);
+//            $component = $this->productComponentService->findId($product->component);
             $info[] = [
                 'order_id'      => $paymentInfo->order_id,
-                'product_name'  => $component->product->name,
-                'memory'        => $component->memory,
-                'color'         => $component->color->name,
+                'product_name'  => $product->product_name,
+                'memory'        => $product->memory,
+                'color'         => $product->color,
                 'amount'        => $product->amount,
-                'price'         => $component->price,
-                'product_total' => $product->amount * $component->price,
+                'price'         => $product->price,
+                'product_total' => $product->amount * $product->price,
                 'total'         => $paymentInfo->total
             ];
         }

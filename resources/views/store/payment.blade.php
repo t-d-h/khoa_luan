@@ -11,6 +11,7 @@
                         <th>Phương thức thanh toán</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
+                        <th>Vận chuyển</th>
                         <th>Lịch sử</th>
                         <th>Thông tin</th>
                     </tr>
@@ -19,8 +20,12 @@
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $payment->order_id }}</td>
                             <td>{{ $payment->payment_type }}</td>
-                            <td>{{ $payment->total }}</td>
+                            <td>{{ number_format($payment->total, 0, '.', '.') }}</td>
                             <td>{{ $payment->status == 1 ? 'Thành công' : 'Thất bại' }}</td>
+                            <td>
+                                {{ $payment->delivery == 0 ? 'Đang giao' :
+                                   ($payment->delivery == 1 ? 'Hoàn thành' : 'Huỷ đơn') }}
+                            </td>
                             <td>{{ $payment->created_at }}</td>
                             <td>
                                 <div class="btn btn-primary" data-toggle="modal" data-target="#detail" onclick="getinfo({{ $payment->order_id }})">Chi tiết</div>

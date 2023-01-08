@@ -53,7 +53,11 @@
                                 <img class="img-thumbnail" src="{{ asset('images/' . $product->component->first()->image ?? null) }}">
                                 <div class="pt-3"><strong>{{ $product->name }}</strong></div>
                                 <p>While/Black</p>
-                                <div><strong>{{ $product->component->first()->price ?? null }}</strong></div>
+                                <div>
+                                    <strong>
+                                        {{ number_format($product->component->first()->price, 0, '.', '.') ?? null }} VND
+                                    </strong>
+                                </div>
                                 <a href="{{ route(STORE_CART_DETAIL, $row->id) }}" class="btn btn-danger">Mua ngay</a>
                             </div>
                         </div>

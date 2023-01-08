@@ -126,6 +126,10 @@ class VNPayController extends Controller
     {
         $dataRequest = $request->all();
 
+        if ($dataRequest['vnp_ResponseCode'] == '24') {
+            return redirect()->to(route(STORE_CART));
+        }
+
         try {
             $this->paymentService->updateWithCondition(['status' => 1], 'order_id', $dataRequest['vnp_TxnRef']);
             Session::pull('cart');

@@ -176,6 +176,10 @@ class StoreController extends Controller
             $paymentInfo[] = [
                 'component' => $value,
                 'amount'    => $dataRequest['amount'][$key],
+                'product_name' => $component->product->name,
+                'memory' => $component->memory,
+                'color' => $component->color->name,
+                'price' => $component->price,
             ];
         }
 

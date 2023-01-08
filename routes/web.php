@@ -157,6 +157,7 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
     Route::prefix('invoice')->group(function () {
         Route::get('', [InvoiceController::class, 'index'])->name(ADMIN_INVOICE_INDEX);
+        Route::get('{id}/update', [InvoiceController::class, 'detail'])->name(ADMIN_INVOICE_DETAIL);
         Route::post('', [InvoiceController::class, 'update'])->name(ADMIN_INVOICE_UPDATE);
     });
 

@@ -133,7 +133,11 @@
                                         class="img-thumbnail">
                                     <div class="pt-3"><strong>{{ $row->name }}</strong></div>
                                     <p>While/Black</p>
-                                    <div><strong>{{ $row->component->first()->price }} VNĐ</strong></div>
+                                    <div>
+                                        <strong>
+                                            {{ number_format($row->component->first()->price, 0, '.', '.') }} VNĐ
+                                        </strong>
+                                    </div>
                                     <a href="{{ route(STORE_CART_DETAIL, $row->id) }}" class="btn btn-danger">Mua ngay</a>
                                 </div>
                             </div>
