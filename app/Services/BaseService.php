@@ -89,4 +89,9 @@ abstract class BaseService
 
         return $row;
     }
+
+    public function paginate($limit)
+    {
+        return $this->model->paginate($limit);
+    }
 }

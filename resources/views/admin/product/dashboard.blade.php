@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="container-fluid p-0">
-        <h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+        <h1 class="h3 mb-3"><strong>Thống kê</strong> Thông tin</h1>
 
         <div class="row">
             <div class="col-xl-6 col-xxl-5 d-flex">
@@ -15,7 +15,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Sales</h5>
+                                            <h5 class="card-title">Vận chuyển</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -24,11 +24,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3">2.382</h1>
+                                    <h1 class="mt-1 mb-3" id="delivery"></h1>
                                     <div class="mb-0">
                                         <span class="text-danger"> <i
                                                 class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-                                        <span class="text-muted">Since last week</span>
+                                        <span class="text-muted">Kể từ tháng trước</span>
                                     </div>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Visitors</h5>
+                                            <h5 class="card-title">Khách hàng đăng ký</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -45,11 +45,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3">14.212</h1>
+                                    <h1 class="mt-1 mb-3" id="customer"></h1>
                                     <div class="mb-0">
                                         <span class="text-success"> <i
                                                 class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-                                        <span class="text-muted">Since last week</span>
+                                        <span class="text-muted">Kể từ tháng trước</span>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Earnings</h5>
+                                            <h5 class="card-title">Thu nhập</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -72,7 +72,7 @@
                                     <div class="mb-0">
                                         <span class="text-success"> <i
                                                 class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-                                        <span class="text-muted">Since last week</span>
+                                        <span class="text-muted">Kể từ tháng trước</span>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col mt-0">
-                                            <h5 class="card-title">Orders</h5>
+                                            <h5 class="card-title">Đơn hàng</h5>
                                         </div>
 
                                         <div class="col-auto">
@@ -89,11 +89,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="mt-1 mb-3">64</h1>
+                                    <h1 class="mt-1 mb-3" id="order"></h1>
                                     <div class="mb-0">
                                         <span class="text-danger"> <i
                                                 class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-                                        <span class="text-muted">Since last week</span>
+                                        <span class="text-muted">Kể từ tháng trước</span>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@
                                 </div>
                             </form>
                         </div>
-                        <h5 class="card-title mb-0">Recent Movement</h5>
+                        <h5 class="card-title mb-0">Biểu đồ</h5>
                     </div>
                     <div class="card-body pt-2 pb-3">
                         <div class="chart chart-sm"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -305,7 +305,7 @@
             new Chart(document.getElementById("chartjs-dashboard-line"), {
                 type: "line",
                 data: {
-                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
                     datasets: [{
                         label: "Sales ($)",
                         fill: true,
@@ -376,4 +376,5 @@
             });
         });
     </script>
+    <script src="{{ mix('/js/dashboard.js') }}"></script>
 @endsection

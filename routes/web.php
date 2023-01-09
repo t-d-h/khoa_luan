@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductComponentController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -163,6 +164,9 @@ Route::prefix('admin')->middleware('admin')->group(function() {
 
     //Dashboard + ajax
     Route::get('/', [AdminController::class, 'dashboard'])->name(ADMIN_DASHBOARD);
+    Route::get('/count-delivery-success', [DashboardController::class, 'countDeliverySuccess']);
+    Route::get('/count-customer', [DashboardController::class, 'countCustomer']);
+    Route::get('/count-order', [DashboardController::class, 'countOrder']);
     Route::get('get-product-type', [AdminController::class, 'getProductAjax'])->name(AJAX_GET_PRODUCT_TYPE);
 
     Route::get('summernote', function () {

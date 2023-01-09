@@ -35,7 +35,7 @@
                         <tbody>
                         @foreach($invoices as $key => $row)
                             <tr>
-                                <td>{{ $key + 1 }}</td>
+                                <td>{{ ($invoices->currentPage() - 1) * $invoices->perPage() + $loop->index + 1 }}</td>
                                 <td>{{ $row->order_id }}</td>
                                 <td>{{ $row->customer->name }}</td>
                                 <td>{{ $row->payment_type }}</td>
@@ -59,12 +59,17 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="btn btn-primary" data-toggle="modal" data-target="#detail">Cập nhật</div>
+                                    <a href="{{ route(ADMIN_INVOICE_DETAIL, $row->order_id) }}" class="btn btn-primary">Cập nhật</a>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    {{ $invoices->links('vendor.pagination.bootstrap-4') }}
                 </div>
             </div>
         </div>

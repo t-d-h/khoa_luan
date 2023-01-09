@@ -29,25 +29,27 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        $assign['invoices'] = $this->paymentService->all();
+        $assign['invoices'] = $this->paymentService->paginate(10);
 
         return view('admin.invoice.index', $assign);
     }
 
-    public function detail(Request $request)
+    public function detail($orderId)
     {
-        $invoice = $this->paymentService->find('order_id', '=', $request->input('order_id'));
-        return view('admin.in');
+        $assign['invoice'] = $this->paymentService->find('order_id', '=', $orderId)->first();
+        $assign['orderId'] = $orderId;
+        $assign['payments'] = json_decode($assign['invoice']->payment_info);
+
+        return view('admin.invoice.edit', $assign);
     }
 
     public function update(Request $request)
     {
         $order_id = $request->input('order_id');
-        dd(2);
-        $payment = $this->paymentService->find('order_id', '=', $order_id);
-        $payment->status = $request->input('status');
+        $payment = $this->paymentService->find('order_id', '=', $order_id)->firstOrFail();
+        $payment->delivery = $request->input('delivery');
         $payment->save();
 
-        return back();
+        return back()->with(['status' => 'success', 'message' => 'Cập thật thành công']);
     }
 }

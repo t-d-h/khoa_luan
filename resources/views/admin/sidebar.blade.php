@@ -2,7 +2,7 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <a class="sidebar-brand" href="index.html">
-            <span class="align-middle">Admin Management</span>
+            <span class="align-middle">Quản trị viên</span>
         </a>
 
         <ul class="sidebar-nav">
@@ -12,7 +12,7 @@
 
             <li class="sidebar-item">
                 <a class="sidebar-link" href="{{ route(ADMIN_DASHBOARD) }}">
-                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Thống kê</span>
                 </a>
             </li>
 
@@ -44,28 +44,12 @@
             </li>
 
             <li class="sidebar-header">
-                Khách hàng
+                Hoá đơn
             </li>
 
             <li class="sidebar-item {{ Request::url() == route(ADMIN_INVOICE_INDEX) ? 'active' : '' }}">
                 <a class="sidebar-link" href="{{ route(ADMIN_INVOICE_INDEX) }}">
                     <i class="align-middle" data-feather="user"></i> <span class="align-middle">Thông tin đơn hàng</span>
-                </a>
-            </li>
-
-            <li class="sidebar-header">
-                Hoá đơn
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="charts-chartjs.html">
-                    <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Charts</span>
-                </a>
-            </li>
-
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="maps-google.html">
-                    <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
                 </a>
             </li>
         </ul>

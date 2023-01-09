@@ -17,6 +17,26 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @yield('css')
+
+    <style>
+        #helper a {
+            text-decoration: none;
+            color: white;
+            padding: 5px;
+            border: 2px solid;
+            background-color: gray;
+            display: block;
+        }
+
+        #helper div {
+            margin-bottom: 0;
+            width: 100%;
+        }
+
+        #helper a:hover {
+            background-color: firebrick;
+        }
+    </style>
 </head>
 <body>
 <!-- Navbar -->
@@ -77,21 +97,20 @@
 @if(Request::url() != route(STORE_CART))
     <div class="taskbar-left">
         <div class="giohang">
-            <p id="soluong"></p>
             <button class="btn"><i class="gg-shopping-cart"></i></button>
             <div class="dropdown-giohang">
                 <div id="scroll-giohang">
 
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-12" id="tong-giohang">
-                        <b>Tổng:</b>
-                        <p>VND</p>
-                    </div>
-                </div>
+{{--                <div class="row mt-2">--}}
+{{--                    <div class="col-md-12" id="tong-giohang">--}}
+{{--                        <b>Tổng:</b>--}}
+{{--                        <p>VND</p>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-danger w-75">Thanh toán</button>
+                        <a href="{{ route(STORE_CART) }}" class="btn btn-danger w-75">Thanh toán</a>
                     </div>
 
                 </div>
@@ -153,6 +172,14 @@
     <p>Đã thêm vào giỏ</p>
 </div>
 
+{{-- Thanh công cụ trợ giúp --}}
+<div style="position: absolute;display: none" id="helper">
+    <div><a href="{{ route(STORE) }}">Trang chủ</a></div>
+    <div><a href="{{ route(STORE_CART) }}">Giỏ hàng</a></div>
+    <div><a href="{{ route(STORE_CUSTOMER_INFO) }}">Thông tin cá nhân</a></div>
+</div>
+
+<script src="{{ mix('/js/store.js') }}"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajax({

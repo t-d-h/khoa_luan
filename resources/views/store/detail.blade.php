@@ -110,6 +110,18 @@
 
     <hr>
 
+    <div class="row" style="display: flex;justify-content: center">
+        <div class="col-12 text-center">
+            <h1>Giới thiệu sản phẩm</h1>
+        </div>
+        <div class="col-10">
+            <div>
+                {!! $product->description !!}
+            </div>
+        </div>
+    </div>
+
+    <hr>
     <!-- Sản phẩm liên quan -->
     <div class="container">
         <div class="row mt-5">

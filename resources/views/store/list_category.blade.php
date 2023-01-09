@@ -58,7 +58,7 @@
                                         {{ number_format($product->component->first()->price, 0, '.', '.') ?? null }} VND
                                     </strong>
                                 </div>
-                                <a href="{{ route(STORE_CART_DETAIL, $row->id) }}" class="btn btn-danger">Mua ngay</a>
+                                <a href="{{ route(STORE_CART_DETAIL, $product->id) }}" class="btn btn-danger">Mua ngay</a>
                             </div>
                         </div>
                     @endforeach
