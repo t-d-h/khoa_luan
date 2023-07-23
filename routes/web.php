@@ -45,6 +45,7 @@ Route::post('admin-login', [AdminController::class, 'login'])->name(ADMIN_LOGIN)
 Route::prefix('store')->group(function () {
     Route::get('/', [StoreController::class, 'index'])->name(STORE);
     Route::get('product-type', [StoreController::class, 'getProductType']);
+    Route::post('product-rating', [StoreController::class, 'productRating'])->name('product.rating');
 
     //Auth Customer
     Route::get('login', function () {

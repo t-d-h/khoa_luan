@@ -1,5 +1,6 @@
 @extends('index')
 @section('content')
+    @include('common.noti_message')
     <!-- Content -->
     <div class="container mt-3">
         <div class="row">
@@ -119,6 +120,68 @@
                 {!! $product->description !!}
             </div>
         </div>
+    </div>
+    <hr>
+
+    {{-- Product rating + comment --}}
+    <div class="ml-4">
+        <h1>Bình luận</h1>
+        <form action="{{ route('product.rating') }}" method="post">
+            @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <div id="comment" class="mt-3">
+                <textarea class="form-control mt-3" id="summernote" name="comment" placeholder="Bình luận ở đây"></textarea>
+            </div>
+            <div id="rating" style="display: block">
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label class = "full" for="star3" title="Meh - 3 stars"></label>
+
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+            </div>
+            <div class="pt-5">
+                <button class="btn btn-success mt-3" type="submit">Gửi</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="show_comment" class="mt-3" style="height: 500px; overflow: auto">
+        @foreach($rating as $row)
+            <div class="pb-3 p-3" style="border: 1px solid">
+                <p>Thời gian: {{ $row->created_at }}</p>
+                <p>Người dùng: {{ $row->customer->email }}</p>
+                <p>Bình chọn: {{ $row->rate }} sao</p>
+                <div style="display: flex">
+                    <div>Nội dung: </div>
+                    <div> {!! $row->comment !!}</div>
+                </div>
+{{--                <div id="rated" style="display: block">--}}
+{{--                    <input type="radio" id="star5" name="rating" value="5" {{ $row->rate == 5 ? 'checked=checked' : '' }} />--}}
+{{--                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>--}}
+
+{{--                    <input type="radio" id="star4" name="rating" value="4" {{ $row->rate == 4 ? 'checked=checked' : '' }}/>--}}
+{{--                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>--}}
+
+{{--                    <input type="radio" id="star3" name="rating" value="3" {{ $row->rate == 3 ? 'checked=checked' : '' }}/>--}}
+{{--                    <label class = "full" for="star3" title="Meh - 3 stars"></label>--}}
+
+{{--                    <input type="radio" id="star2" name="rating" value="2" {{ $row->rate == 2 ? 'checked=checked' : '' }} />--}}
+{{--                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>--}}
+
+{{--                    <input type="radio" id="star1" name="rating" value="1" {{ $row->rate == 1 ? 'checked=checked' : '' }} />--}}
+{{--                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>--}}
+{{--                </div>--}}
+            </div>
+        @endforeach
     </div>
 
     <hr>
@@ -248,6 +311,23 @@
                 $(this).css('background-color', 'gainsboro');
                 $('[name=component]').val($(this).attr('data-component'));
                 // console.log($('[name=component]').val());
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                placeholder: 'Nhập thông tin mô tả sản phẩm',
+                height: 120,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                ]
             });
         });
     </script>

@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ mix('/css/css.css') }}">
     <script src="{{ mix('/js/cart.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/rating.css') }}">
     <link href='https://css.gg/shopping-cart.css' rel='stylesheet'>
     <link href='https://css.gg/arrow-up-r.css' rel='stylesheet'>
     <!-- include summernote css/js -->
@@ -204,7 +205,7 @@
         });
 
         $('#summernote').summernote({
-            placeholder: 'Hello stand alone ui',
+            placeholder: 'Bình luận',
             height: 120,
             toolbar: [
                 ['style', ['style']],

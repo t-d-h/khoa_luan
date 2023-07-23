@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductRatingModel;
 use App\Models\SpecialModel;
 use App\Models\SpecialProductModel;
 use App\Services\CustomerService;
@@ -127,6 +128,9 @@ class StoreController extends Controller
     public function detail($id)
     {
         $assign['product'] = $this->productService->findId($id);
+        $assign['rating'] = ProductRatingModel::where('product_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
         $assign['component'] = $assign['product']->component->first();
         $name = $assign['product']->name;
         $assign['sameProduct'] = $this->productService->getSameProduct($id, $assign['product']->type);
@@ -230,5 +234,23 @@ class StoreController extends Controller
     {
         $types = $this->productTypeService->allAvailable();
         return response()->json(['types' => $types]);
+    }
+
+    public function productRating(Request $request)
+    {
+        $dataRequest = $request->all();
+        $customerId = Auth::guard('web')->user()->id ?? 'guess';
+        $productId = $dataRequest['product_id'];
+        $comment = $dataRequest['comment'];
+        $rating = $dataRequest['rating'];
+
+        ProductRatingModel::create([
+            'customer_id' => $customerId,
+            'product_id' => $productId,
+            'rate' => $rating,
+            'comment' => $comment
+        ]);
+
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Bình luận thành công']);
     }
 }
