@@ -6,7 +6,7 @@ define('STORE_DETAIL', 'store.detail');
 define('VNP_TMNCODE', '0MXE8R5O');
 define('VNP_HASHSECRET', 'MPWTZMJNAFXHKCJUQBHQUSUESFOISYFD');
 define('VNP_URL', 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html');
-define('VNP_RETURNURL', '127.0.0.1:8000/store/vnpay/result');
+define('VNP_RETURNURL', '100.93.254.15:31009/store/vnpay/result');
 
 //Store cart
 define('STORE_CART', 'store.cart');
@@ -46,7 +46,7 @@ define('RESULT_PAYMENT_MOMO', 'result.payment.momo');
 define('MOMO_PARTNER_CODE', 'MOMOBKUN20180529');
 define('MOMO_ACCESS_KEY', 'klm05TvNBzhg7h7j');
 define('MOMO_SECRET_KEY', 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa');
-define('MOMO_NOTIFY_URL', 'http://127.0.0.1:8000/store/momo/ipn_momo');
+define('MOMO_NOTIFY_URL', 'http://100.93.254.15:31009/store/momo/ipn_momo');
 define('MOMO_BANK_CODE', 'SML');
 
 //Alert

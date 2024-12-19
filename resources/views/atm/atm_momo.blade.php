@@ -94,7 +94,7 @@
                                     <label for="fxRate" class="col-form-label">NotifyUrl</label>
                                     <div class='input-group date' id='fxRate'>
                                         <input type='text' name="notifyUrl"
-                                               value=" http://127.0.0.1:8000/store/momo/ipn_momo"
+                                               value=" http://100.93.254.15:31009/store/momo/ipn_momo"
                                                class="form-control"/>
                                     </div>
                                 </div>

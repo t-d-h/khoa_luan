@@ -82,8 +82,8 @@
                                 '<td>'+ e.data.name + '</td>'+
                                 '<td><p class="text-bg-success">Hoạt động</p></td>'+
                                 '<td>'+
-                                '<a href="http://127.0.0.1:8000/admin/product/type/'+e.data.id+'" class="btn btn-primary">Thay đổi</a>'+
-                                '<a href="http://127.0.0.1:8000/admin/product/type/'+e.data.id+'/delete" class="btn btn-danger">Xoá</a>'+
+                                '<a href="http://100.93.254.15:31009/admin/product/type/'+e.data.id+'" class="btn btn-primary">Thay đổi</a>'+
+                                '<a href="http://100.93.254.15:31009/admin/product/type/'+e.data.id+'/delete" class="btn btn-danger">Xoá</a>'+
                                 '</td>'+
                                 '</tr>'
 

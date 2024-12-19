@@ -2,7 +2,7 @@
     <div class="row text-muted">
         <div class="col-6 text-start">
             <p class="mb-0">
-                <strong>Hphone</strong> - <strong>Vũ Mạnh Hùng</strong></a>								&copy;
+                <strong>Hphone</strong> - <strong>Trần Đình Hoàn</strong></a>								&copy;
             </p>
         </div>
         <div class="col-6 text-end">

@@ -18,7 +18,7 @@ class StripeService extends BaseService
 
         header('Content-Type: application/json');
 
-        $YOUR_DOMAIN = 'http://127.0.0.1:8000/';
+        $YOUR_DOMAIN = 'http://100.93.254.15:31009/';
 
         $checkout_session = \Stripe\Checkout\Session::create([
             'line_items' => [[
@@ -27,8 +27,8 @@ class StripeService extends BaseService
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => 'http://127.0.0.1:8000' . '/store/stripe/success?order_id=' . $orderId,
-            'cancel_url' => 'http://127.0.0.1:8000' . '/cancel',
+            'success_url' => 'http://100.93.254.15:31009' . '/store/stripe/success?order_id=' . $orderId,
+            'cancel_url' => 'http://100.93.254.15:31009' . '/cancel',
         ]);
 
         return $checkout_session->url;

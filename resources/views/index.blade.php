@@ -189,7 +189,7 @@
             success: function (e) {
                 var html = '';
                 $.each(e.types, function (key, value) {
-                    html += '<a href="http://127.0.0.1:8000/store/cart/list-category?product-type='+ value.id +'" class="dropdown-item">'+ value.name +'</a>'
+                    html += '<a href="http://100.93.254.15:31009/store/cart/list-category?product-type='+ value.id +'" class="dropdown-item">'+ value.name +'</a>'
                 })
 
                 $('#product-type').html(html);
