@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -xeu
 
 image=rg.hoantran.me/do-an/php:$(date +%s)
 
