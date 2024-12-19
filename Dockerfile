@@ -12,7 +12,7 @@ RUN add-apt-repository ppa:ondrej/php && \
 RUN curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php && \
     php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /khoa_luan
+RUN mkdir /khoa_luan
 COPY . .
 RUN cd khoa_luan && \
     composer install
